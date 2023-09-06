@@ -20,7 +20,7 @@ const Header = () => {
             </div>
             <div className="pages">
             <AnimatePresence>
-            {page === "home" ? (  
+            {page === "home" ? (
                 <motion.div className="home">
                     <Icon path={mdiHome} size={1} color="rgb(17,108,221)" />
                     <motion.div
@@ -29,7 +29,7 @@ const Header = () => {
                         initial={{ height: "0" }}
                         animate={{ height: ".2em" }}
                         exit={{ opacity: "0", height: "0" }}
-                        transition={{ duration: 0.1 }}>
+                        transition={{ duration: 0.25 }}>
                     </motion.div>
                 </motion.div>
             ) : (
@@ -46,7 +46,7 @@ const Header = () => {
                         initial={{ height: "0" }}
                         animate={{ height: ".2em" }}
                         exit={{ opacity: "0", height: "0" }}
-                        transition={{ duration: 0.1 }}>
+                        transition={{ duration: 0.25 }}>
                     </motion.div>
                 </motion.div>):(
                 <motion.div className="friends" onClick={() => handleClick("friends")}>
@@ -62,7 +62,7 @@ const Header = () => {
                         initial={{ height: "0" }}
                         animate={{ height: ".2em" }}
                         exit={{ opacity: "0", height: "0" }}
-                        transition={{ duration: 0.1 }}>
+                        transition={{ duration: 0.25 }}>
                     </motion.div>
                 </motion.div>:
                 <div className="profile" onClick={() => handleClick("profile")}>

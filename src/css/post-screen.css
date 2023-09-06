@@ -6,3 +6,39 @@
 .post-third {
     flex: 2;
 }
+.profile-third{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.small-profile {
+    position: sticky;
+    top: 10%;
+    width: clamp(25%, 400px, 75%);
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(32, 32, 32);
+    border-radius: 1em;
+    gap: 1em;
+    height: fit-content;
+}
+.medium-profile-pic {
+    width: 10em;
+    height: 10em;
+    border-radius: 10em;
+}
+.view-profile, .view-friends {
+    border: none;
+    background-color: rgb(253, 253, 253);
+    color: rgb(7, 1, 1);
+    border-radius: 1em;
+    font-size: 1.3em;
+    padding: .5em;
+    width: 75%;
+}
+.profile-name {
+    font-size: 1.3em;
+    color: white;
+}

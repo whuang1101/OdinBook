@@ -5,4 +5,5 @@
 }
 .bottom-screen {
     display: flex;
+    min-height: 93vh;
 }
