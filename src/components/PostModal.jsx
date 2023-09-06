@@ -1,16 +1,46 @@
 import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../redux/postSlice"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
 const PostModal = () => {
-    const post = useSelector(state => state.post)
+    const post = useSelector(state => state.post);
+    const host = useSelector(state => state.host);
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user) 
     const [postContent, setPostContent] = useState("")
     const characterLimit = 60;
     const [mouseDown, setMouseDown] = useState(false)
     const [postMouseDown, setPostMouseDown] = useState(false);
+
+    // fetching from post api to add to backend
+    const handlePostSubmit = (e) =>
+        {
+        e.preventDefault()
+        const body = {
+            content: postContent,
+            userId: user._id
+        }
+            fetch(`${host}/posts`, {
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(response => {
+            if(response.ok){
+                console.log("hi")
+            }
+            else {
+                console.log(response)
+            }
+        }).catch(err => {
+            console.log(err)
+        })
+        dispatch(updatePost(false));
+        setPostContent("")
+    }
+
     const handlePostContent = (e) => {
         setPostContent(e.target.value)
     }
@@ -36,7 +66,6 @@ const PostModal = () => {
     const modalDown = () => {
         setPostMouseDown(true);
     }
-
     return (
         <>
         {post && 
@@ -45,9 +74,9 @@ const PostModal = () => {
                     <div className="create-post-header" >
                         Create post
                     </div>
-                    <form className="post-form">
+                    <form className="post-form" onSubmit={(e) => handlePostSubmit(e)}>
                         <div className="post-profile">
-                            <img src={user.image_url} alt={user.image} className="smallest-profile-pic" />
+                            <img src={user.image_url} alt={user.name} className="smallest-profile-pic" />
                             <div className="post-name">{user.name}</div>
                         </div>
                         <textarea name="post-content" 

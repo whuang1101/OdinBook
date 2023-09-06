@@ -9,7 +9,6 @@ const Router = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
   useEffect(() => {
     fetch("http://localhost:3000/auth/login/success", {
       credentials: "include",
@@ -48,9 +47,7 @@ const Router = () => {
   ]);
 
   return (
-    <hostContext.Provider value="http://localhost:3000">
       <RouterProvider router={router} />
-    </hostContext.Provider>
   );
 };
 

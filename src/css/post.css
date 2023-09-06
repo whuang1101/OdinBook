@@ -2,13 +2,15 @@
     display: flex;
     justify-content: center;
     padding-top: 2em;
+    padding-bottom: 2em;
 }
 .posts {
     width: clamp(60%, 650px, 85%);
     display: flex;
     flex-direction: column;
+    gap: 1em;
 }
-.add-post {
+.add-post,.post {
     width: 100%;
     background-color: white;
     padding: .75em;
@@ -20,8 +22,8 @@
     flex: 1;
 }
 .smallest-profile-pic {
-    width: 3em;
-    height: 3em;
+    width: 2.5em;
+    height: 2.5em;
     border-radius: 3em;
 }
 .post-button {
@@ -109,5 +111,38 @@
 .post-submit{
     background-color: rgb(56,114,240);
     color: white;
+}
+.post-hader {
+    display: flex;
+}
 
+/*Handle actual post formatting*/
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+.post{
+    flex-direction: column;
+    gap: 1em;
+}
+.post-content {
+    font-size: 1.2em;
+}
+.likes-comments {
+    display: flex;
+    width: 100%;
+    gap: .4em
+}
+.likes, .comments {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5em;
+    border-radius: .5em;
+    gap: .2em;
+}
+.likes:hover, .comments:hover {
+    background-color: rgb(221,230, 233);
 }
