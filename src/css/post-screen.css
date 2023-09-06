@@ -1,0 +1,8 @@
+.profile-third, .friends-third{
+    flex: 1;
+    border: 1px solid black;
+    min-height: 93vh;
+}
+.post-third {
+    flex: 2;
+}

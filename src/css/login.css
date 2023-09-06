@@ -34,6 +34,7 @@
 }
 .right-side {
     justify-content: center;
+    border-left: 1px solid rgb(185, 183, 183);
 }
 /*Login form*/
 .login {
@@ -97,7 +98,7 @@
 .github-mention {
     flex: 1;
     display: flex;
-    background-color: black;
+    background-color: rgb(46, 46, 46);
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -127,6 +128,5 @@
     }
     .login{
         height: fit-content;
-        width: clamp(80%, 800px, 100%)
     }
 }

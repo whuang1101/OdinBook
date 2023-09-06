@@ -1,13 +1,18 @@
 import "../css/login.css"
 import GithubLogo from "../assets/GithubLogo"
 import FacebookLogo from "../assets/FacebookLogo"
+import { motion } from "framer-motion"
+import { useContext } from "react"
+import { hostContext } from "./hostContext"
 const Login = () => {
+    const msg = useContext(hostContext);
+    console.log(msg)
     return(
         <>
         <div className="login-page-background">
             <div className="login-screen">
                 <div className="left-side">
-                    <h1 className="title">fakebook</h1>
+                    <h1 className="title">OdinBook</h1>
                 </div>
                 <div className="right-side">
                     <div className="login">
@@ -17,7 +22,7 @@ const Login = () => {
                             <input type="submit"  className="login-submit" value={"Log In"}/>
                             <div className="facebook-login">
                                 <span>Or Login with</span>
-                                <FacebookLogo/>
+                                <motion.span whileHover={{scale:1.2}}><FacebookLogo/></motion.span>
                             </div>
                         </form>
                         <div className="sign-up">
