@@ -11,7 +11,6 @@ const Header = () => {
     const handleClick = (page) => {
         dispatch(updatePage(page))
     }
-    console.log(page)
     return (
         <div className="header">
             <div className="odin-header">
@@ -19,7 +18,6 @@ const Header = () => {
                 <div className="odin-book-title">Odin Book</div>
             </div>
             <div className="pages">
-            <AnimatePresence>
             {page === "home" ? (
                 <motion.div className="home">
                     <Icon path={mdiHome} size={1} color="rgb(17,108,221)" />
@@ -49,15 +47,15 @@ const Header = () => {
                         transition={{ duration: 0.25 }}>
                     </motion.div>
                 </motion.div>):(
-                <motion.div className="friends" onClick={() => handleClick("friends")}>
+                <div className="friends" onClick={() => handleClick("friends")}>
                     <Icon path={mdiAccountGroupOutline} size={1} />
-                </motion.div>)
+                </div>)
             }
                 {page === "profile" ?
                 <motion.div className="profile">
                     <Icon path={mdiAccount} size={1} color="rgb(17,108,221)"/>
                     <motion.div
-                        key="friends"
+                        key="profile"
                         className="border"
                         initial={{ height: "0" }}
                         animate={{ height: ".2em" }}
@@ -69,7 +67,6 @@ const Header = () => {
                     <Icon path={mdiAccountOutline} size={1} />
                 </div>
                 }
-            </AnimatePresence>
             </div>
             <div className="profile-image">
                 <img src={user.image_url} alt={user.name} style={{height:"2em", width:"2em", borderRadius:"1em"}}/>

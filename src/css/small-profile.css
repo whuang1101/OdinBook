@@ -2,6 +2,8 @@
     flex: 1;
     border: 1px solid black;
     min-height: 93vh;
+    padding-top: 2em;
+
 }
 .post-third {
     flex: 2;
