@@ -74,7 +74,7 @@
     flex-direction: column;
     align-items: center;
 }
-.login-submit {
+.login-submit  {
     color: white;
     background-color: rgb(57,117,234);
     border: none;

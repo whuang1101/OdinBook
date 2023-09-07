@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateFriendSelection } from "../redux/friendSelectSlice";
 import { useEffect } from "react";
 import { updatePage } from "../redux/pageSlice";
+import FriendSuggestions from "./friends-components/FriendSuggestions";
 
 
 const Friends = ({setUser}) => {
@@ -79,7 +80,7 @@ const Friends = ({setUser}) => {
                 }
             </div>
             <div className="friend-display">
-
+                {friendSelection === "Friend Suggestions" && <FriendSuggestions/>}
             </div>
         </div>
     </div>

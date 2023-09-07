@@ -41,3 +41,85 @@
 }
 /**/
 a:visited {color:black;}
+
+/*Friend Suggestions*/
+.suggested-friends {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1em;
+}
+.friend-display {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 2em;
+    gap: 1em;
+}
+.user-container {
+    display: flex;
+    flex-direction: column;
+    height: 25em;
+    max-height: 40em;
+    border-radius: 1em;
+    box-shadow: 1px 1px 10px black;
+}
+.friend-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 1em 1em 0em 0em;
+    flex: 3;
+}
+.information-part {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    background-color: white;
+    border-radius: 0em 0em 1em 1em;
+}
+.suggestion-name {
+    font-size: 1.2em;
+}
+.cancel-request-button {
+    font-size: 1.2em;
+    border-radius: .2em;
+    border: none;
+    width: 80%;
+    padding: .5em;
+    font-weight: 600;
+    background-color: rgb(228,230,234);
+    color: black;
+}
+.cancel-request-button:hover {
+    background-color: rgb(217, 218, 221);
+
+}
+.add-friend-button{
+    font-size: 1.2em;
+    border-radius: .2em;
+    border: none;
+    width: 80%;
+    padding: .5em;
+    font-weight: bold;
+    color: white;
+}
+.add-friend-button {
+    background-color: rgb(57,117,234);
+}
+.add-friend-button:hover {
+    background-color: rgb(30, 99, 237);
+
+}
+
+@media screen and (max-width:960px ) {
+    .suggested-friends{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+@media screen and ( min-width: 960px) and (max-width:1200px){
+    .suggested-friends{
+        grid-template-columns: repeat(2,1fr);
+    }
+}

@@ -13,28 +13,6 @@ const Router = () => {
   const [loading, setLoading] = useState(true);
   const [facebookLogin, setFacebookLogin] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:3000/auth/login/success", {
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Failed to fetch user data");
-        }
-      })
-      .then((data) => {
-        if(data){
-        setUser(data);
-        dispatch(updateUser(data));
-        setLoading(false);}
-        else{
-          dispatch(updateUser(initialUser));
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
       if(initialUser){
         fetch("http://localhost:3000/auth/local/success", {
           credentials: "include",
@@ -58,6 +36,29 @@ const Router = () => {
           .catch((error) => {
             dispatch(updateUser(initialUser));
             console.error(error);
+            setLoading(false);
+          });
+      }else{
+        fetch("http://localhost:3000/auth/login/success", {
+          credentials: "include",
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Failed to fetch user data");
+            }
+          })
+          .then((data) => {
+            if(data){
+            setUser(data);
+            dispatch(updateUser(data));
+            setLoading(false);}
+            else{
+              dispatch(updateUser(initialUser));
+            }
+          })
+          .catch((error) => {
             setLoading(false);
           });
       }

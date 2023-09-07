@@ -47,12 +47,12 @@ const Header = ({setUser}) => {
                 </motion.div>
             ) : (
                 <Link to="/" className="home" onClick={() => handleClick("home")}>
-                    <Icon path={mdiHomeOutline} size={1} />
+                    <Icon path={mdiHomeOutline} size={1.3} />
                 </Link>
             )}
             {page === "friends" ? (
                 <motion.div className="friends">
-                    <Icon path={mdiAccountGroup} size={1} color="rgb(17,108,221)"/>
+                    <Icon path={mdiAccountGroup} size={1.3} color="rgb(17,108,221)"/>
                     <motion.div
                         key="friends"
                         className="border"
@@ -64,13 +64,13 @@ const Header = ({setUser}) => {
                 </motion.div>
                 ):(
                 <Link to="/friends" className="friends" onClick={() => handleClick("friends")} >
-                    <Icon path={mdiAccountGroupOutline} size={1} />
+                    <Icon path={mdiAccountGroupOutline} size={1.3} />
                 </Link>)
                 
             }
                 {page === "profile" ?
                 <motion.div className="profile">
-                    <Icon path={mdiAccount} size={1} color="rgb(17,108,221)"/>
+                    <Icon path={mdiAccount} size={1.3} color="rgb(17,108,221)"/>
                     <motion.div
                         key="profile"
                         className="border"
@@ -81,7 +81,7 @@ const Header = ({setUser}) => {
                     </motion.div>
                 </motion.div>:
                 <div className="profile" onClick={() => handleClick("profile")}>
-                    <Icon path={mdiAccountOutline} size={1} />
+                    <Icon path={mdiAccountOutline} size={1.3} />
                 </div>
                 }
             </div>
