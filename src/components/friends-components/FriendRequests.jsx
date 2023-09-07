@@ -105,6 +105,25 @@ const FriendRequests = () => {
         
   
     }
+
+    const handleAcceptFriend = (postId) => {
+        const body = {
+            id: postId
+        }
+        fetch(`${host}/friends/request/accept`,{
+            method:"PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(
+            response => 
+            {if(response.ok)
+            {
+                console.log("suceed")
+            }}
+        )
+    }
     return (
         <>
         {pendingRequests.length !== 0 &&
@@ -150,9 +169,17 @@ const FriendRequests = () => {
                             <motion.button 
                             whileHover= {{scale:1.1}}
                             whileTap= {{scale:.9}}
-                            className="add-friend-button"
+                            className="confirm-friend-button"
+                            onClick={() => {handleAcceptFriend(request._id)}}
                             > 
-                                Add Friend
+                                Confirm
+                            </motion.button>
+                            <motion.button 
+                            whileHover= {{scale:1.1}}
+                            whileTap= {{scale:.9}}
+                            className="remove-request-button"
+                            > 
+                                Cancel Request
                             </motion.button>
                         </div>
                     </div>

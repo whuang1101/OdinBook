@@ -58,16 +58,15 @@ a:visited {color:black;}
 .user-container, .request-container {
     display: flex;
     flex-direction: column;
-    height: 25em;
-    max-height: 40em;
     border-radius: 1em;
+    min-height: 25em;
     box-shadow: 1px 1px 10px black;
 }
 .friend-image {
     width: 100%;
     height: 100%;
     border-radius: 1em 1em 0em 0em;
-    flex: 3;
+    flex: 2;
 }
 .information-part {
     flex: 1;
@@ -78,12 +77,13 @@ a:visited {color:black;}
     gap: .5em;
     background-color: white;
     border-radius: 0em 0em 1em 1em;
+    padding: 1em;
 }
 .suggestion-name {
     font-size: 1.2em;
 }
-.cancel-request-button {
-    font-size: 1.2em;
+.cancel-request-button, .remove-request-button {
+    font-size: 1.15em;
     border-radius: .2em;
     border: none;
     width: 80%;
@@ -92,12 +92,12 @@ a:visited {color:black;}
     background-color: rgb(228,230,234);
     color: black;
 }
-.cancel-request-button:hover {
+.cancel-request-button:hover, .remove-request-button:hover {
     background-color: rgb(217, 218, 221);
 
 }
-.add-friend-button{
-    font-size: 1.2em;
+.add-friend-button, .confirm-friend-button{
+    font-size: 1.15em;
     border-radius: .2em;
     border: none;
     width: 80%;
@@ -105,10 +105,10 @@ a:visited {color:black;}
     font-weight: bold;
     color: white;
 }
-.add-friend-button {
+.add-friend-button, .confirm-friend-button{
     background-color: rgb(57,117,234);
 }
-.add-friend-button:hover {
+.add-friend-button:hover, .confirm-friend-button:hover {
     background-color: rgb(30, 99, 237);
 
 }
