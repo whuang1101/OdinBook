@@ -6,8 +6,9 @@ import Homepage from "./Homepage";
 import { updateUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 const Router = () => {
+  const initialUser = JSON.parse(localStorage.getItem("userData"));
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(initialUser);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch("http://localhost:3000/auth/login/success", {
@@ -21,11 +22,16 @@ const Router = () => {
         }
       })
       .then((data) => {
+        if(data){
         setUser(data);
         dispatch(updateUser(data));
-        setLoading(false);
+        setLoading(false);}
+        else{
+          dispatch(updateUser(initialUser));
+        }
       })
       .catch((error) => {
+        dispatch(updateUser(initialUser));
         console.error(error);
         setLoading(false);
       });
@@ -42,7 +48,7 @@ const Router = () => {
     },
     {
       path: "/login",
-      element: !user ? <Login /> : <Navigate to="/" />,
+      element: !user ? <Login setUser ={setUser}/> : <Navigate to="/" />,
     },
   ]);
 

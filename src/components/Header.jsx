@@ -2,9 +2,9 @@ import "../css/header.css"
 import Icon from '@mdi/react';
 import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline, mdiHome, mdiHomeOutline } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
-import { AnimatePresence, motion } from "framer-motion";
 import { updatePage } from "../redux/pageSlice";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 const Header = ({setUser}) => {
     const user = useSelector((state) => state.user);
     const page = useSelector((state) => state.page);
@@ -15,8 +15,15 @@ const Header = ({setUser}) => {
         dispatch(updatePage(page))
     }
     const handleLogout = () => {
-        fetch(`${host}/auth/logout`)
+        fetch(`${host}/auth/logout`,{
+            method:"POST",
+            credentials: "include",
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
         setUser(null)
+        localStorage.setItem("userData", null);
         navigate("/login")
     }
     return (

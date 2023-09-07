@@ -14,7 +14,7 @@ const Post = () => {
     const host = useSelector(state => state.host);
     const allPosts = useSelector(state => state.allPosts)
     const [likedPosts, setLikedPosts] = useState([]);
-
+    const [loading, setLoading] = useState(true)
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
@@ -33,7 +33,9 @@ const Post = () => {
             dispatch(updateAllPosts(updatedPosts))
             const likedPostIds = data.filter(post => compareMongo(user._id, post.likes))
             .map(post => post._id);
-            setLikedPosts(likedPostIds);})
+            setLikedPosts(likedPostIds);
+            setLoading(false)
+        })
     },[])
 
     const handleAddLike = (postId) => {
@@ -107,7 +109,7 @@ const Post = () => {
                         {/* Post modal/ background is on PostModal.jsx */}
                     </div>
                     {
-                        allPosts.length!==0 ? allPosts.map((post) => (
+                        !loading ? allPosts.map((post) => (
                             <div className="post" key={post._id}>
                                 <div className="post-header">
                                     <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
