@@ -38,7 +38,7 @@ const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: user ? <Homepage /> : <Navigate to="/login" />,
+      element: user ? <Homepage setUser ={setUser}/> : <Navigate to="/login" />,
     },
     {
       path: "/login",

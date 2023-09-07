@@ -4,12 +4,20 @@ import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline,
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { updatePage } from "../redux/pageSlice";
-const Header = () => {
+import { useNavigate } from "react-router-dom";
+const Header = ({setUser}) => {
     const user = useSelector((state) => state.user);
     const page = useSelector((state) => state.page);
+    const host = useSelector((state) => state.host);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleClick = (page) => {
         dispatch(updatePage(page))
+    }
+    const handleLogout = () => {
+        fetch(`${host}/auth/logout`)
+        setUser(null)
+        navigate("/login")
     }
     return (
         <div className="header">
@@ -68,7 +76,7 @@ const Header = () => {
                 </div>
                 }
             </div>
-            <div className="profile-image">
+            <div className="profile-image" onClick={() => handleLogout()}>
                 <img src={user.image_url} alt={user.name} style={{height:"2em", width:"2em", borderRadius:"1em"}}/>
             </div>
         </div>

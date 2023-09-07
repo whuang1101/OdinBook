@@ -7,11 +7,11 @@ import Post from "./homepage-components/Post"
 import PostModal from "./PostModal"
 
 
-const Homepage = () => {
+const Homepage = ({setUser}) => {
     return(
         <div className="home-background">
             <PostModal/>
-            <Header/>
+            <Header setUser={setUser}/>
             <div className="bottom-screen">
                 <SmallProfile/>
                 <Post/>
