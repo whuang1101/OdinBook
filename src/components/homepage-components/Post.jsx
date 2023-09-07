@@ -18,7 +18,6 @@ const Post = () => {
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
-            console.log("ok")
                 return response.json()
             }
             else{

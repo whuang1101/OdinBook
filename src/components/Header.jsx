@@ -35,7 +35,7 @@ const Header = ({setUser}) => {
             <div className="pages">
             {page === "home" ? (
                 <motion.div className="home">
-                    <Icon path={mdiHome} size={1} color="rgb(17,108,221)" />
+                    <Icon path={mdiHome} size={1.3} color="rgb(17,108,221)" />
                     <motion.div
                         key="home"
                         className="border"

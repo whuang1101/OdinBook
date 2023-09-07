@@ -79,7 +79,6 @@ const FriendSuggestions = () => {
         fetch(`${host}/friends/suggestions/${user._id}`)
         .then(response => 
             {if(response.ok){
-                console.log("hi")
                 return response.json()
             }}
             ).then(
