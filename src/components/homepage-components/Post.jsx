@@ -1,24 +1,20 @@
 import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../../redux/postSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updateAllPosts } from "../../redux/allPostsSlice";
 import Icon from '@mdi/react';
-import { mdiCommentOutline, mdiThumbUpOutline } from '@mdi/js';
+import { mdiCommentOutline, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import timeCalculator from "../../js/timeCalculator"; "../../js/timeCalculator"
+import compareMongo from "../../js/compareMongoId";
 const Post = () => {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const host = useSelector(state => state.host);
     const allPosts = useSelector(state => state.allPosts)
-    const dateCalculator = (date) => {
-        const inputDate = new Date(date)
-        const currentDate = new Date();
-        console.log(currentDate)
-        const timeDifference = (currentDate-inputDate)/1000;
-        console.log(timeDifference)
-    }
+    const [likedPosts, setLikedPosts] = useState([]);
+
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
@@ -29,8 +25,75 @@ const Post = () => {
                 console.log(response.status)
             }
         }
-        ).then(data =>  dispatch(updateAllPosts(data)))
+        ).then(data =>  {
+            const updatedPosts = data.map(post => ({
+                ...post,
+                likes: post.likes.length // Initialize likes property with the current like count
+            }));
+            dispatch(updateAllPosts(updatedPosts))
+            const likedPostIds = data.filter(post => compareMongo(user._id, post.likes))
+            .map(post => post._id);
+            setLikedPosts(likedPostIds);})
     },[])
+
+    const handleAddLike = (postId) => {
+        const body = {
+            userId: user._id,
+            postId: postId
+        }
+        fetch(`${host}/posts/like/add`,{
+            method:"PUT",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(response => 
+            {if (response.ok){
+                console.log("nice")
+            }}
+        )
+        setLikedPosts(prevLikedPosts => [...prevLikedPosts, postId]);
+        const updatedPosts = allPosts.map(post => {
+            if (post._id === postId) {
+                return {
+                    ...post,
+                    likes: post.likes + 1 
+                };
+            }
+            return post;
+        });
+        dispatch(updateAllPosts(updatedPosts))
+
+    }
+    const handleRemoveLike = (postId) => {
+        const body = {
+            userId: user._id,
+            postId: postId
+        }
+        fetch(`${host}/posts/like/remove`,{
+            method:"PUT",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(response => 
+            {if (response.ok){
+                console.log("nice")
+            }}
+        )
+        setLikedPosts(likedPosts.filter(id => id !== postId));
+        const updatedPosts = allPosts.map(post => {
+            if (post._id === postId) {
+                return {
+                    ...post,
+                    likes: post.likes - 1
+                };
+            }
+            return post;
+        });
+        dispatch(updateAllPosts(updatedPosts))
+
+    }
     const firstName = user.name.split(" ")[0];
     return (
         <>
@@ -48,23 +111,39 @@ const Post = () => {
                             <div className="post" key={post._id}>
                                 <div className="post-header">
                                     <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
-                                    <div className="actual-post-name">{user.name}</div>
-                                    {dateCalculator(post.date)}
+                                    <div className="name-time">
+                                        <div className="name">
+                                            {user.name}
+                                        </div>
+                                        <div className="long-ago">
+                                            {timeCalculator(post.date)}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="post-content">
                                     {post.text}
                                 </div>
                                 <div className="likes-comments">
-                                    <div className="likes">
-                                        <Icon path={mdiThumbUpOutline} size={1} />
-                                        <div className="like">
-                                            {post.likes.length}
-                                        </div>
-                                    </div>
+                                        {/*If userid is in likes show blue icon*/}
+                                        {likedPosts.includes(post._id) ?
+                                            <div className="likes" onClick={() => handleRemoveLike(post._id)}>
+                                                <Icon path={mdiThumbUp} size={1} color={"rgb(57,115,234)"}/>
+                                                <div className="like">
+                                                    {post.likes}
+                                                </div>
+                                            </div>:
+                                            <div className="likes" onClick={() => {handleAddLike(post._id)}}>
+                                                <Icon path={mdiThumbUpOutline} size={1} color={"rgb(126,131,139)"} />
+                                                    <div className="like">
+                                                {post.likes}
+                                                </div>
+                                            </div>
+                                        }
+                                    
                                     <div className="comments">
-                                        <Icon path={mdiCommentOutline} size={1} />
+                                        <Icon path={mdiCommentOutline} size={1} color={"rgb(126,131,139)"} />
                                         <div>
-                                            {post.likes.length}
+                                            {post.comments.length}
                                         </div>
                                     </div>
                                 </div>

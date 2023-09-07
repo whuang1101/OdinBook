@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../redux/postSlice"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-
+import { updateAllPosts } from "../redux/allPostsSlice"
+import { useNavigate } from "react-router-dom"
 const PostModal = () => {
     const post = useSelector(state => state.post);
     const host = useSelector(state => state.host);
@@ -12,7 +13,8 @@ const PostModal = () => {
     const characterLimit = 60;
     const [mouseDown, setMouseDown] = useState(false)
     const [postMouseDown, setPostMouseDown] = useState(false);
-
+    const navigate = useNavigate()
+    
     // fetching from post api to add to backend
     const handlePostSubmit = (e) =>
         {
@@ -39,6 +41,8 @@ const PostModal = () => {
         })
         dispatch(updatePost(false));
         setPostContent("")
+        navigate(0)
+        
     }
 
     const handlePostContent = (e) => {
