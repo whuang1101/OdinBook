@@ -152,7 +152,7 @@ const Post = () => {
                             </div>
                         )):
                         (
-                            Array.from({ length: 5 }).map((_, index) => (
+                            Array.from({ length: 3 }).map((_, index) => (
                                 <div className="post" key={index}>
                                 <div className="post-header">
                                     <Skeleton width={40} height={40} circle={true} />

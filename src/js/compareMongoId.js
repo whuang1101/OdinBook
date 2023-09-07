@@ -3,7 +3,8 @@ function compareMongo (userId,likesArray) {
     { 
         if(userId===id2){
         return true;
-    }}
+    }
+}
     return false
 }
 

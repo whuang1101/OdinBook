@@ -3,7 +3,7 @@ import Icon from '@mdi/react';
 import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline, mdiHome, mdiHomeOutline } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
 import { updatePage } from "../redux/pageSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 const Header = ({setUser}) => {
     const user = useSelector((state) => state.user);
@@ -46,9 +46,9 @@ const Header = ({setUser}) => {
                     </motion.div>
                 </motion.div>
             ) : (
-                <div className="home" onClick={() => handleClick("home")} >
+                <Link to="/" className="home" onClick={() => handleClick("home")}>
                     <Icon path={mdiHomeOutline} size={1} />
-                </div>
+                </Link>
             )}
             {page === "friends" ? (
                 <motion.div className="friends">
@@ -61,10 +61,12 @@ const Header = ({setUser}) => {
                         exit={{ opacity: "0", height: "0" }}
                         transition={{ duration: 0.25 }}>
                     </motion.div>
-                </motion.div>):(
-                <div className="friends" onClick={() => handleClick("friends")}>
+                </motion.div>
+                ):(
+                <Link to="/friends" className="friends" onClick={() => handleClick("friends")} >
                     <Icon path={mdiAccountGroupOutline} size={1} />
-                </div>)
+                </Link>)
+                
             }
                 {page === "profile" ?
                 <motion.div className="profile">

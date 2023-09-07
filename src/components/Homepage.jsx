@@ -14,7 +14,7 @@ const Homepage = ({setUser}) => {
             <Header setUser={setUser}/>
             <div className="bottom-screen">
                 <SmallProfile/>
-                <Post/>
+                <Post />
                 <div className="friends-third">
                 </div>
             </div>

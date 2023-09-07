@@ -1,0 +1,43 @@
+.friend-toggle {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: white;
+}
+.friend-display{
+    flex: 3;
+}
+.friend-title {
+    font-size: 1.8em;
+    padding: .5em;
+}
+.friend-requests, .friend-suggestions, .all-friends {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    font-weight: 400;
+    gap: .5em;
+    margin-left: .25em;
+    margin-right: .25em;
+    border-radius: .25em;
+}
+
+.friend-requests:hover, .friend-suggestions:hover, .all-friends:hover{
+    background-color: rgb(240,242,245);
+}
+.icon-outline, .focus-icon-outline {
+    padding: .25em;
+    border-radius: 1em;
+}
+.icon-outline{
+    background-color: rgb(228,230,234);
+}
+/*Show clearly which page it's on by highlighting current selection*/
+.focus{ 
+    background-color: rgb(240,242,245);
+}
+.focus-icon-outline {
+    background-color: rgb(57,117,234);
+}
+/**/
+a:visited {color:black;}
