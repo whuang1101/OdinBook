@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { updatePage } from "../redux/pageSlice";
 import FriendSuggestions from "./friends-components/FriendSuggestions";
 import FriendRequests from "./friends-components/FriendRequests";
+import AllFriends from "./friends-components/AllFriends";
 
 
 const Friends = ({setUser}) => {
@@ -81,8 +82,9 @@ const Friends = ({setUser}) => {
                 }
             </div>
             <div className="friend-display">
-                {friendSelection === "Friend Suggestions" && <FriendSuggestions/>}
                 {friendSelection === "Friend Requests" && <FriendRequests/>}
+                {friendSelection === "Friend Suggestions" && <FriendSuggestions/>}
+                {friendSelection === "All Friends" && <AllFriends/>}
             </div>
         </div>
     </div>

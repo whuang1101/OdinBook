@@ -112,3 +112,7 @@ a:visited {color:black;}
     background-color: rgb(30, 99, 237);
 
 }
+
+.friend-name {
+    font-size: 2em;
+}

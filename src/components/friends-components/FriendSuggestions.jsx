@@ -94,7 +94,9 @@ const FriendSuggestions = () => {
     },[])
     return(
         <>
+            {allSuggestions.length !== 0 &&
             <h2>Friend Suggestions</h2>
+            }
             <div className="suggested-friends">
             {!loading ? allSuggestions.map((user) => (
                 <div className="user-container" key={user._id}>
