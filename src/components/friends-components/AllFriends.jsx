@@ -30,7 +30,6 @@ const AllFriends=  () => {
                     <img src={user.image_url} alt="hey" className="friend-image"/>
                     <div className="information-part">
                         <div className="friend-name">{user.name}</div>
-
                     </div>
                 </div>
             )): 

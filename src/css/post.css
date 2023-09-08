@@ -10,7 +10,7 @@
     flex-direction: column;
     gap: 1em;
 }
-.add-post,.post {
+.add-post, .post {
     width: 100%;
     background-color: white;
     padding: .75em;
@@ -45,16 +45,18 @@
 /*post background for when add post is open*/
 .post-background {
     position: absolute;
-    z-index: 1;
+    z-index: 3;
     height: 100vh;
     width: 100%;
     background-color: rgba(209, 209, 211, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
 }
 .post-modal {
-    z-index: 2;
+    position: fixed;
+    z-index: 3;
     background-color: white;
     border-radius: 1em;
     width: clamp(30%,450px,100%);
@@ -112,7 +114,7 @@
     background-color: rgb(56,114,240);
     color: white;
 }
-.post-hader {
+.post-header {
     display: flex;
 }
 

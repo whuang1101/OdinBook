@@ -2,12 +2,9 @@ import "../css/login.css"
 import GithubLogo from "../assets/GithubLogo"
 import FacebookLogo from "../assets/FacebookLogo"
 import { motion } from "framer-motion"
-import { useContext } from "react"
-import { hostContext } from "./hostContext"
 import { useDispatch, useSelector } from "react-redux"
 import { updateUser } from "../redux/userSlice"
 const Login = ({setUser}) => {
-    const msg = useContext(hostContext);
     const host = useSelector(state => state.host)
     const dispatch = useDispatch();
     const login = (e) => {
@@ -33,7 +30,6 @@ const Login = ({setUser}) => {
               }
         )
     }
-    console.log(msg)
     return(
         <>
         <div className="login-page-background">

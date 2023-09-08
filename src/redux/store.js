@@ -5,6 +5,7 @@ import postReducer from "./postSlice"
 import hostReducer from "./hostSlice"
 import allPostsReducer from "./allPostsSlice"
 import friendSelectionReducer from "./friendSelectSlice"
+import profileReducer from "./profileSlice"
 export default configureStore({
     reducer: {
         user: userReducer,
@@ -13,5 +14,6 @@ export default configureStore({
         host: hostReducer,
         allPosts: allPostsReducer,
         friendSelection: friendSelectionReducer,
+        profile: profileReducer,
     }
 })

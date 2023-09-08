@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePage } from "../redux/pageSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { updateFriendSelection } from "../redux/friendSelectSlice";
 const Header = ({setUser}) => {
     const user = useSelector((state) => state.user);
     const page = useSelector((state) => state.page);
@@ -12,6 +13,7 @@ const Header = ({setUser}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleClick = (page) => {
+        dispatch(updateFriendSelection("Friend Requests"))
         dispatch(updatePage(page))
     }
     const handleLogout = () => {

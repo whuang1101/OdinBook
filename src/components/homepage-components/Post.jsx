@@ -8,6 +8,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import timeCalculator from "../../js/timeCalculator"; "../../js/timeCalculator"
 import compareMongo from "../../js/compareMongoId";
+import { Link } from "react-router-dom";
 const Post = () => {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
@@ -93,7 +94,6 @@ const Post = () => {
             return post;
         });
         dispatch(updateAllPosts(updatedPosts))
-
     }
     const firstName = user.name.split(" ")[0];
     return (
@@ -111,7 +111,9 @@ const Post = () => {
                         !loading ? allPosts.map((post) => (
                             <div className="post" key={post._id}>
                                 <div className="post-header">
-                                    <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
+                                    <Link to= {`/profile/${post.author._id}`}>
+                                        <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
+                                    </Link>
                                     <div className="name-time">
                                         <div className="name">
                                             {user.name}

@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Login from "./Login";
-import { hostContext } from "./hostContext";
 import { useState, useEffect } from "react";
 import Homepage from "./Homepage";
 import { updateUser } from "../redux/userSlice";
@@ -59,6 +58,7 @@ const Router = () => {
             }
           })
           .catch((error) => {
+            console.error(error)
             setLoading(false);
           });
       }
