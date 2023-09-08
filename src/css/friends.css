@@ -1,9 +1,14 @@
-.friend-toggle {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+.first-half{
+    flex:1;
+    position: relative;
     background-color: white;
     box-shadow: 1px 1px 5px rgb(195, 193, 193);
+}
+.friend-toggle {
+    display: flex;
+    position: sticky;
+    top: 7vh;
+    flex-direction: column;
 }
 .friend-display{
     flex: 3;

@@ -163,7 +163,7 @@ const FriendRequests = () => {
         {incomingRequests.length !== 0 || !loading ?
         <>
         {incomingRequests.length !== 0 &&
-        <h2>Friend Requests</h2>
+            <h2>Friend Requests</h2>
         }
             <div className="incoming-requests">
             {incomingRequests && incomingRequests.map((request) => (

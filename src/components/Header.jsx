@@ -80,9 +80,9 @@ const Header = ({setUser}) => {
                         transition={{ duration: 0.25 }}>
                     </motion.div>
                 </motion.div>:
-                <div className="profile" onClick={() => handleClick("profile")}>
+                <Link to={`/profile/${user._id}`} className="profile" onClick={() => handleClick("profile")} >
                     <Icon path={mdiAccountOutline} size={1.3} />
-                </div>
+                </Link>
                 }
             </div>
             <div className="profile-image" onClick={() => handleLogout()}>

@@ -23,6 +23,7 @@ const Friends = ({setUser}) => {
         <div className="home-background">
         <Header setUser={setUser}/>
         <div className="bottom-screen">
+            <div className="first-half">
             <div className="friend-toggle">
                 <h1 className="friend-title">Friends</h1>
                 {friendSelection === "Friend Requests" ?
@@ -80,6 +81,7 @@ const Friends = ({setUser}) => {
             </div>
 
                 }
+            </div>
             </div>
             <div className="friend-display">
                 {friendSelection === "Friend Requests" && <FriendRequests/>}

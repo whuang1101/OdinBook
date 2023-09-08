@@ -6,12 +6,12 @@ import Homepage from "./Homepage";
 import { updateUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import Friends from "./Friends";
+import Profile from "./Profile";
 const Router = () => {
   const initialUser = JSON.parse(localStorage.getItem("userData"));
   const dispatch = useDispatch();
   const [user, setUser] = useState(initialUser);
   const [loading, setLoading] = useState(true);
-  const [facebookLogin, setFacebookLogin] = useState(false);
   useEffect(() => {
       if(initialUser){
         fetch("http://localhost:3000/auth/local/success", {
@@ -81,6 +81,10 @@ const Router = () => {
       path: "/friends",
       element: user ? <Friends setUser ={setUser}/> : <Navigate to="/login" />,
     },
+    {
+      path: "/profile/:id",
+      element: user ? <Profile setUser ={setUser}/> : <Navigate to="/login" />,
+    }
   ]);
 
   return (

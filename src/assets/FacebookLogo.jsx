@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { hostContext } from "../components/hostContext";
+import { useSelector } from "react-redux";
 
 const FacebookLogo = () => {
-  const host = useContext(hostContext)
+  const host = useSelector(state => state.host)
   const handleClick = () => {
       window.open(`${host}/auth/facebook/callback`,"_self")
   }

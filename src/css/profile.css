@@ -1,0 +1,89 @@
+.profile-screen{
+    display: flex;
+    justify-content: center;
+    min-height: 93vh;
+}
+
+.profile-container {
+    width: clamp(60%,1200px,100%);
+    min-height: 93vh;
+}
+.background-image{
+    height: 25em;
+    animation: changeColor 10s infinite ;
+    border-radius: 0 0 1em 1em;
+
+}
+.profile-display-container{
+    display: flex;
+    justify-content: center;
+
+}
+.profile-header {
+    border-bottom: 1px solid rgb(204,206,210);
+    width: 90%;
+    display: flex;
+}
+.image-profile {
+    position: relative;
+    width: 10em;
+}
+.medium-size{
+    position: absolute;
+    height: 10em;
+    width: 100%;
+    transform: translateY(-50%);
+    border-radius: 100%;
+}
+.profile-page-name {
+    display: flex;
+    flex-direction: column;
+    padding: 1.3em;
+    gap: .5em;
+    flex: 4;
+}
+.user-name {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+.num-friends {
+    font-weight: 600;
+}
+.profile-edit {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.edit-profile {
+    background-color: rgb(228,230,234);
+    border: none;
+    font-size: 1em;
+    font-weight: 700;
+    padding: .5em;
+    border-radius: .2em;
+    display: flex;
+    align-items: center;
+    gap: .2em;
+}
+
+.edit-profile:hover {
+    background-color: rgb(205, 206, 207);
+}
+@keyframes changeColor {
+    0% {
+        background-color: rgb(125, 125, 125);
+    }
+    25% {
+        background-color: rgb(63, 63, 63);
+    }
+    50% {
+        background-color: rgb(0, 0, 0);
+    }
+    75% {
+        background-color: rgb(63, 63, 63);
+    }
+    100% {
+        background-color: rgb(125, 125, 125);
+    }
+}
