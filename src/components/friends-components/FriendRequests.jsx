@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react"
+import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 const FriendRequests = () => {
     const [pendingRequests, setPendingRequests] = useState([]);
     const [incomingRequests, setIncomingRequests] = useState([]);
     const host = useSelector(state => state.host)
     const user = useSelector(state => state.user)
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         fetch(`${host}/friends/pending/${user._id}`)
         .then(response =>{
@@ -19,6 +21,7 @@ const FriendRequests = () => {
             {
             const modifiedData = data.map(item => ({ ...item, isRequested: true }));
             setPendingRequests(modifiedData)
+            setLoading(false)
         }
         )
         fetch(`${host}/friends/request/${user._id}`)
@@ -157,9 +160,11 @@ const FriendRequests = () => {
         </div>
         </>
         }
-        {incomingRequests.length !== 0 && 
+        {incomingRequests.length !== 0 || !loading ?
         <>
+        {incomingRequests.length !== 0 &&
         <h2>Friend Requests</h2>
+        }
             <div className="incoming-requests">
             {incomingRequests && incomingRequests.map((request) => (
                     <div className="request-container" key={request.sender._id}>
@@ -185,7 +190,19 @@ const FriendRequests = () => {
                     </div>
                 ))}
             </div>
-        </>
+        </>:
+        (
+            <div className="incoming-requests">
+                {Array.from({ length: 8 }).map((_, index) => (
+                
+                    <div className="user-container" key={index}>
+                        <div className="friend-image">
+                            <Skeleton height={"100%"} borderRadius={"1em"}/>
+                        </div>
+                    </div>
+                    ))}
+            </div>
+        )
         }
         </>
     )

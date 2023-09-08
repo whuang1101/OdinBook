@@ -3,6 +3,7 @@
     flex-direction: column;
     flex: 1;
     background-color: white;
+    box-shadow: 1px 1px 5px rgb(195, 193, 193);
 }
 .friend-display{
     flex: 3;

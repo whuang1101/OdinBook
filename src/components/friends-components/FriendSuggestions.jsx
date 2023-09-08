@@ -123,7 +123,7 @@ const FriendSuggestions = () => {
                 </div>
             )):
             (
-                Array.from({ length: 6 }).map((_, index) => (
+                Array.from({ length: 8 }).map((_, index) => (
                     <div className="user-container" key={index}>
                         <div className="friend-image">
                             <Skeleton height={"100%"} borderRadius={"1em"}/>
