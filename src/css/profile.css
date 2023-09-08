@@ -1,12 +1,20 @@
 .profile-screen{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     min-height: 93vh;
 }
 
 .profile-container {
     width: clamp(60%,1200px,100%);
-    min-height: 93vh;
+}
+.profile-box-shadow{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 1px 1px 5px rgb(138, 135, 135);
+    z-index: 1;
+    padding-bottom: 1em;
 }
 .background-image{
     height: 25em;
@@ -14,11 +22,14 @@
     border-radius: 0 0 1em 1em;
 
 }
+/*Start of the profile header section*/
+
 .profile-display-container{
     display: flex;
     justify-content: center;
 
 }
+
 .profile-header {
     border-bottom: 1px solid rgb(204,206,210);
     width: 90%;
@@ -41,6 +52,7 @@
     padding: 1.3em;
     gap: .5em;
     flex: 4;
+    
 }
 .user-name {
     font-size: 1.8em;
@@ -64,11 +76,68 @@
     border-radius: .2em;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: .2em;
 }
 
-.edit-profile:hover {
+.edit-profile:hover, .edit-details:hover {
     background-color: rgb(205, 206, 207);
+}
+
+/*Start of the bottom section*/
+.info-bottom {
+    background-color: rgb(240,242,245);
+    display: flex;
+    justify-content: center;
+    padding: 1.3em;
+    width: 100%;
+    position: relative;
+}
+.info-container{
+    width: clamp(60%,1200px,100%);
+    gap: 2em;
+    display: flex;
+    justify-content: center;
+}
+.info-post {
+    display: flex;
+    width: 90%;
+    gap: 2em;
+}
+.info-section,.post-section {
+    position: sticky;
+    top: 9vh;
+    height: fit-content;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: white;
+}
+.info-section {
+    flex: 1;
+    gap: .5em;
+    display: flex;
+    flex-direction: column;
+}
+.post-section{
+    flex: 1.5;
+
+}
+.university, .lives {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+.edit-details {
+    background-color: rgb(228,230,234);
+    border: none;
+    font-size: 1em;
+    font-weight: 700;
+    padding: .5em;
+    border-radius: .2em;
+    gap: .2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 @keyframes changeColor {
     0% {
