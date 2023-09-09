@@ -26,6 +26,7 @@
     height: 2.5em;
     border-radius: 3em;
 }
+
 .post-button {
     background-color: rgb(240,242,245);
     color: rgb(170,172,176);
@@ -38,6 +39,7 @@
     font-size: 1.2em;
     border-radius: 1em;
 }
+
 .post-button:hover {
     background-color: rgb(224, 226, 228);;
 }
@@ -119,6 +121,11 @@
 }
 
 /*Handle actual post formatting*/
+.title-background {
+    background-color: white;
+    padding: .75em;
+    border-radius: 1em;
+}
 .post-header {
     display: flex;
     align-items: center;
@@ -132,11 +139,14 @@
     font-size: 1.2em;
 }
 .likes-comments {
-    padding-top: .1em;
+    padding-top: .2em;
+    padding-bottom: .2em;
     border-top: 1px solid rgb(230,231,233);
+    border-bottom: 1px solid rgb(230,231,233);
     display: flex;
     width: 100%;
     gap: .4em
+
 }
 .likes, .comments {
     flex: 1;
@@ -149,4 +159,33 @@
 }
 .likes:hover, .comments:hover {
     background-color: rgb(221,230, 233);
+}
+
+/*Comment handling*/
+
+.post-comments {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+}
+.comment-picture {
+    width: 2em;
+    height: 2em;
+    border-radius: 3em;
+}
+.comment-entry {
+    width: 100%;
+    background-color: rgb(240,242,245);
+    border: none;
+    padding: .5em;
+    border-radius: 1em;
+    display: flex;
+    font-size: 1.2em;
+    height: fit-content;
+    resize: none;
+}
+
+.comment-form {
+    width: 100%;
 }

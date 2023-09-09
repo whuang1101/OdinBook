@@ -11,18 +11,17 @@ const SmallProfile = () => {
                 <motion.img whileHover={{ rotate: 360 }} transition={{ duration: 1, }}src={user.image_url} alt={user.name} className="medium-profile-pic"/>
                 <motion.div className="profile-name">{user.name}</motion.div>
                 
-                    <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}}className="view-profile">
                         <Link to ={`/profile/${user._id}`} className="link">
+                            <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}}className="view-profile">
                             View Profile
+                            </motion.button>
                         </Link>
-                    </motion.button>
                 
-                    
-                    <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}} className="view-friends">
                         <Link to ={`/friends`} className="link" onClick={() =>dispatch(updateFriendSelection("All Friends"))}>
-                            View Friends
+                            <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}} className="view-friends">
+                                View Friends
+                            </motion.button>
                         </Link>
-                    </motion.button>
                
             </div>
         </div>

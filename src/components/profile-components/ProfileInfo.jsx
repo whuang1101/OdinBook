@@ -8,7 +8,7 @@ const ProfileInfo = () => {
         <div className="info-section">
             <h3>Intro</h3>
             {!profile.bio &&
-            ((user._id === profile._id) &&(profile.job || profile.lives || profile.studies_at)) &&
+            (user._id === profile._id) &&
             <button className="add-bio">
                 <div className="edit">
                     Add Bio
@@ -40,12 +40,19 @@ const ProfileInfo = () => {
                 </div>
             }
             {
-            ((user._id === profile._id) &&(profile.job || profile.lives || profile.studies_at)) &&
+            ((user._id === profile._id) && (profile.job || profile.lives || profile.studies_at)) ?
             <button className="edit-details">
                 <div className="edit">
                     Edit Details
                 </div>
+            </button>:
+             user._id === profile._id &&
+            <button className="edit-details">
+                <div className="edit">
+                    Add Details
+                </div>
             </button>
+            
             }
         </div>
     )

@@ -15,7 +15,7 @@ const Login = ({setUser}) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({username:"whuang1", password: "abcd1234"})
+            body: JSON.stringify({username:"whuang1@ufl.edu", password: "abcd1234"})
         }).then(
             response => {
                 if(response.ok) {
@@ -24,9 +24,12 @@ const Login = ({setUser}) => {
             }
         ).then (
             data => {
+                console.log(data);
+                if(data !== undefined){
                 dispatch(updateUser(data));
                 setUser(true);
                 localStorage.setItem("userData", JSON.stringify(data));
+            }
               }
         )
     }

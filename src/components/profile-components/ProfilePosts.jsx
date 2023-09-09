@@ -109,7 +109,7 @@ const ProfilePosts = () => {
                         <button className="post-button" onClick={() => dispatch(updatePost(true))}>What's on your mind {firstName}?</button>
                     </div>
                 </>:
-                <h2>Recent Posts</h2>
+                <h2 className="title-background">Recent Posts</h2>
                 }
                 
                 {/* Post modal/ background is on PostModal.jsx */}
@@ -120,7 +120,7 @@ const ProfilePosts = () => {
                             <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
                             <div className="name-time">
                                 <div className="name">
-                                    {user.name}
+                                    {post.author.name}
                                 </div>
                                 <div className="long-ago">
                                     {timeCalculator(post.date)}

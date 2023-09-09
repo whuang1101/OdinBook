@@ -1,21 +1,24 @@
 import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../../redux/postSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateAllPosts } from "../../redux/allPostsSlice";
 import Icon from '@mdi/react';
-import { mdiCommentOutline, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
+import { mdiCommentOutline, mdiSend, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import timeCalculator from "../../js/timeCalculator"; "../../js/timeCalculator"
 import compareMongo from "../../js/compareMongoId";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 const Post = () => {
+    const commentRef = useRef(null)
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const host = useSelector(state => state.host);
     const allPosts = useSelector(state => state.allPosts)
     const [likedPosts, setLikedPosts] = useState([]);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [commentText, setCommentText] = useState({});
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
@@ -33,6 +36,7 @@ const Post = () => {
             dispatch(updateAllPosts(updatedPosts))
             const likedPostIds = data.filter(post => compareMongo(user._id, post.likes))
             .map(post => post._id);
+            //
             setLikedPosts(likedPostIds);
             setLoading(false)
         })
@@ -95,6 +99,14 @@ const Post = () => {
         });
         dispatch(updateAllPosts(updatedPosts))
     }
+    const handleCommentChange = (event, postId) => {
+        setCommentText((prevCommentText) => ({
+        ...prevCommentText,
+        [postId]: event.target.value,
+      }));
+      console.log(commentText[postId])
+
+    }
     const firstName = user.name.split(" ")[0];
     return (
         <>
@@ -115,9 +127,9 @@ const Post = () => {
                                         <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
                                     </Link>
                                     <div className="name-time">
-                                        <div className="name">
-                                            {user.name}
-                                        </div>
+                                        <Link to= {`/profile/${post.author._id}`} className="name">
+                                            {post.author.name}
+                                        </Link>
                                         <div className="long-ago">
                                             {timeCalculator(post.date)}
                                         </div>
@@ -150,6 +162,31 @@ const Post = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {post.comments.length === 0 &&
+                                <div className="post-comments">
+                                    <div className="image-container">
+                                    <Link to= {`/profile/${user._id}`}>
+                                        <img src={user.image_url} alt={`${user.name} profile pic`} className="comment-picture"/>
+                                        </Link>
+                                    </div>
+                                    
+                                        <motion.textarea 
+                                        className="comment-entry"
+                                        initial={{height:"2.2em"}} 
+                                        whileFocus={{height:"7em"}} 
+                                        placeholder="Write a comment"
+                                        value={commentText[post._id]}
+                                        onChange={(e) => {handleCommentChange(e,post._id)}}>
+                                        
+
+                                        </motion.textarea>
+                                        {commentText[post._id] &&
+                                        <Icon path={mdiSend} size={1} className="comment-send" color={"rgb(57,115,234)"}/>}
+
+
+                                </div>
+                                }
+                                
                             </div>
                         )):
                         (
