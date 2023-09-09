@@ -6,6 +6,8 @@ import hostReducer from "./hostSlice"
 import allPostsReducer from "./allPostsSlice"
 import friendSelectionReducer from "./friendSelectSlice"
 import profileReducer from "./profileSlice"
+import commentModalReducer from "./commentModalSlice";
+import editCommentReducer from "./editCommentSlice"
 export default configureStore({
     reducer: {
         user: userReducer,
@@ -15,5 +17,7 @@ export default configureStore({
         allPosts: allPostsReducer,
         friendSelection: friendSelectionReducer,
         profile: profileReducer,
+        commentModal: commentModalReducer,
+        editComment: editCommentReducer,
     }
 })

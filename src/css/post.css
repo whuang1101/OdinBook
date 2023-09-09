@@ -194,10 +194,53 @@
     display: flex;
     gap: .75em;
 }
+.edited {
+    position: absolute;
+    right: 2%;
+    top: 10%;
+    font-size: .5em;
+
+}
 .comment-name {
     font-weight: 600;
 }
+
+.edit-delete-container {
+display: none;
+padding: 5px;
+border-radius: 50%;
+cursor: pointer;
+}
+
+.comment-container:hover .edit-delete-container {
+display: flex;
+align-items: center;
+position: relative;
+}
+.edit-dropdown {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,100%);
+    background-color: white;
+    border-radius: .5em;
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+    width: 10em;
+    gap: .5em;
+    box-shadow: 2px 2px 10px black;
+    z-index: 2;
+}
+.edit-comment, .delete-comment{
+    padding: .5em;
+    border-radius: .5em;
+}
+.edit-comment:hover, .delete-comment:hover {
+    background-color: rgb(240,242,245);
+}
 .name-comment {
+    position: relative;
     background-color: rgb(240,242,245);
     border-radius: .8em;
     padding: .5em;
@@ -217,4 +260,28 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
+}
+/*Delete Form for comments*/
+.delete-content {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+.choices {
+    display: flex;
+    justify-content: space-around;
+    padding: 1em;
+    padding-top: 0;
+
+}
+.confirm-comment-delete, .cancel-comment-delete{
+    padding: .5em;
+    font-size: 1.3em;
+    border: none;
+    outline: none;
+    border-radius: .5em;
+}
+.confirm-comment-delete{
+    background-color: red;
+    color: white;
 }

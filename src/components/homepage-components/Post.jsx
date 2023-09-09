@@ -3,23 +3,26 @@ import { updatePost } from "../../redux/postSlice";
 import { useEffect, useRef, useState } from "react";
 import { updateAllPosts } from "../../redux/allPostsSlice";
 import Icon from '@mdi/react';
-import { mdiCommentOutline, mdiSend, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
+import { mdiCommentOutline, mdiDotsHorizontal, mdiLoading, mdiSend, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import timeCalculator from "../../js/timeCalculator"; "../../js/timeCalculator"
 import compareMongo from "../../js/compareMongoId";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-const Post = () => {
+import { updateCommentModal } from "../../redux/commentModalSlice";
+import { updateComment } from "../../redux/editCommentSlice";
+const Post = ({setLoading,loading}) => {
     const user = useSelector(state => state.user)
+    const commentModal = useSelector(state => state.commentModal);
     const dispatch = useDispatch()
     const host = useSelector(state => state.host);
     const allPosts = useSelector(state => state.allPosts)
     const [likedPosts, setLikedPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [commentText, setCommentText] = useState({});
     const [commentLoading, setCommentLoading] = useState({}); 
     const [actualLoading,setActualLoading] = useState(false);
+    const [editDropDown,setEditDropDown] =  useState(false);
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
@@ -49,8 +52,7 @@ const Post = () => {
             // Set the commentLoading state to the updated object with all values set to false.
             setCommentLoading(updatedCommentLoading);
         })
-    },[actualLoading])
-
+    },[actualLoading,commentModal])
 
     const handleAddLike = (postId) => {
         const body = {
@@ -153,6 +155,15 @@ const Post = () => {
             }
         )
     }
+    const handleEditComment = (commentId) => {
+        dispatch(updateCommentModal("edit-comment"))
+        dispatch(updateComment(commentId))
+    }
+    
+    const handleDeleteComment = (commentId) => {
+        dispatch(updateCommentModal("delete-comment"))
+        dispatch(updateComment(commentId))
+    }
     const firstName = user.name.split(" ")[0];
     return (
         <>
@@ -238,9 +249,25 @@ const Post = () => {
                                                     </Link>
                                                 </div>
                                                 <div className="name-comment">
+                                                    {comment.edited && <div className="edited">edited</div>}
                                                     <div className="comment-name">{comment.author.name}</div>
                                                     <div className="user-comment">{comment.text}</div>
                                                 </div>
+                                                {comment.author._id === user._id &&
+                                                <>
+                                                    <div className="edit-delete-container" onClick={() => setEditDropDown(!editDropDown)}>
+                                                        <div className="edit-delete-icon">
+                                                            <Icon path={mdiDotsHorizontal} size={1} color={"rgb(57,115,234)"}/>
+                                                        </div>
+                                                        {editDropDown &&
+                                                            <div className="edit-dropdown">
+                                                                <div className="edit-comment" onClick={() =>handleEditComment(comment._id)}>Edit</div>
+                                                                <div className="delete-comment" onClick={() =>handleDeleteComment(comment._id)}>Delete</div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </>
+                                                }
                                             </div>
                                         ))}
                                     </div>
