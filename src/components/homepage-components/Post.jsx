@@ -11,7 +11,6 @@ import compareMongo from "../../js/compareMongoId";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 const Post = () => {
-    const commentRef = useRef(null)
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const host = useSelector(state => state.host);
@@ -19,6 +18,8 @@ const Post = () => {
     const [likedPosts, setLikedPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [commentText, setCommentText] = useState({});
+    const [commentLoading, setCommentLoading] = useState({}); 
+    const [actualLoading,setActualLoading] = useState(false);
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
@@ -39,8 +40,17 @@ const Post = () => {
             //
             setLikedPosts(likedPostIds);
             setLoading(false)
+
+            const updatedCommentLoading = { ...commentLoading };
+            // Iterate through the keys (postIds) and set all values to false.
+            for (const postId in updatedCommentLoading) {
+            updatedCommentLoading[postId] = false;
+            }
+            // Set the commentLoading state to the updated object with all values set to false.
+            setCommentLoading(updatedCommentLoading);
         })
-    },[])
+    },[actualLoading])
+
 
     const handleAddLike = (postId) => {
         const body = {
@@ -104,8 +114,44 @@ const Post = () => {
         ...prevCommentText,
         [postId]: event.target.value,
       }));
-      console.log(commentText[postId])
-
+      if(commentLoading[postId] === undefined)
+      {    console.log("hi")
+        setCommentLoading((prevCommentLoading) => ({
+        ...prevCommentLoading,
+        [postId]: false,
+      }));
+    }
+    }
+    const postComment = (event,postId,userId) => {
+        setCommentLoading((prevCommentLoading) => ({
+            ...prevCommentLoading,
+            [postId]: true,
+          }));
+        const body  = {
+            postId:postId,
+            text: commentText[postId],
+            userId:userId,
+        }
+        fetch(`${host}/comments/add`, {
+            method:"POST",
+            headers:{
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(
+            response => {
+                if(response.ok){
+                      setCommentText((prevCommentText) => ({
+                        ...prevCommentText,
+                        [postId]: "",
+                      }));
+                      setActualLoading(!actualLoading);
+                }
+                else{
+                    console.log(response.status);
+                }
+            }
+        )
     }
     const firstName = user.name.split(" ")[0];
     return (
@@ -162,7 +208,7 @@ const Post = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {post.comments.length === 0 &&
+                                
                                 <div className="post-comments">
                                     <div className="image-container">
                                     <Link to= {`/profile/${user._id}`}>
@@ -181,11 +227,42 @@ const Post = () => {
 
                                         </motion.textarea>
                                         {commentText[post._id] &&
-                                        <Icon path={mdiSend} size={1} className="comment-send" color={"rgb(57,115,234)"}/>}
-
-
+                                        <Icon path={mdiSend} size={1} className="comment-send" color={"rgb(57,115,234)"} onClick={(e) => {postComment(e, post._id, user._id)}}/>}
                                 </div>
-                                }
+                                    <div className="all-comments">
+                                        {post.comments.map((comment) =>(
+                                            <div className="comment-container" key={comment._id}>
+                                                <div className="image-container">
+                                                    <Link to= {`/profile/${comment.author._id}`}>
+                                                        <img src={comment.author.image_url} alt={`${comment.author.name} profile pic`} className="comment-picture"/>
+                                                    </Link>
+                                                </div>
+                                                <div className="name-comment">
+                                                    <div className="comment-name">{comment.author.name}</div>
+                                                    <div className="user-comment">{comment.text}</div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                
+                                 {commentLoading[post._id] &&     
+                                    <div className="comment-container">
+                                        <div className="image-container">
+                                            {/* Use Skeleton component for loading image */}
+                                            <Skeleton circle={true} height={40} width={40} className="comment-picture"/>
+                                        </div>
+                                        <div className="name-comment">
+                                            <div className="comment-name">
+                                            {/* Use Skeleton component for loading name */}
+                                            <Skeleton width={80} />
+                                            </div>
+                                            <div className="user-comment">
+                                            {/* Use Skeleton component for loading comment text */}
+                                            <Skeleton count={3} />
+                                            </div>
+                                        </div>
+                                    </div>}
+
                                 
                             </div>
                         )):
