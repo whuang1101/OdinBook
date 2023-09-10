@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { updateAllPosts } from "../redux/allPostsSlice"
 import { useNavigate } from "react-router-dom"
-const PostModal = () => {
+const PostModal = ({newInfo, setNewInfo, setLoading}) => {
     const post = useSelector(state => state.post);
     const host = useSelector(state => state.host);
     const dispatch = useDispatch()
@@ -41,8 +41,8 @@ const PostModal = () => {
         })
         dispatch(updatePost(false));
         setPostContent("")
-        navigate(0)
-        
+        setLoading(true); 
+        setNewInfo(!newInfo);    
     }
 
     const handlePostContent = (e) => {

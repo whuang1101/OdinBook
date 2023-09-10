@@ -10,14 +10,15 @@ import { useState } from "react"
 
 const Homepage = ({setUser}) => {
     const [loading, setLoading] = useState(true);
+    const [newInfo, setNewInfo] = useState(false);
     return(
         <div className="home-background">
             <EditModal setLoading={setLoading}/>
-            <PostModal/>
+            <PostModal newInfo={newInfo} setNewInfo={setNewInfo} setLoading={setLoading}/>
             <Header setUser={setUser}/>
             <div className="bottom-screen">
                 <SmallProfile/>
-                <Post setLoading = {setLoading} loading={loading}/>
+                <Post setLoading = {setLoading} loading={loading} newInfo={newInfo}/>
                 <div className="friends-third">
                 </div>
             </div>

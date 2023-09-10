@@ -117,9 +117,6 @@
     background-color: rgb(56,114,240);
     color: white;
 }
-.post-header {
-    display: flex;
-}
 
 /*Handle actual post formatting*/
 .title-background {
@@ -128,6 +125,11 @@
     border-radius: 1em;
 }
 .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.post-header-right {
     display: flex;
     align-items: center;
     gap: 1em;
@@ -211,7 +213,12 @@ padding: 5px;
 border-radius: 50%;
 cursor: pointer;
 }
-
+.post-header:hover .edit-delete-container{
+    display: flex;
+}
+.post-content:hover .edit-delete-container {
+    display: flex;
+}
 .comment-container:hover .edit-delete-container {
 display: flex;
 align-items: center;
@@ -228,7 +235,6 @@ position: relative;
     flex-direction: column;
     padding: .5em;
     width: 10em;
-    gap: .5em;
     box-shadow: 2px 2px 10px black;
     z-index: 2;
 }
@@ -280,8 +286,19 @@ position: relative;
     border: none;
     outline: none;
     border-radius: .5em;
+    width: 25%;
 }
 .confirm-comment-delete{
     background-color: red;
     color: white;
+}
+/*Edit post styling*/
+
+.edit-post-icon{
+    padding: .5em;
+    border-radius: 4em;
+    position: relative;
+}
+.edit-post-icon:hover {
+    background-color: rgb(240,242,245);
 }

@@ -12,7 +12,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { updateCommentModal } from "../../redux/commentModalSlice";
 import { updateComment } from "../../redux/editCommentSlice";
-const Post = ({setLoading,loading}) => {
+import { updateEditPost } from "../../redux/editPostSlice";
+const Post = ({setLoading,loading, newInfo}) => {
     const user = useSelector(state => state.user)
     const commentModal = useSelector(state => state.commentModal);
     const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const Post = ({setLoading,loading}) => {
     const [commentLoading, setCommentLoading] = useState({}); 
     const [actualLoading,setActualLoading] = useState(false);
     const [editDropDown,setEditDropDown] =  useState(false);
+    const [postDropdown, setPostDropDown] = useState({});
     useEffect(()=> {
         fetch(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
@@ -37,6 +39,13 @@ const Post = ({setLoading,loading}) => {
                 ...post,
                 likes: post.likes.length // Initialize likes property with the current like count
             }));
+            const userIDs = data.map(post => post.author._id);
+            for(let i =0; i <userIDs.length; i ++) {
+                setPostDropDown((previous) => ({
+                    ...previous,
+                    [userIDs[i]]: false
+                }))
+            }
             dispatch(updateAllPosts(updatedPosts))
             const likedPostIds = data.filter(post => compareMongo(user._id, post.likes))
             .map(post => post._id);
@@ -45,15 +54,20 @@ const Post = ({setLoading,loading}) => {
             setLoading(false)
 
             const updatedCommentLoading = { ...commentLoading };
-            // Iterate through the keys (postIds) and set all values to false.
             for (const postId in updatedCommentLoading) {
             updatedCommentLoading[postId] = false;
             }
             // Set the commentLoading state to the updated object with all values set to false.
             setCommentLoading(updatedCommentLoading);
         })
-    },[actualLoading,commentModal])
-
+    },[actualLoading,commentModal, newInfo])
+    const handlePostDropDown = (postId) => {
+        console.log("clicked")
+        setPostDropDown((previous) => ({
+            ...previous,
+            [postId]: !previous[postId]
+          }));
+    }
     const handleAddLike = (postId) => {
         const body = {
             userId: user._id,
@@ -159,10 +173,17 @@ const Post = ({setLoading,loading}) => {
         dispatch(updateCommentModal("edit-comment"))
         dispatch(updateComment(commentId))
     }
-    
     const handleDeleteComment = (commentId) => {
         dispatch(updateCommentModal("delete-comment"))
         dispatch(updateComment(commentId))
+    }
+    const handleEditPost = (postId) => {
+        dispatch(updateCommentModal("edit-post"))
+        dispatch(updateEditPost(postId))
+    }
+    const handleDeletePost = (postId) => {
+        dispatch(updateCommentModal("delete-post"))
+        dispatch(updateEditPost(postId))
     }
     const firstName = user.name.split(" ")[0];
     return (
@@ -180,6 +201,7 @@ const Post = ({setLoading,loading}) => {
                         !loading ? allPosts.map((post) => (
                             <div className="post" key={post._id}>
                                 <div className="post-header">
+                                    <div className="post-header-right">
                                     <Link to= {`/profile/${post.author._id}`}>
                                         <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
                                     </Link>
@@ -191,6 +213,20 @@ const Post = ({setLoading,loading}) => {
                                             {timeCalculator(post.date)}
                                         </div>
                                     </div>
+                                    </div>
+                                    {post.author._id === user._id &&
+                                        <>
+                                            <div className="edit-post-icon" onClick={() => handlePostDropDown(post._id)}>
+                                                <Icon path={mdiDotsHorizontal} size={1} color={"rgb(57,115,234)"}/>
+                                                {postDropdown[post._id] &&
+                                                 <div className="edit-dropdown">
+                                                    <div className="edit-comment" onClick={() => handleEditPost(post._id)}>Edit</div>
+                                                    <div className="delete-comment" onClick={(() => handleDeletePost(post._id))}>Delete</div>
+                                             </div>
+                                             }
+                                            </div>
+                                        </>
+                                    }
                                 </div>
                                 <div className="post-content">
                                     {post.text}
@@ -296,7 +332,7 @@ const Post = ({setLoading,loading}) => {
                         (
                             Array.from({ length: 3 }).map((_, index) => (
                                 <div className="post" key={index}>
-                                <div className="post-header">
+                                <div className="post-header-right">
                                     <Skeleton width={40} height={40} circle={true} />
                                     <div className="actual-post-name">
                                         <Skeleton width={100} />
