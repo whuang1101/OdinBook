@@ -38,7 +38,6 @@ const ProfilePosts = ({loading,setLoading, newInfo}) => {
             }
         }
         ).then(data =>  {
-            console.log(data)
             const updatedPosts = data.map(post => ({
                 ...post,
                 likes: post.likes.length,

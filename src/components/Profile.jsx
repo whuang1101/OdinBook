@@ -19,7 +19,6 @@ const Profile = ({setUser}) => {
         fetch(`${host}/users/${id}`).then(
             response => {
                 if(response.ok){
-                    console.log("User retrieved")
                     return response.json()
                 }
                 else {
@@ -30,7 +29,7 @@ const Profile = ({setUser}) => {
             dispatch(updateProfile(data))})
         .catch(err => console.error(err));
             dispatch(updatePage("profile"))
-    },[host,id])
+    },[])
     const [loading, setLoading] =useState(true)
     const [newInfo, setNewInfo] = useState(false);
 

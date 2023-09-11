@@ -81,8 +81,13 @@
     gap: .2em;
 }
 
-.edit-profile:hover, .edit-details:hover, .add-bio:hover {
+.edit-profile:hover, .edit-details:hover, .add-bio:hover,.edit-bio:hover, .bio-save:hover, .bio-cancel:hover {
     background-color: rgb(205, 206, 207);
+}
+.studies-at {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
 }
 
 /*Start of the bottom section*/
@@ -126,7 +131,7 @@
     gap: 1em;
     align-items: center;
 }
-.edit-details, .add-bio {
+.edit-details, .add-bio, .edit-bio{
     background-color: rgb(228,230,234);
     border: none;
     font-size: 1em;
@@ -137,6 +142,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.bio-input {
+    background-color: rgb(240,242,245);
+    resize: none;
+    text-align: center;
+    padding: .5em;
+    border-radius: 1em;
+}
+.bio-input:focus {
+    background-color: white;
+
+}
+.write-bio {
+    display: flex;
+    flex-direction: column;
+    gap:.25em;
+}
+.bio-save-cancel {
+    display: flex;
+    justify-content: flex-end;
+    gap: .4em;
+}
+.remaining-characters {
+    display: flex;
+    justify-content: flex-end;
+    font-size: .9em;
+    color: rgb(114,115,119);
+}
+.bio-save, .bio-cancel {
+    background-color: rgb(228,230,234);
+    border: none;
+    font-size: .9em;
+    font-weight: 525;
+    padding: .75em;
+    border-radius: .2em;
 }
 
 /*Profile Post start*/
