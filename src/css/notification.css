@@ -1,0 +1,19 @@
+.notification-background {
+    position: fixed;
+    z-index: 3;
+    top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.notification-container {
+    background-color: white;
+    padding: 1em;
+    border-radius: 1em;
+    width: clamp(30%, 400px, 80%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 5px black;
+}

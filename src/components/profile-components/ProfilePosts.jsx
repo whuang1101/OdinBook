@@ -13,7 +13,7 @@ import { updateCommentModal } from "../../redux/commentModalSlice";
 import { updateComment } from "../../redux/editCommentSlice";
 import { updateEditPost } from "../../redux/editPostSlice";
 
-const ProfilePosts = ({loading,setLoading, newInfo}) => {
+const ProfilePosts = ({loading,setLoading, newInfo, setNotification}) => {
     const commentModal = useSelector(state => state.commentModal);
     const [commentLoading, setCommentLoading] = useState({}); 
     const [actualLoading,setActualLoading] = useState(false);
@@ -112,6 +112,18 @@ const ProfilePosts = ({loading,setLoading, newInfo}) => {
                         [postId]: "",
                       }));
                       setActualLoading(!actualLoading);
+                      const current = {
+                        status: true,
+                        content: "Comment Created Successfully"
+                        };
+                    setNotification(current);
+                        setTimeout(() => {
+                        const newStatus = {
+                            status: false,
+                            content: ""
+                        };
+                        setNotification(newStatus);
+                    }, 3000);
                 }
                 else{
                     console.log(response.status);

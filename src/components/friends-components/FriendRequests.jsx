@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
-const FriendRequests = () => {
+const FriendRequests = ({setNotification}) => {
     const [pendingRequests, setPendingRequests] = useState([]);
     const [incomingRequests, setIncomingRequests] = useState([]);
     const host = useSelector(state => state.host)
@@ -125,6 +125,18 @@ const FriendRequests = () => {
                 console.log("success")
                 const updatedRequests = incomingRequests.filter((item) => item._id !== postId);
                 setIncomingRequests(updatedRequests); 
+                const current = {
+                    status: true,
+                    content: "Friend Added Successfully!"
+                };
+                setNotification(current);
+                    setTimeout(() => {
+                    const newStatus = {
+                        status: false,
+                        content: ""
+                    };
+                    setNotification(newStatus);
+                }, 3000);
             }}
         )
     }

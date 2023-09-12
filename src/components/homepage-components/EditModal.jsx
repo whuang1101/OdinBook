@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { updateCommentModal } from "../../redux/commentModalSlice"
 import { updateComment } from "../../redux/editCommentSlice"
 import { updateEditPost } from "../../redux/editPostSlice"
-const EditModal = ({setLoading}) => {
+const EditModal = ({setLoading, setNotification}) => {
     const commentModal = useSelector(state => state.commentModal);
     const host = useSelector(state => state.host);
     const comment =  useSelector(state => state.editComment)
@@ -55,6 +55,22 @@ const EditModal = ({setLoading}) => {
         }).then(response => {
             if(response.ok){
                 console.log("hi")
+                dispatch(updateComment(""))
+                dispatch(updateEditPost(""))
+                dispatch(updateCommentModal(""));
+                setLoading(true)
+                const current = {
+                    status: true,
+                    content: "Comment Edited Successfully"
+                };
+                setNotification(current);
+                    setTimeout(() => {
+                    const newStatus = {
+                        status: false,
+                        content: ""
+                    };
+                    setNotification(newStatus);
+                }, 3000);
             }
             else {
                 console.log(response)
@@ -76,6 +92,22 @@ const EditModal = ({setLoading}) => {
             }).then(response => {
                 if(response.ok){
                     console.log("hi")
+                    dispatch(updateComment(""))
+                    dispatch(updateEditPost(""))
+                    dispatch(updateCommentModal(""));
+                    setLoading(true)
+                const current = {
+                        status: true,
+                        content: "Post Edited Successfully"
+                    };
+                    setNotification(current);
+                        setTimeout(() => {
+                        const newStatus = {
+                            status: false,
+                            content: ""
+                        };
+                        setNotification(newStatus);
+                    }, 3000);
                 }
                 else {
                     console.log(response)
@@ -84,10 +116,6 @@ const EditModal = ({setLoading}) => {
                 console.log(err)
             })
         }
-        dispatch(updateComment(""))
-        dispatch(updateEditPost(""))
-        dispatch(updateCommentModal(""));
-        setLoading(true)
     }
     const handleCancelDelete = () => {
         dispatch(updateCommentModal(""));
@@ -107,7 +135,18 @@ const EditModal = ({setLoading}) => {
             body: JSON.stringify(body)
         }).then(response => {
             if(response.ok){
-                console.log("Successfully Delete Comment")
+                const current = {
+                    status: true,
+                    content: "Comment Deleted Successfully"
+                };
+                setNotification(current);
+                    setTimeout(() => {
+                    const newStatus = {
+                        status: false,
+                        content: ""
+                    };
+                    setNotification(newStatus);
+                }, 3000);
             }
             else {
                 console.log(response)
@@ -132,7 +171,20 @@ const EditModal = ({setLoading}) => {
             body: JSON.stringify(body)
         }).then(response => {
             if(response.ok){
-                return response.json()
+                setLoading(true)
+                const current = {
+                    status: true,
+                    content: "Post Deleted Successfully"
+                };
+                setNotification(current);
+                    setTimeout(() => {
+                    const newStatus = {
+                        status: false,
+                        content: ""
+                    };
+                    setNotification(newStatus);
+                }, 3000);
+                return response.json();
             }
             else {
                 console.log(response.status)

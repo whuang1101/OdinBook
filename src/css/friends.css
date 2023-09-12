@@ -7,7 +7,7 @@
 .friend-toggle {
     display: flex;
     position: sticky;
-    top: 7vh;
+    top: 10vh;
     flex-direction: column;
 }
 .friend-display{
@@ -137,4 +137,22 @@ a:visited {color:black;}
 }
 .remove-friend:hover {
     background-color: rgb(189, 13, 13);
+}
+@media screen and (max-width:640px) {
+    .first-half {
+        display: none;
+    }
+    .suggested-friends, .pending-friends, .incoming-requests {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: .5em;
+    }
+}
+@media screen and (max-height:500px) {
+    .info-post {
+        flex-direction: column;
+    }
+    .friend-toggle {
+        top: 20vh;
+    }
 }

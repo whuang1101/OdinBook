@@ -9,22 +9,33 @@ import EditModal from "./homepage-components/EditModal"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updatePage } from "../redux/pageSlice"
+import Notification from "./Notification"
 
 const Homepage = ({setUser}) => {
     const [loading, setLoading] = useState(true);
     const [newInfo, setNewInfo] = useState(false);
+    const [notification, setNotification] = useState({
+        status: false,
+        content: ""
+    });
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(updatePage("home"))
+        setNotification({
+            status: false,
+            content: ""
+        })
     },[])
     return(
         <div className="home-background">
-            <EditModal setLoading={setLoading}/>
-            <PostModal newInfo={newInfo} setNewInfo={setNewInfo} setLoading={setLoading}/>
+            {notification.status &&
+                <Notification content={notification.content}/>}
+            <EditModal setLoading={setLoading} setNotification={setNotification}/>
+            <PostModal newInfo={newInfo} setNewInfo={setNewInfo} setLoading={setLoading} setNotification={setNotification}/>
             <Header setUser={setUser}/>
             <div className="bottom-screen">
                 <SmallProfile/>
-                <Post setLoading = {setLoading} loading={loading} newInfo={newInfo}/>
+                <Post setLoading = {setLoading} loading={loading} newInfo={newInfo} setNotification={setNotification}/>
                 <div className="friends-third">
                 </div>
             </div>

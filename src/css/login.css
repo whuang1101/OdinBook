@@ -118,6 +118,11 @@ a {
     src: url("../assets/facebook-logo-font/KlavikaMedium-TF.otf");
 }
 
+@media screen and (max-width:640px) {
+    .right-side{
+        border: none;
+    }
+}
 @media screen and (max-width: 850px) {
     .login-screen{
         flex-direction: column;
@@ -131,8 +136,10 @@ a {
         padding: 1em;
         align-items: initial;
         justify-content: initial;
+        border: none;
     }
     .login{
         height: fit-content;
     }
 }
+

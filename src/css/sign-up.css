@@ -9,7 +9,7 @@
     align-items: center;
 }
 .sign-up-modal {
-    width: clamp(40%,600px, 100%);
+    width: clamp(40%,600px, 98%);
     border: 1px solid white;
     background-color: white;
     display: flex;
@@ -63,4 +63,33 @@
 }
 .error {
     color: red;
+}
+
+@media screen and (max-width:640px) {
+    .sign-up-modal {
+        gap: 1em;
+    }
+    .sign-up-title-container {
+        padding: .2em;
+    }
+    .name-container, .password-container, .email-container, .live-job-container, .study-image-container {
+        gap: .1em;
+    }
+    .sign-up-form {
+        padding: .2em;
+        gap: 1em;
+    }
+    .first-name, .last-name, .sign-up-email, .password, .confirm-password, .live, .job, .study-sign-up {
+        padding: .5em;
+        font-size: .9em;
+        border-radius: .5em; 
+    }
+    .profile-picture{
+        border-radius: .5em;
+        padding: .2em;
+        font-size: .9em;
+    }
+    .error {
+        font-size: .8em;
+    }
 }

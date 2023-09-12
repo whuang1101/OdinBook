@@ -112,7 +112,7 @@
 }
 .info-section, .post-section {
     position: sticky;
-    top: 9vh;
+    top: 12vh;
     height: fit-content;
     border-radius: 1em;
 }
@@ -201,5 +201,26 @@
     }
     100% {
         background-color: rgb(125, 125, 125);
+    }
+}
+
+
+@media screen and (max-width:640px) {
+    .info-post {
+        flex-direction: column;
+    }
+    .info-section {
+        position: static;
+    }
+    .edit-profile {
+        display: none;
+    }
+    .info-bottom {
+        padding: 1em;
+    }
+}
+@media screen and (max-height:500px) {
+    .info-section, .post-section  {
+        top: 20vh;
     }
 }

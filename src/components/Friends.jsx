@@ -4,16 +4,20 @@ import Icon from '@mdi/react';
 import { mdiAccountArrowLeft, mdiAccountArrowLeftOutline, mdiAccountMultiple, mdiAccountMultipleOutline, mdiAccountPlus, mdiAccountPlusOutline } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
 import { updateFriendSelection } from "../redux/friendSelectSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updatePage } from "../redux/pageSlice";
 import FriendSuggestions from "./friends-components/FriendSuggestions";
 import FriendRequests from "./friends-components/FriendRequests";
 import AllFriends from "./friends-components/AllFriends";
-
+import Notification from "./Notification";
 
 const Friends = ({setUser}) => {
     const friendSelection = useSelector(state => state.friendSelection);
     const dispatch = useDispatch();
+    const [notification, setNotification] = useState({
+        status: false,
+        content: ""
+    });
     useEffect(() => 
     {
         dispatch(updatePage("friends"))
@@ -21,6 +25,8 @@ const Friends = ({setUser}) => {
     ,[])
     return (
         <div className="home-background">
+        {notification.status &&
+        <Notification content={notification.content}/>}
         <Header setUser={setUser}/>
         <div className="bottom-screen">
             <div className="first-half">
@@ -84,9 +90,9 @@ const Friends = ({setUser}) => {
             </div>
             </div>
             <div className="friend-display">
-                {friendSelection === "Friend Requests" && <FriendRequests/>}
+                {friendSelection === "Friend Requests" && <FriendRequests setNotification={setNotification}/>}
                 {friendSelection === "Friend Suggestions" && <FriendSuggestions/>}
-                {friendSelection === "All Friends" && <AllFriends/>}
+                {friendSelection === "All Friends" && <AllFriends setNotification={setNotification}/>}
             </div>
         </div>
     </div>

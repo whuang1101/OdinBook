@@ -62,7 +62,7 @@
     z-index: 3;
     background-color: white;
     border-radius: 1em;
-    width: clamp(30%,450px,100%);
+    width: clamp(30%,450px,95%);
     max-height: 60%;
 }
 .create-post-header {
@@ -301,4 +301,11 @@ position: relative;
 }
 .edit-post-icon:hover {
     background-color: rgb(240,242,245);
+}
+
+@media screen and (max-width:640px) {
+    .post-button {
+        font-size: .9em;
+    }
+    .
 }

@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { updateCommentModal } from "../../redux/commentModalSlice";
 import { updateComment } from "../../redux/editCommentSlice";
 import { updateEditPost } from "../../redux/editPostSlice";
-const Post = ({setLoading,loading, newInfo}) => {
+const Post = ({setLoading,loading, newInfo, setNotification}) => {
     const user = useSelector(state => state.user)
     const commentModal = useSelector(state => state.commentModal);
     const dispatch = useDispatch()
@@ -162,6 +162,18 @@ const Post = ({setLoading,loading, newInfo}) => {
                         [postId]: "",
                       }));
                       setActualLoading(!actualLoading);
+                        const current = {
+                            status: true,
+                            content: "Comment Created Successfully"
+                        };
+                        setNotification(current);
+                            setTimeout(() => {
+                            const newStatus = {
+                                status: false,
+                                content: ""
+                            };
+                            setNotification(newStatus);
+                        }, 3000);
                 }
                 else{
                     console.log(response.status);

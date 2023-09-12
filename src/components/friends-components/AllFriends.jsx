@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux"
-const AllFriends=  () => {
+const AllFriends=  ({setNotification}) => {
     
     const host = useSelector(state=> state.host);
     const user = useSelector(state=> state.user);
@@ -33,7 +33,26 @@ const AllFriends=  () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(body)
-        })
+        }).then(
+            response => {
+                if (response.ok){
+                    const updatedRequests = allFriends.filter((item) => item._id !== friendId);
+                    setAllFriends(updatedRequests);
+                    const current = {
+                        status: true,
+                        content: "Friend Removed Successfully"
+                    };
+                    setNotification(current);
+                        setTimeout(() => {
+                        const newStatus = {
+                            status: false,
+                            content: ""
+                        };
+                        setNotification(newStatus);
+                    }, 3000);
+                }
+            }
+        )
     }
     return(
         <>

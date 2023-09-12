@@ -2,9 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../redux/postSlice"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { updateAllPosts } from "../redux/allPostsSlice"
-import { useNavigate } from "react-router-dom"
-const PostModal = ({newInfo, setNewInfo, setLoading}) => {
+import Notification from "./Notification"
+const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
     const post = useSelector(state => state.post);
     const host = useSelector(state => state.host);
     const dispatch = useDispatch()
@@ -13,7 +12,6 @@ const PostModal = ({newInfo, setNewInfo, setLoading}) => {
     const characterLimit = 60;
     const [mouseDown, setMouseDown] = useState(false)
     const [postMouseDown, setPostMouseDown] = useState(false);
-    const navigate = useNavigate()
     
     // fetching from post api to add to backend
     const handlePostSubmit = (e) =>
@@ -31,7 +29,23 @@ const PostModal = ({newInfo, setNewInfo, setLoading}) => {
             body: JSON.stringify(body)
         }).then(response => {
             if(response.ok){
-                console.log("hi")
+                dispatch(updatePost(false));
+                setPostContent("")
+                setLoading(true); 
+                setNewInfo(!newInfo);    
+                const current = {
+                    status: true,
+                    content: "Post Created"
+                };
+        
+                setNotification(current);
+                    setTimeout(() => {
+                    const newStatus = {
+                        status: false,
+                        content: ""
+                    };
+                    setNotification(newStatus);
+                }, 3000);
             }
             else {
                 console.log(response)
@@ -44,7 +58,6 @@ const PostModal = ({newInfo, setNewInfo, setLoading}) => {
         setLoading(true); 
         setNewInfo(!newInfo);    
     }
-
     const handlePostContent = (e) => {
         setPostContent(e.target.value)
     }
