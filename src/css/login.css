@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 .login-page-background {
+    position: relative;
     display: flex;
     height: 100vh;
     flex-direction: column;

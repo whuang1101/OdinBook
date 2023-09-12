@@ -120,5 +120,21 @@ a:visited {color:black;}
 }
 
 .friend-name {
-    font-size: 2em;
+    font-size: 1.3em;
+}
+
+/*Remove friend*/
+.remove-friend {
+    font-size: 1.15em;
+    border-radius: .2em;
+    border: none;
+    width: 80%;
+    padding: .5em;
+    font-weight: 600;
+    color: white;
+    background-color: rgb(255, 0, 0);
+
+}
+.remove-friend:hover {
+    background-color: rgb(189, 13, 13);
 }

@@ -6,11 +6,17 @@ import SmallProfile from "./homepage-components/SmallProfile"
 import Post from "./homepage-components/Post"
 import PostModal from "./PostModal"
 import EditModal from "./homepage-components/EditModal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { updatePage } from "../redux/pageSlice"
 
 const Homepage = ({setUser}) => {
     const [loading, setLoading] = useState(true);
     const [newInfo, setNewInfo] = useState(false);
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(updatePage("home"))
+    },[])
     return(
         <div className="home-background">
             <EditModal setLoading={setLoading}/>

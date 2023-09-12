@@ -71,13 +71,12 @@ const FriendRequests = () => {
             console.log(err)
         })
     }
-    const handleCancelRequest = (recipientId) => {
+    const handleCancelRequest = (requestId, recipientId) => {
             const body = {
-                recipientId: recipientId,
-                senderId: user._id
+                recipientId: requestId,
             }
-            fetch(`${host}/friends/remove`,{
-                method: "POST",
+            fetch(`${host}/friends/cancel/request`,{
+                method: "DELETE",
                 headers: {
                     "Content-Type" : "application/json"
                 },
@@ -93,14 +92,14 @@ const FriendRequests = () => {
             ).then(() => {
                 let updatedList = [... pendingRequests];
                 updatedList = updatedList.map( item => {
-                    console.log(item._id, recipientId)
                     if (item.recipient._id === recipientId) {
                         return { ...item, isRequested: false };
                     } else {
                         return item;
                     }
                 })
-                console.log(updatedList);
+                const updatedRequests = incomingRequests.filter((item) => item._id !== requestId);
+                setIncomingRequests(updatedRequests); 
                 setPendingRequests(updatedList)
             }).catch((err) => {
                 console.log(err)
@@ -123,43 +122,14 @@ const FriendRequests = () => {
             response => 
             {if(response.ok)
             {
-                console.log("suceed")
+                console.log("success")
+                const updatedRequests = incomingRequests.filter((item) => item._id !== postId);
+                setIncomingRequests(updatedRequests); 
             }}
         )
     }
     return (
         <>
-        {pendingRequests.length !== 0 &&
-        <>
-        <h2>Pending Requests</h2>
-        <div className="pending-friends">
-         {pendingRequests && pendingRequests.length !== 0 && pendingRequests.map((request) => (
-                <div className="request-container" key={request.recipient._id}>
-                    <img src={request.recipient.image_url} alt="hey" className="friend-image"/>
-                    <div className="information-part">
-                        <div className="suggestion-name">{request.recipient.name}</div>
-                        {!request.isRequested ?
-                        <motion.button 
-                        whileHover= {{scale:1.1}}
-                        whileTap= {{scale:.9}}
-                        className="add-friend-button"
-                        onClick={() => {handleAddFriend(request.recipient._id)}}> 
-                            Add Friend
-                        </motion.button>
-                        :
-                        <motion.button
-                        whileHover={{scale: 1.1}}
-                        whileTap= {{scale:.9}} 
-                        className="cancel-request-button"
-                        onClick={() => {handleCancelRequest(request.recipient._id)}}>
-                        Cancel Request
-                        </motion.button>} 
-                    </div>
-                </div>
-            ))}
-        </div>
-        </>
-        }
         {incomingRequests.length !== 0 || !loading ?
         <>
         {incomingRequests.length !== 0 &&
@@ -183,6 +153,7 @@ const FriendRequests = () => {
                             whileHover= {{scale:1.1}}
                             whileTap= {{scale:.9}}
                             className="remove-request-button"
+                            onClick={() => {handleCancelRequest(request._id, request.recipient._id)}}
                             > 
                                 Cancel Request
                             </motion.button>
@@ -203,6 +174,37 @@ const FriendRequests = () => {
                     ))}
             </div>
         )
+        }
+        {pendingRequests.length !== 0 &&
+        <>
+        <h2>Pending Requests</h2>
+        <div className="pending-friends">
+         {pendingRequests && pendingRequests.length !== 0 && pendingRequests.map((request) => (
+                <div className="request-container" key={request.recipient._id}>
+                    <img src={request.recipient.image_url} alt="hey" className="friend-image"/>
+                    <div className="information-part">
+                        <div className="suggestion-name">{request.recipient.name}</div>
+                        {!request.isRequested ?
+                        <motion.button 
+                        whileHover= {{scale:1.1}}
+                        whileTap= {{scale:.9}}
+                        className="add-friend-button"
+                        onClick={() => {handleAddFriend(request.recipient._id)}}> 
+                            Add Friend
+                        </motion.button>
+                        :
+                        <motion.button
+                        whileHover={{scale: 1.1}}
+                        whileTap= {{scale:.9}} 
+                        className="cancel-request-button"
+                        onClick={() => {handleCancelRequest(request._id, request.recipient._id)}}>
+                        Cancel Request
+                        </motion.button>} 
+                    </div>
+                </div>
+            ))}
+        </div>
+        </>
         }
         </>
     )

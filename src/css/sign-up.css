@@ -1,0 +1,66 @@
+.sign-up-background {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255,255,255,.5);
+    z-index: 3;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sign-up-modal {
+    width: clamp(40%,600px, 100%);
+    border: 1px solid white;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: .5em;
+    box-shadow: 1px 1px 8px black;
+}
+.sign-up-title-container {
+    border-bottom: 1px solid rgb(131, 135, 140);
+    padding: 1em;
+}
+.sign-up-title {
+    font-weight: bold;
+    font-size: 2em;
+}
+.sign-up-form {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.easy {
+    color: rgb(131, 135, 140);
+}
+.name-container, .password-container, .email-container, .live-job-container, .study-image-container {
+    display: flex;
+    gap: 1em;
+}
+.first-name, .last-name, .sign-up-email, .password, .confirm-password, .live, .job, .study-sign-up {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: .3em;
+    font-size: 1.2em;
+    border-radius: .5em;
+    border: 1px solid black;    
+}
+.profile-picture{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: .5em;
+    padding: .3em;
+    font-size: 1.2em;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.error {
+    color: red;
+}

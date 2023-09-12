@@ -22,17 +22,34 @@ const AllFriends=  () => {
         }
       )
     },[])
+    const handleRemoveFriend = (friendId) => {
+        const body = {
+            friendId:friendId,
+            selfId: user._id,
+        }
+        fetch(`${host}/users/friend/remove`,{
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body)
+        })
+    }
     return(
         <>
          <div className="suggested-friends">
         {!loading ? allFriends.map((user) => (
-                <div className="user-container" key={user._id}>
-                    <img src={user.image_url} alt="hey" className="friend-image"/>
-                    <div className="information-part">
-                        <div className="friend-name">{user.name}</div>
-                    </div>
+            <div className="user-container" key={user._id}>
+                <img src={user.image_url} alt="hey" className="friend-image"/>
+                <div className="information-part">
+                    <div className="friend-name">{user.name}</div>
+                    <motion.button whileHover={{scale: 1.1}} whileTap={{scale: .9}} 
+                    className="remove-friend"
+                    onClick={() => {handleRemoveFriend(user._id)}}
+                    >Remove Friend</motion.button>
                 </div>
-            )): 
+            </div>
+        )): 
             
         (
             Array.from({ length: 8 }).map((_, index) => (

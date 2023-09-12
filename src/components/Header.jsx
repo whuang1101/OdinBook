@@ -1,15 +1,18 @@
 import "../css/header.css"
 import Icon from '@mdi/react';
-import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline, mdiHome, mdiHomeOutline } from '@mdi/js';
+import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline, mdiDoor, mdiDoorOpen, mdiHome, mdiHomeOutline } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
 import { updatePage } from "../redux/pageSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { updateFriendSelection } from "../redux/friendSelectSlice";
+import { useState } from "react";
+import { updateProfile } from "../redux/profileSlice";
 const Header = ({setUser}) => {
     const user = useSelector((state) => state.user);
     const page = useSelector((state) => state.page);
     const host = useSelector((state) => state.host);
+    const [dropDown, setDropDown] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleClick = (page) => {
@@ -27,6 +30,7 @@ const Header = ({setUser}) => {
         setUser(null)
         localStorage.setItem("userData", null);
         navigate("/login")
+        dispatch(updateProfile(null));
     }
     return (
         <div className="header">
@@ -87,8 +91,26 @@ const Header = ({setUser}) => {
                 </Link>
                 }
             </div>
-            <div className="profile-image" onClick={() => handleLogout()}>
-                <img src={user.image_url} alt={user.name} style={{height:"2em", width:"2em", borderRadius:"1em"}}/>
+            <div className="profile-image">
+                <motion.img
+                whileHover={{scale: 1.3}}
+                whileTap={{scale: .8}} src={user.image_url} alt={user.name} style={{height:"2em", width:"2em", borderRadius:"1em"}} onClick={() =>setDropDown(!dropDown)}/>
+                {dropDown &&
+                    <div className="profile-drop-down">
+                        <Link to={`/profile/${user._id}`} className="view-profile-image">
+                            <Icon path={mdiAccountOutline} size={1} color={"rgb(57,115,234)"}/>
+                            <div >
+                                View Profile
+                            </div>
+                            </Link>
+                        <div className="logout" onClick={() => handleLogout()}>
+                            <Icon path={mdiDoorOpen} size={1} color={"rgb(57,115,234)"}/>
+                        <div>
+                            Logout
+                        </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     )

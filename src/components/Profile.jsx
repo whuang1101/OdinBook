@@ -38,19 +38,19 @@ const Profile = ({setUser}) => {
         <>
             <Header setUser={setUser}/>
             {profile && 
-            <div className="profile-screen">
-            <EditModal setLoading={setLoading}/>
-                <PostModal newInfo={newInfo} setNewInfo={setNewInfo} setLoading={setLoading}/>
-                <ProfileHeader/>
-                <div className="info-bottom">
-                    <div className="info-container">
-                        <div className="info-post">
-                            <ProfileInfo/>
-                            <ProfilePosts  setLoading = {setLoading} loading={loading} newInfo={newInfo}/>
+                <div className="profile-screen">
+                <EditModal setLoading={setLoading}/>
+                    <PostModal newInfo={newInfo} setNewInfo={setNewInfo} setLoading={setLoading}/>
+                    <ProfileHeader/>
+                    <div className="info-bottom">
+                        <div className="info-container">
+                            <div className="info-post">
+                                <ProfileInfo/>
+                                <ProfilePosts  setLoading = {setLoading} loading={loading} newInfo={newInfo}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             }
             
         </>
