@@ -307,5 +307,8 @@ position: relative;
     .post-button {
         font-size: .9em;
     }
-    .
+    .edit-dropdown {
+    width: 5em;
+    padding: 0;
+    }
 }

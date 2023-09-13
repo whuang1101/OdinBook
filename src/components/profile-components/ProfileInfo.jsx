@@ -103,7 +103,7 @@ const ProfileInfo = () => {
     return (
         <div className="info-section">
             <h3>Intro</h3>
-            {profile.bio.length !== 0 ? 
+            { profile && profile.bio && profile.bio.length !== 0 ? 
             !bioOpen &&
             <>
              <div className="profile-bio">{profile.bio}</div>

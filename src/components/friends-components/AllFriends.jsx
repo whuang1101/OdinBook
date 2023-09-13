@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom";
 const AllFriends=  ({setNotification}) => {
     
     const host = useSelector(state=> state.host);
@@ -58,16 +59,17 @@ const AllFriends=  ({setNotification}) => {
         <>
          <div className="suggested-friends">
         {!loading ? allFriends.map((user) => (
-            <div className="user-container" key={user._id}>
+            <Link to= {`/profile/${user._id}`} className="user-container" key={user._id}>
                 <img src={user.image_url} alt="hey" className="friend-image"/>
                 <div className="information-part">
                     <div className="friend-name">{user.name}</div>
                     <motion.button whileHover={{scale: 1.1}} whileTap={{scale: .9}} 
                     className="remove-friend"
-                    onClick={() => {handleRemoveFriend(user._id)}}
+                    onClick={(e) =>  {e.preventDefault();
+                        {handleRemoveFriend(user._id)}}}
                     >Remove Friend</motion.button>
                 </div>
-            </div>
+            </Link>
         )): 
             
         (

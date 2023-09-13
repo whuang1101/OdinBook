@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const FriendRequests = ({setNotification}) => {
     const [pendingRequests, setPendingRequests] = useState([]);
     const [incomingRequests, setIncomingRequests] = useState([]);
@@ -150,9 +151,9 @@ const FriendRequests = ({setNotification}) => {
             <div className="incoming-requests">
             {incomingRequests && incomingRequests.map((request) => (
                     <div className="request-container" key={request.sender._id}>
-                        <img src={request.sender.image_url} alt="hey" className="friend-image"/>
+                        <Link to ={`/profile/${user._id}`}><img src={request.sender.image_url} alt="hey" className="friend-image"/></Link>
                         <div className="information-part">
-                            <div className="suggestion-name">{request.sender.name}</div>
+                            <Link to ={`/profile/${user._id}`} className="suggestion-name">{request.sender.name}</Link>
                             <motion.button 
                             whileHover= {{scale:1.1}}
                             whileTap= {{scale:.9}}
@@ -193,9 +194,9 @@ const FriendRequests = ({setNotification}) => {
         <div className="pending-friends">
          {pendingRequests && pendingRequests.length !== 0 && pendingRequests.map((request) => (
                 <div className="request-container" key={request.recipient._id}>
-                    <img src={request.recipient.image_url} alt="hey" className="friend-image"/>
+                    <Link to ={`/profile/${user._id}`}><img src={request.recipient.image_url} alt="hey" className="friend-image"/></Link>
                     <div className="information-part">
-                        <div className="suggestion-name">{request.recipient.name}</div>
+                        <Link to={`/profile/${user._id}`} className="suggestion-name">{request.recipient.name}</Link>
                         {!request.isRequested ?
                         <motion.button 
                         whileHover= {{scale:1.1}}

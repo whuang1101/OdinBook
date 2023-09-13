@@ -51,7 +51,7 @@ a:visited {color:black;}
 /*Friend Suggestions*/
 .suggested-friends, .pending-friends, .incoming-requests {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5,1fr);
     gap: 1em;
 }
 .friend-display {
@@ -65,7 +65,8 @@ a:visited {color:black;}
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    min-height: 25em;
+    min-height: 15em;
+    font-size: .8em; 
     box-shadow: 1px 1px 10px black;
 }
 .friend-image {
@@ -121,6 +122,7 @@ a:visited {color:black;}
 
 .friend-name {
     font-size: 1.3em;
+    text-wrap: break-word;
 }
 
 /*Remove friend*/
@@ -149,9 +151,6 @@ a:visited {color:black;}
     }
 }
 @media screen and (max-height:500px) {
-    .info-post {
-        flex-direction: column;
-    }
     .friend-toggle {
         top: 20vh;
     }

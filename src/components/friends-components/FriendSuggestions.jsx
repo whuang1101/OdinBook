@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 const FriendSuggestions = () => {
     const host = useSelector(state =>  state.host)
     const user = useSelector(state => state.user)
@@ -100,9 +101,9 @@ const FriendSuggestions = () => {
             <div className="suggested-friends">
             {!loading ? allSuggestions.map((user) => (
                 <div className="user-container" key={user._id}>
-                    <img src={user.image_url} alt="hey" className="friend-image"/>
+                    <Link to ={`/profile/${user._id}`}><img src={user.image_url} alt="hey" className="friend-image"/></Link>
                     <div className="information-part">
-                        <div className="suggestion-name">{user.name}</div>
+                        <Link to ={`/profile/${user._id}`} className="suggestion-name">{user.name}</Link>
                         {!user.isRequested ?
                         <motion.button 
                         whileHover= {{scale:1.1}}
