@@ -29,9 +29,10 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
             body: JSON.stringify(body)
         }).then(response => {
             if(response.ok){
+                setLoading(true); 
                 dispatch(updatePost(false));
                 setPostContent("")
-                setLoading(true); 
+                console.log("set to true")
                 setNewInfo(!newInfo);    
                 console.log("ok")
                 const current = {
@@ -46,7 +47,7 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                         content: ""
                     };
                     setNotification(newStatus);
-                }, 2000);
+                }, 3000);
             }
             else {
                 console.log(response)

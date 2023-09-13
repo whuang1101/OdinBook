@@ -51,8 +51,10 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             .map(post => post._id);
             //
             setLikedPosts(likedPostIds);
-            setLoading(false)
-
+            console.log("set to false ")
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000);
             const updatedCommentLoading = { ...commentLoading };
             for (const postId in updatedCommentLoading) {
             updatedCommentLoading[postId] = false;

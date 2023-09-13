@@ -21,6 +21,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification}) => {
     const {id} = useParams();
     const [likedPosts, setLikedPosts] = useState(false)
     const allPosts = useSelector(state => state.allPosts)
+    const post = useSelector(state => state.post)
     const host = useSelector(state => state.host)
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
@@ -54,7 +55,11 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification}) => {
             .map(post => post._id);
             //
             setLikedPosts(likedPostIds);
-            setLoading(false)
+            console.log("set to false ")
+
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000);
 
             const updatedCommentLoading = { ...commentLoading };
             for (const postId in updatedCommentLoading) {

@@ -46,6 +46,34 @@ const Login = ({setUser}) => {
               }
         )
     }
+    const demoLogin = (e) => {
+        e.preventDefault();
+        fetch(`${host}/auth/local`,{
+            method:"POST",
+            credentials:"include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({username:"johndoe1@gmail.com", password: "Abcd1234"})
+        }).then(
+            response => {
+                if(response.ok) {
+                    return response.json();
+                }
+            }
+        ).then (
+            data => {
+                if(data !== undefined){
+                dispatch(updateUser(data));
+                setUser(true);
+                localStorage.setItem("userData", JSON.stringify(data));
+            }
+            else{
+                setError(true);
+            }
+              }
+        )
+    }
     const handleLoginCredentials = (e, name) => {
         if(name === "email"){
             const credentials = {...loginCredentials, 
@@ -85,6 +113,8 @@ const Login = ({setUser}) => {
                         <div className="sign-up">
                             <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}} className="sign-up-button"
                             onClick={() => setSignUpModal(true)}>Create an Account</motion.button>
+                            <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}} className="sign-up-button"
+                            onClick={(e) => demoLogin(e)}>Try a Demo Account</motion.button>
                         </div>
                     </div>
                     
