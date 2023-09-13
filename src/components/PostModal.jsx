@@ -33,6 +33,7 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                 setPostContent("")
                 setLoading(true); 
                 setNewInfo(!newInfo);    
+                console.log("ok")
                 const current = {
                     status: true,
                     content: "Post Created"
@@ -45,7 +46,7 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                         content: ""
                     };
                     setNotification(newStatus);
-                }, 3000);
+                }, 2000);
             }
             else {
                 console.log(response)

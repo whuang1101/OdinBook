@@ -217,8 +217,8 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification}) => {
                 }
                 
                 {/* Post modal/ background is on PostModal.jsx */}
-                {
-                        !loading ? allPosts.map((post) => (
+                {!(user.friends_list.includes(id) || user._id === id) ? <h3>Friend this user to view their recent posts</h3>:
+                   !loading ? allPosts.map((post) => (
                             <div className="post" key={post._id}>
                                 <div className="post-header">
                                     <div className="post-header-right">

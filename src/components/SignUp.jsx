@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../css/sign-up.css"
 import { useSelector } from "react-redux";
-const SignUp = ({setSignUpModal}) => {
+const SignUp = ({setSignUpModal, setNotification}) => {
     const [newUser, setNewUser] = useState({
         first_name: "",
         last_name: "",
@@ -109,7 +109,20 @@ const SignUp = ({setSignUpModal}) => {
           });
       
           if (response.ok) {
-            console.log("user posted")    
+            setSignUpModal(false);
+            const current = {
+                status: true,
+                content: "User Created use credentials to log in."
+            };
+    
+            setNotification(current);
+                setTimeout(() => {
+                const newStatus = {
+                    status: false,
+                    content: ""
+                };
+                setNotification(newStatus);
+            }, 3000);   
         } else {
             console.log("no")
           }
@@ -118,7 +131,7 @@ const SignUp = ({setSignUpModal}) => {
         }
     };
     const onEmailBlur = () => {
-        fetch(`${host}/users/email/${newUser.email}`)
+        fetch(`${host}/users/email/${newUser.email.toLowerCase()}`)
         .then(response => {
             if(response.ok){
                 return response.json()

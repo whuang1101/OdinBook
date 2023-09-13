@@ -1,7 +1,7 @@
 import Header from "./Header"
 import "../css/friends.css"
 import Icon from '@mdi/react';
-import { mdiAccountArrowLeft, mdiAccountArrowLeftOutline, mdiAccountMultiple, mdiAccountMultipleOutline, mdiAccountPlus, mdiAccountPlusOutline } from '@mdi/js';
+import { mdiAccountArrowLeft, mdiAccountArrowLeftOutline, mdiAccountMultiple, mdiAccountMultipleOutline, mdiAccountPlus, mdiAccountPlusOutline, mdiAlphaXBox, mdiAlphaXBoxOutline, mdiMicrosoftXboxControllerMenu } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
 import { updateFriendSelection } from "../redux/friendSelectSlice";
 import { useEffect, useState } from "react";
@@ -23,6 +23,19 @@ const Friends = ({setUser}) => {
         dispatch(updatePage("friends"))
     }
     ,[])
+    const handleFriendDropDown = () => {
+        console.log("hi")
+        const firstHalf = document.querySelector(".first-half");
+        firstHalf.classList.add("present");
+        const friendDisplay =  document.querySelector(".friend-display");
+        friendDisplay.classList.add("hide");
+    }
+    const handleFriendClose = () => {
+        const firstHalf = document.querySelector(".first-half");
+        firstHalf.classList.remove("present");
+        const friendDisplay =  document.querySelector(".friend-display");
+        friendDisplay.classList.remove("hide");
+    }
     return (
         <div className="home-background">
         {notification.status &&
@@ -31,6 +44,8 @@ const Friends = ({setUser}) => {
         <div className="bottom-screen">
             <div className="first-half">
             <div className="friend-toggle">
+                <Icon path={mdiAlphaXBoxOutline} size={1} className="close-icon" onClick= {() => handleFriendClose()}/>
+
                 <h1 className="friend-title">Friends</h1>
                 {friendSelection === "Friend Requests" ?
                 <div className="friend-requests focus">
@@ -41,7 +56,7 @@ const Friends = ({setUser}) => {
                         Friend Requests
                     </div>
                 </div> :
-                <div className="friend-requests" onClick={() => dispatch(updateFriendSelection("Friend Requests"))}>
+                <div className="friend-requests" onClick={() => {dispatch(updateFriendSelection("Friend Requests")), handleFriendClose()}}>
                     <div className="icon-outline">
                         <Icon path={mdiAccountArrowLeftOutline} size={1} />
                     </div>
@@ -59,7 +74,8 @@ const Friends = ({setUser}) => {
                         Friend Suggestions
                     </div>
                 </div>:
-                <div className="friend-suggestions" onClick={() => dispatch(updateFriendSelection("Friend Suggestions"))}>
+                <div className="friend-suggestions" onClick={() => {dispatch(updateFriendSelection("Friend Suggestions")),
+                handleFriendClose()}}>
                 <div className="icon-outline">
                     <Icon path={mdiAccountPlusOutline} size={1} />
                 </div>
@@ -77,7 +93,7 @@ const Friends = ({setUser}) => {
                         All Friends
                     </div>
                 </div>:
-                <div className="all-friends" onClick={() => dispatch(updateFriendSelection("All Friends"))}>
+                <div className="all-friends" onClick={() => {dispatch(updateFriendSelection("All Friends")), handleFriendClose()}}>
                 <div className="icon-outline">
                     <Icon path={mdiAccountMultipleOutline} size={1} />
                 </div>
@@ -90,6 +106,7 @@ const Friends = ({setUser}) => {
             </div>
             </div>
             <div className="friend-display">
+                <Icon path={mdiMicrosoftXboxControllerMenu} size={1.5} className="friends-dropdown" onClick = {() => handleFriendDropDown()}/>
                 {friendSelection === "Friend Requests" && <FriendRequests setNotification={setNotification}/>}
                 {friendSelection === "Friend Suggestions" && <FriendSuggestions/>}
                 {friendSelection === "All Friends" && <AllFriends setNotification={setNotification}/>}

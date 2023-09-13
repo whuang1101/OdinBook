@@ -57,6 +57,8 @@ const AllFriends=  ({setNotification}) => {
     }
     return(
         <>
+        {allFriends.length === 0 ? !loading &&   <h4>Go add some friends on friend suggestions</h4>:
+        <h2>All Friends</h2>}
          <div className="suggested-friends">
         {!loading ? allFriends.map((user) => (
             <Link to= {`/profile/${user._id}`} className="user-container" key={user._id}>
@@ -75,7 +77,7 @@ const AllFriends=  ({setNotification}) => {
         (
             Array.from({ length: 8 }).map((_, index) => (
             
-                <div className="user-container" key={index}>
+                <div className="user-container-skeleton" key={index}>
                     <div className="friend-image">
                         <Skeleton height={"100%"} borderRadius={"1em"}/>
                     </div>

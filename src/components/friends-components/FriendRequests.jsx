@@ -179,7 +179,7 @@ const FriendRequests = ({setNotification}) => {
             <div className="incoming-requests">
                 {Array.from({ length: 8 }).map((_, index) => (
                 
-                    <div className="user-container" key={index}>
+                    <div className="user-container-skeleton" key={index}>
                         <div className="friend-image">
                             <Skeleton height={"100%"} borderRadius={"1em"}/>
                         </div>
@@ -194,9 +194,9 @@ const FriendRequests = ({setNotification}) => {
         <div className="pending-friends">
          {pendingRequests && pendingRequests.length !== 0 && pendingRequests.map((request) => (
                 <div className="request-container" key={request.recipient._id}>
-                    <Link to ={`/profile/${user._id}`}><img src={request.recipient.image_url} alt="hey" className="friend-image"/></Link>
+                    <Link to ={`/profile/${request.recipient._id}`}><img src={request.recipient.image_url} alt="hey" className="friend-image"/></Link>
                     <div className="information-part">
-                        <Link to={`/profile/${user._id}`} className="suggestion-name">{request.recipient.name}</Link>
+                        <Link to={`/profile/${request.recipient._id}`} className="suggestion-name">{request.recipient.name}</Link>
                         {!request.isRequested ?
                         <motion.button 
                         whileHover= {{scale:1.1}}
@@ -218,6 +218,9 @@ const FriendRequests = ({setNotification}) => {
             ))}
         </div>
         </>
+        }
+        {pendingRequests.length === 0 && incomingRequests.length === 0 && !loading &&  
+        <h4>You don't currently have any pending or incoming requests. Go to Friends Suggestions to add some!</h4>
         }
         </>
     )

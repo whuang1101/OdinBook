@@ -1,4 +1,4 @@
-.profile-third, .friends-third{
+.profile-third, .sponsored-third{
     flex: 1;
     min-height: 93vh;
     padding-top: 2em;
@@ -50,7 +50,12 @@
 }
 
 @media screen and (max-width:640px) {
-    .profile-third, .friends-third{
+    .profile-third, .sponsored-third{
         display: none;
+    }
+}
+@media screen and (max-height:500px) {
+    .small-profile, .sponsored-content{
+        top: 20%;
     }
 }

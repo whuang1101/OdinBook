@@ -4,6 +4,12 @@
     background-color: white;
     box-shadow: 1px 1px 5px rgb(195, 193, 193);
 }
+.close-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+}
 .friend-toggle {
     display: flex;
     position: sticky;
@@ -51,7 +57,7 @@ a:visited {color:black;}
 /*Friend Suggestions*/
 .suggested-friends, .pending-friends, .incoming-requests {
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 1em;
 }
 .friend-display {
@@ -60,18 +66,29 @@ a:visited {color:black;}
     flex-wrap: wrap;
     padding: 2em;
     gap: 1em;
+    position: relative;
+}
+.friends-dropdown {
+    display: none;
 }
 .user-container, .request-container {
     display: flex;
     flex-direction: column;
     border-radius: 1em;
-    min-height: 15em;
     font-size: .8em; 
     box-shadow: 1px 1px 10px black;
 }
+.user-container-skeleton {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    font-size: .8em; 
+    box-shadow: 1px 1px 10px black;
+    min-height: 20em;
+}
 .friend-image {
+    max-height: 20em;
     width: 100%;
-    height: 100%;
     border-radius: 1em 1em 0em 0em;
     flex: 2;
 }
@@ -141,14 +158,38 @@ a:visited {color:black;}
     background-color: rgb(189, 13, 13);
 }
 @media screen and (max-width:640px) {
+    .present {
+        display: block !important;
+    }
+    .friends-dropdown{
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     .first-half {
         display: none;
     }
     .suggested-friends, .pending-friends, .incoming-requests {
         display: grid;
         grid-template-columns: repeat(2,1fr);
-        gap: .5em;
+        gap: 1em;
     }
+    .hide {
+        display: none !important;
+    }
+    .close-icon{
+        display: block !important;
+    }
+}
+@media screen and (min-width:640px) and (max-width: 990px) {
+    .suggested-friends, .pending-friends, .incoming-requests {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 1em;
+        
+    }
+
 }
 @media screen and (max-height:500px) {
     .friend-toggle {
