@@ -84,7 +84,11 @@ const Router = () => {
     {
       path: "/profile/:id",
       element: user ? <Profile setUser ={setUser}/> : <Navigate to="/login" />,
-    }
+    },
+    {
+      path: "*",
+      element: <Navigate to="/" />,
+    },
   ]);
 
   return (
