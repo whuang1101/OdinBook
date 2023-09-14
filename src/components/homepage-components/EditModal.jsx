@@ -176,6 +176,10 @@ const EditModal = ({setLoading, setNotification}) => {
                     status: true,
                     content: "Post Deleted Successfully"
                 };
+                dispatch(updateCommentModal(""));
+                dispatch(updateComment(""));
+                dispatch(updateEditPost(""));
+                setLoading(true);
                 setNotification(current);
                     setTimeout(() => {
                     const newStatus = {
@@ -192,10 +196,6 @@ const EditModal = ({setLoading, setNotification}) => {
         }).catch(err => {
             console.log(err)
         })
-        dispatch(updateCommentModal(""));
-        dispatch(updateComment(""))
-        dispatch(updateEditPost(""))
-        setLoading(true)
     }
     const handlePostContent = (e) => {
         setPostContent(e.target.value)

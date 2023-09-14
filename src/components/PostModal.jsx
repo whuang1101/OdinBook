@@ -43,6 +43,10 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                     content: "Post Created"
                 };
                 setNotification(current);
+                setPostContent("")
+                setLoading(true); 
+                setNewInfo(!newInfo);  
+                dispatch(updatePost(false));
                     setTimeout(() => {
                     const newStatus = {
                         status: false,
@@ -51,19 +55,13 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                     setNotification(newStatus);
                     setPostContent("")
                 }, 2000);
-                dispatch(updatePost(false));
-                setNewInfo(!newInfo);    
             }
             else {
                 console.log(response)
             }
         }).catch(err => {
             console.log(err)
-        })
-        dispatch(updatePost(false));
-        setPostContent("")
-        setLoading(true); 
-        setNewInfo(!newInfo);    
+        })  
     }
     const handlePostContent = (e) => {
         setPostContent(e.target.value)

@@ -63,7 +63,6 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
         })
     },[actualLoading,commentModal, newInfo])
     const handlePostDropDown = (postId) => {
-        console.log("clicked")
         setPostDropDown((previous) => ({
             ...previous,
             [postId]: !previous[postId]
@@ -81,8 +80,8 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             },
             body: JSON.stringify(body)
         }).then(response => 
-            {if (response.ok){
-                console.log("nice")
+            {if (!response.ok){
+                console.log("bad")
             }}
         )
         setLikedPosts(prevLikedPosts => [...prevLikedPosts, postId]);
@@ -110,8 +109,8 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             },
             body: JSON.stringify(body)
         }).then(response => 
-            {if (response.ok){
-                console.log("nice")
+            {if (!response.ok){
+                console.log("bad")
             }}
         )
         setLikedPosts(likedPosts.filter(id => id !== postId));
@@ -132,7 +131,7 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
         [postId]: event.target.value,
       }));
       if(commentLoading[postId] === undefined)
-      {    console.log("hi")
+      { 
         setCommentLoading((prevCommentLoading) => ({
         ...prevCommentLoading,
         [postId]: false,

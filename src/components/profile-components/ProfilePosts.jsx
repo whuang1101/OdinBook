@@ -30,7 +30,6 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
     const [postDropdown, setPostDropDown] = useState({});
     // Making sure dropdown works for all posts so they can pick edit or delete
     useEffect(()=> {
-        console.log("rerender");
         fetch(`${host}/posts/self/${id}`).then( response =>
            { if(response.ok){
                 return response.json()
@@ -40,7 +39,6 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             }
         }
         ).then(data =>  {
-            console.log(data);
             const updatedPosts = data.map(post => ({
                 ...post,
                 likes: post.likes.length,
@@ -59,7 +57,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             setLikedPosts(likedPostIds);
             setTimeout(() => {
                 setLoading(false)
-            }, 1000);
+            }, 2000);
 
             const updatedCommentLoading = { ...commentLoading };
             for (const postId in updatedCommentLoading) {
@@ -68,9 +66,8 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             // Set the commentLoading state to the updated object with all values set to false.
             setCommentLoading(updatedCommentLoading);
         })
-    },[actualLoading,commentModal, id, profileEdit, post])
+    },[actualLoading,commentModal,newInfo])
     const handlePostDropDown = (postId) => {
-        console.log("clicked")
         setPostDropDown((previous) => ({
             ...previous,
             [postId]: !previous[postId]
@@ -148,8 +145,8 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             },
             body: JSON.stringify(body)
         }).then(response => 
-            {if (response.ok){
-                console.log("nice")
+            {if (!response.ok){
+                console.log("response failed")
             }}
         )
         setLikedPosts(prevLikedPosts => [...prevLikedPosts, postId]);
@@ -171,7 +168,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
         [postId]: event.target.value,
       }));
       if(commentLoading[postId] === undefined)
-      {    console.log("hi")
+      {  
         setCommentLoading((prevCommentLoading) => ({
         ...prevCommentLoading,
         [postId]: false,
@@ -190,8 +187,8 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             },
             body: JSON.stringify(body)
         }).then(response => 
-            {if (response.ok){
-                console.log("nice")
+            {if (!response.ok){
+                console.log("failed")
             }}
         )
         setLikedPosts(likedPosts.filter(id => id !== postId));
