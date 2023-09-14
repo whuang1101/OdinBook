@@ -30,6 +30,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
     const [postDropdown, setPostDropDown] = useState({});
     // Making sure dropdown works for all posts so they can pick edit or delete
     useEffect(()=> {
+        console.log("rerender");
         fetch(`${host}/posts/self/${id}`).then( response =>
            { if(response.ok){
                 return response.json()
@@ -39,6 +40,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             }
         }
         ).then(data =>  {
+            console.log(data);
             const updatedPosts = data.map(post => ({
                 ...post,
                 likes: post.likes.length,
@@ -66,7 +68,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             // Set the commentLoading state to the updated object with all values set to false.
             setCommentLoading(updatedCommentLoading);
         })
-    },[actualLoading,commentModal, id, profileEdit,post])
+    },[actualLoading,commentModal, id, profileEdit, newInfo])
     const handlePostDropDown = (postId) => {
         console.log("clicked")
         setPostDropDown((previous) => ({
