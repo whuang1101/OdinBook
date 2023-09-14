@@ -27,7 +27,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
     const user = useSelector(state => state.user);
     const firstName = user.name.split(" ")[0];
     const [editDropDown,setEditDropDown] =  useState(false);
-    const [postDropdown, setPostDropDown] = useState({})
+    const [postDropdown, setPostDropDown] = useState({});
     // Making sure dropdown works for all posts so they can pick edit or delete
     useEffect(()=> {
         fetch(`${host}/posts/self/${id}`).then( response =>
@@ -66,7 +66,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             // Set the commentLoading state to the updated object with all values set to false.
             setCommentLoading(updatedCommentLoading);
         })
-    },[actualLoading,commentModal, newInfo, id, profileEdit])
+    },[actualLoading,commentModal, newInfo, id, profileEdit,post])
     const handlePostDropDown = (postId) => {
         console.log("clicked")
         setPostDropDown((previous) => ({
