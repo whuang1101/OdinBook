@@ -27,5 +27,30 @@
 <img width="381" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/66811df9-9926-4110-8eeb-3b6797b7b392">
 <img width="1494" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/6b78b954-76d0-4cfb-96c4-dd3dae5c198b">
 
+## Features
+- Local Authentication/ Make an account and sign in.
+- Password encrypted with bcryptjs.
+- Demo Account to login without making account.
+- Create edit, and delete posts.
+- Comment and like posts. 
+- View only friend's Posts on the timeline.
+- Send friend requests and accept to view their post history.
+- Profile page dispalying profile image, bio, and their most recent posts.
+- Fully responsive and available on all platforms, mobile, tablet, and laptop.
+- Loading Skeleton when posts are being created, edited or deleted.
+
+## Technologies
+- MERN(MongoDb, Express, React, Node) for full stack.
+- PassportJs and Bcryptjs to allow for local strategy authentication
+- React Router Dom for client-side routing.
+- All information is fetched using a REST API created and linked above.
+- Redux toolkit for React state managment.
+- Framer Motion to create better effects.
+- Faker module to create and populate my database with users.
+
+## Works
+- [Previous Project - Keep In Touch(Messenger Clone)](https://github.com/whuang1101/KeepInTouch#technologies)
+- Next Project - Hopefully work for you company :D
+
 
 
