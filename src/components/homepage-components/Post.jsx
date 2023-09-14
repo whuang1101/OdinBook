@@ -219,7 +219,8 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
                                     </Link>
                                     <div className="name-time">
                                         <Link to= {`/profile/${post.author._id}`} className="name">
-                                            {post.author.name}
+                                            {post.author.name} 
+                                            {post.edited && <span style={{fontSize: ".7em", opacity:".8"}}> (Edited)</span>}
                                         </Link>
                                         <div className="long-ago" tabIndex={0}>
                                             {timeCalculator(post.date)}

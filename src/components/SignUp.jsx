@@ -95,15 +95,15 @@ const SignUp = ({setSignUpModal, setNotification}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData();
-        formData.append("image_url", newUser.image_url);
-        formData.append("first_name", newUser.first_name);
-        formData.append("last_name", newUser.last_name);
-        formData.append("email", newUser.email);
-        formData.append("password", newUser.password);
-        formData.append("confirm_password", newUser.confirm_password);
-        formData.append("live", newUser.live);
-        formData.append("job", newUser.job);
-        formData.append("studies", newUser.studies);
+        formData.append("image_url", newUser.image_url.trim());
+        formData.append("first_name", newUser.first_name.trim());
+        formData.append("last_name", newUser.last_name.trim());
+        formData.append("email", newUser.email.trim());
+        formData.append("password", newUser.password.trim());
+        formData.append("confirm_password", newUser.confirm_password.trim());
+        formData.append("live", newUser.live.trim());
+        formData.append("job", newUser.job.trim());
+        formData.append("studies", newUser.studies.trim());
       
         try {
           const response = await fetch(`${host}/users/newUser`, {
