@@ -66,7 +66,7 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
             // Set the commentLoading state to the updated object with all values set to false.
             setCommentLoading(updatedCommentLoading);
         })
-    },[actualLoading,commentModal, newInfo, id, profileEdit,post])
+    },[actualLoading,commentModal, id, profileEdit,post])
     const handlePostDropDown = (postId) => {
         console.log("clicked")
         setPostDropDown((previous) => ({
