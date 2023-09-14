@@ -21,7 +21,7 @@ const Profile = ({setUser}) => {
     const dispatch = useDispatch();
     const [profileEdit, setProfileEdit] = useState(false);
     const post = useSelector(state => state.post);
-
+    const [newInfo, setNewInfo] = useState(false);
     useEffect(()=> {
         fetch(`${host}/users/${id}`).then(
             response => {
@@ -43,7 +43,6 @@ const Profile = ({setUser}) => {
             dispatch(updatePage("profile"))
     },[id, profileEdit,newInfo,post])
     const [loading, setLoading] =useState(true)
-    const [newInfo, setNewInfo] = useState(false);
     const [notification, setNotification] = useState({
         status: false,
         content: ""
