@@ -102,16 +102,16 @@ const ProfileInfo = () => {
     }
     return (
         <div className="info-section">
-            <h3>Intro</h3>
+            <h3 tabIndex={0}>Intro</h3>
             { profile && profile.bio && profile.bio.length !== 0 ? 
             !bioOpen &&
             <>
-             <div className="profile-bio">{profile.bio}</div>
+             <div className="profile-bio" tabIndex={0}>{profile.bio}</div>
              {user._id === profile._id &&
                 <button className="edit-bio" onClick={() => setBioOpen(true)}>
-                        <div className="edit">
-                            Edit Bio
-                        </div>
+                    <div className="edit">
+                        Edit Bio
+                    </div>
                 </button>
             }
              </>
@@ -145,7 +145,7 @@ const ProfileInfo = () => {
             !detailsOpen ?
             <>
                 {profile.studies_at &&
-                    <div className="university">
+                    <div className="university" tabIndex={0}>
                         <Icon path={mdiSchool} size={1} color={"rgb(140,147,157)"}/>
                         <div className="university-info">
                             Studied at {profile.studies_at}
@@ -153,7 +153,7 @@ const ProfileInfo = () => {
                     </div>
                 }
                 {profile.lives &&
-                    <div className="lives">
+                    <div className="lives" tabIndex={0}>
                         <Icon path={mdiHome} size={1} color={"rgb(140,147,157)"}/>
                         <div className="live-info">
                             Lives in {profile.lives}
@@ -161,7 +161,7 @@ const ProfileInfo = () => {
                     </div>}
                 
                 {profile.job &&
-                    <div className="lives">
+                    <div className="lives" tabIndex={0}>
                         <Icon path={mdiBriefcase} size={1} color={"rgb(140,147,157)"}/>
                         <div className="live-info">
                             Works at {profile.job}

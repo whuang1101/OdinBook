@@ -1,0 +1,50 @@
+.edit-profile-background {
+    position: fixed;
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgb(255, 255, 255, .5);
+    z-index: 4;
+}
+.edit-profile-modal {
+    position: fixed;
+    top:50%;
+    left: 50%;
+    width: clamp(40%,500px, 95%);
+    background-color: white;
+    transform: translate(-50%,-50%);
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    border-radius: 1em;
+    box-shadow: 1px 1px 5px black;
+}
+.selected-profile-image {
+    width: 10em;
+    height: 10em;
+    border-radius: 100%;
+}
+.profile-picture-container, .name-change-container, .delete-button {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.save-image, .save-name  {
+    color: white;
+    background-color: rgb(57,117,234);
+    border: none;
+    font-weight: bold;
+    font-size: 1.3em;
+    border: none;    
+    padding: .5em;
+    border-radius: .2em;
+    border: 1px solid lightgrey;
+}
+.edit-name-container {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+a {
+    color: black;
+}

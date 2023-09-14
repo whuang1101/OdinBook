@@ -18,6 +18,11 @@ const Login = ({setUser}) => {
     const dispatch = useDispatch();
     const [signUpModal, setSignUpModal] = useState(false);
     const [error, setError] = useState(false)
+    const handleFacebookEnter = (e) => {
+        if(e.key === "Enter"){
+            window.open(`${host}/auth/facebook/callback`,"_self")
+        }
+    }
     const login = (e) => {
         e.preventDefault();
         fetch(`${host}/auth/local`,{
@@ -54,7 +59,7 @@ const Login = ({setUser}) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({username:"johndoe1@gmail.com", password: "Abcd1234"})
+            body: JSON.stringify({username:"joebob1@gmail.com", password: "Abcd1234"})
         }).then(
             response => {
                 if(response.ok) {
@@ -101,13 +106,13 @@ const Login = ({setUser}) => {
                 <div className="right-side">
                     <div className="login">
                         <form className="login-form" onSubmit={(e) => login(e)}>
-                            <input type="email" name="email" aria-label="email" className="email-login" placeholder="Email" onChange={(e) => handleLoginCredentials(e, "email")} value={loginCredentials.email}/>
-                            <input type="password" name="password" aria-label="password" className="password-login" placeholder="Password" onChange={(e) => handleLoginCredentials(e, "password")}value={loginCredentials.password} />
+                            <input type="email" name="email" aria-label="Enter Email:" className="email-login" placeholder="Email" onChange={(e) => handleLoginCredentials(e, "email")} value={loginCredentials.email}/>
+                            <input type="password" name="password" aria-label="Enter Password:" className="password-login" placeholder="Password" onChange={(e) => handleLoginCredentials(e, "password")}value={loginCredentials.password} />
                             <input type="submit"  className="login-submit" value={"Log In"}/>
                             {error && <div className="error">Either Email or Password is wrong!</div>}
                             <div className="facebook-login">
                                 <span>Or Login with</span>
-                                <motion.span whileHover={{scale:1.1}}  whileTap={{scale: .9}}><FacebookLogo/></motion.span>
+                                <motion.span whileHover={{scale:1.1}}  whileTap={{scale: .9}} onKeyDown={(e) => handleFacebookEnter(e)}><FacebookLogo/></motion.span>
                             </div>
                         </form>
                         <div className="sign-up">

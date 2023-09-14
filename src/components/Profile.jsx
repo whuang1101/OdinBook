@@ -11,11 +11,16 @@ import ProfilePosts from "./profile-components/ProfilePosts";
 import PostModal from "./PostModal";
 import EditModal from "./homepage-components/EditModal";
 import Notification from "./Notification";
+import EditProfile from "./profile-components/EditProfile";
+import { updateUser } from "../redux/userSlice";
 const Profile = ({setUser}) => {
     const {id} = useParams()
+    const user = useSelector(state => state.user);
     const host = useSelector(state => state.host);
     const profile = useSelector(state => state.profile);
     const dispatch = useDispatch();
+    const [profileEdit, setProfileEdit] = useState(false);
+
     useEffect(()=> {
         fetch(`${host}/users/${id}`).then(
             response => {
@@ -27,10 +32,15 @@ const Profile = ({setUser}) => {
                 }
             }
         ).then(data => {
-            dispatch(updateProfile(data))})
+            dispatch(updateProfile(data))
+            if(user._id === id ){
+            dispatch(updateUser(data))}
+        }
+            
+            )
         .catch(err => console.error(err));
             dispatch(updatePage("profile"))
-    },[])
+    },[id, profileEdit])
     const [loading, setLoading] =useState(true)
     const [newInfo, setNewInfo] = useState(false);
     const [notification, setNotification] = useState({
@@ -41,6 +51,9 @@ const Profile = ({setUser}) => {
 
     return(
         <>
+            {profileEdit &&
+            <EditProfile setProfileEdit={setProfileEdit} setUser={setUser}/>
+            }
             <Header setUser={setUser}/>
             {profile && 
                 <div className="profile-screen">
@@ -49,12 +62,12 @@ const Profile = ({setUser}) => {
                 }
                     <EditModal setLoading={setLoading} setNotification={setNotification}/>
                     <PostModal newInfo={newInfo} setNewInfo={setNewInfo} setLoading={setLoading} setNotification={setNotification}/>
-                    <ProfileHeader/>
+                    <ProfileHeader setProfileEdit={setProfileEdit}/>
                     <div className="info-bottom">
                         <div className="info-container">
                             <div className="info-post">
                                 <ProfileInfo/>
-                                <ProfilePosts  setLoading = {setLoading} loading={loading} newInfo={newInfo} setNotification={setNotification}/>
+                                <ProfilePosts  setLoading = {setLoading} loading={loading} newInfo={newInfo} setNotification={setNotification} profileEdit={profileEdit}/>
                             </div>
                         </div>
                     </div>

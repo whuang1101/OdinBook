@@ -16,6 +16,7 @@
     flex-direction: column;
     border-radius: .5em;
     box-shadow: 1px 1px 8px black;
+    position: relative;
 }
 .sign-up-title-container {
     border-bottom: 1px solid rgb(131, 135, 140);
@@ -64,7 +65,11 @@
 .error {
     color: red;
 }
-
+.close-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 @media screen and (max-width:640px) {
     .sign-up-modal {
         gap: 1em;

@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../redux/postSlice"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 import Notification from "./Notification"
 const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
+    const modalRef = useRef(null);
     const post = useSelector(state => state.post);
     const host = useSelector(state => state.host);
     const dispatch = useDispatch()
@@ -12,6 +13,13 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
     const characterLimit = 60;
     const [mouseDown, setMouseDown] = useState(false)
     const [postMouseDown, setPostMouseDown] = useState(false);
+    useEffect(() => {
+        setTimeout(() => {
+          if (modalRef.current) {
+            modalRef.current.focus();
+          }
+        }, 0);
+      }, []);
     
     // fetching from post api to add to backend
     const handlePostSubmit = (e) =>
@@ -103,7 +111,8 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                         style={{resize:"none"}}
                         placeholder="What's on your mind?" 
                         className={postContent.length < characterLimit ? "large-font": "small-font"}
-                        onChange={(e) => handlePostContent(e)}></textarea>
+                        onChange={(e) => handlePostContent(e)} 
+                        ref={modalRef}></textarea>
                        { postContent.length === 0 ?
                         <input type = "submit" className="post-submit-disabled" value={"Post"} disabled/>:
                         <motion.input type="submit" className="post-submit" value={"Post"} />}

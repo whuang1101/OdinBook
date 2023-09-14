@@ -58,20 +58,28 @@ const AllFriends=  ({setNotification}) => {
     return(
         <>
         {allFriends.length === 0 ? !loading &&   <h4>Go add some friends on friend suggestions</h4>:
-        <h2>All Friends</h2>}
+        <h2 >All Friends</h2>}
          <div className="suggested-friends">
         {!loading ? allFriends.map((user) => (
-            <Link to= {`/profile/${user._id}`} className="user-container" key={user._id}>
-                <img src={user.image_url} alt="hey" className="friend-image"/>
+            <div to= {`/profile/${user._id}`} className="user-container" key={user._id}>
+                <Link to ={`/profile/${user._id}`}><img src={user.image_url} alt="hey" className="friend-image"/></Link>
                 <div className="information-part">
-                    <div className="friend-name">{user.name}</div>
+                    <Link to ={`/profile/${user._id}`} className="friend-name">{user.name}</Link>
+                    {user._id !== "65024ac3d8483c4d24af5ce0" ?
                     <motion.button whileHover={{scale: 1.1}} whileTap={{scale: .9}} 
                     className="remove-friend"
                     onClick={(e) =>  {e.preventDefault();
                         {handleRemoveFriend(user._id)}}}
-                    >Remove Friend</motion.button>
+                    >Remove Friend</motion.button>:
+                    <motion.button whileHover={{scale: 1.1}} whileTap={{scale: .9}} 
+                    className="remove-friend"
+                    onClick={(e) =>  {e.preventDefault();
+                        {handleRemoveFriend(user._id)}}}
+                    disabled
+                    >Can't remove this one</motion.button>
+                    }
                 </div>
-            </Link>
+            </div>
         )): 
             
         (

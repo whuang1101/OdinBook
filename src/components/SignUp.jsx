@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import "../css/sign-up.css"
 import { useSelector } from "react-redux";
+import Icon from '@mdi/react';
+import { mdiAlphaXCircle } from "@mdi/js";
+
 const SignUp = ({setSignUpModal, setNotification}) => {
     const [newUser, setNewUser] = useState({
         first_name: "",
@@ -141,49 +144,51 @@ const SignUp = ({setSignUpModal, setNotification}) => {
     return (
         <div className="sign-up-background" onClick={() => setSignUpModal(false)}>
             <div className="sign-up-modal" onClick={(e) => e.stopPropagation()}>
+                <Icon path={mdiAlphaXCircle} size={1.5} onClick ={() => {setSignUpModal(false)}} className="close-modal" onKeyDown ={(e) => {e.key === "Enter" && setSignUpModal(false)}} tabIndex={0}
+                aria-label="Close Sign up form"/>
                 <div className="sign-up-title-container">
-                    <h1 className="sign-up-title">Sign Up</h1>
-                    <p className="easy">It’s quick and easy.</p>
-                    <p className="easy">* are required fields</p>
+                    <h1 className="sign-up-title" tabIndex={0}>Sign Up</h1>
+                    <p className="easy" tabIndex={0}>It’s quick and easy.</p>
+                    <p className="easy" tabIndex={0}>* are required fields</p>
                 </div>
                 <form className="sign-up-form" onSubmit={(e) => handleSubmit(e)}>
                     <div className="name-container">
                         {newUser.first_name ?
-                        <input type="text" className="first-name" placeholder="First Name *" name="first" onChange={(e) => {handleOnChange(e)}} required/>
-                        :  <input type="text" className="first-name" placeholder="First Name *" name="first" onChange={(e) => {handleOnChange(e)}} style={{border:"1px solid red"}} required/>
+                        <input type="text" className="first-name" placeholder="First Name *" name="first" onChange={(e) => {handleOnChange(e)}}   aria-label="Enter your First Name" required/>
+                        :  <input type="text" className="first-name" placeholder="First Name *" name="first" onChange={(e) => {handleOnChange(e)}} style={{border:"1px solid red"}} aria-label="Enter your First Name" required/>
                          }
-                         {newUser.last_name ?<input type="text" className="last-name" placeholder="Last Name *" name="last" onChange={(e) => {handleOnChange(e)}} required/>:
-                         <input type="text" className="last-name" placeholder="Last Name *" name="last" onChange={(e) => {handleOnChange(e)}} style={{border:"1px solid red"}} required/>
+                         {newUser.last_name ?<input type="text" className="last-name" placeholder="Last Name *" name="last" onChange={(e) => {handleOnChange(e)}} aria-label="Enter Last name"required/>:
+                         <input type="text" className="last-name" placeholder="Last Name *" name="last" onChange={(e) => {handleOnChange(e)}} style={{border:"1px solid red"}} aria-label="Enter Last name"required/>
                         }
                     </div>
                     <div className="email-container">
-                        <input type="email" className="sign-up-email" placeholder="Email *" name="email" onChange={(e) => {handleOnChange(e)}} onBlur={() =>onEmailBlur()} required/>
+                        <input type="email" className="sign-up-email" placeholder="Email *" name="email" onChange={(e) => {handleOnChange(e)}} onBlur={() =>onEmailBlur()}aria-label="Enter your email" required/>
                     </div>
                     {emailFound &&<p className="error">Email already exists</p>}
                     <div className="password-container">
                         {(anyError) ?
                         <>
-                        <input type="password" className="password" placeholder="Password *" name="password"onChange={(e) => {handleOnChange(e)}} style={{border: "1px solid red"}} required/>
-                        <input type="password" className="confirm-password" placeholder="Confirm Password *" name="confirm-password" onChange={(e) => {handleOnChange(e)}} style={{border: "1px solid red"}} required/>
+                        <input type="password" className="password" placeholder="Password *" name="password"onChange={(e) => {handleOnChange(e)}} style={{border: "1px solid red"}}   aria-label="Enter your password"required/>
+                        <input type="password" className="confirm-password" placeholder="Confirm Password *" name="confirm-password" onChange={(e) => {handleOnChange(e)}}  aria-label="Confirm your password"style={{border: "1px solid red"}} required/>
                         </>
-                        : <><input type="password" className="password" placeholder="Password *" name="password"onChange={(e) => {handleOnChange(e)}}  required/>
-                        <input type="password" className="confirm-password" placeholder="Confirm Password *" name="confirm-password" onChange={(e) => {handleOnChange(e)}} required/>
+                        : <><input type="password" className="password" placeholder="Password *" name="password"onChange={(e) => {handleOnChange(e)}}  aria-label="Enter your password" required/>
+                        <input type="password" className="confirm-password" placeholder="Confirm Password *" name="confirm-password" onChange={(e) => {handleOnChange(e)}}  aria-label="Confirm your password"required/>
                         </>
                         }</div>
                     {!password && <>
-                        <p className="error">Passwords don't match</p>
+                        <p className="error" tabIndex={0}>Passwords don't match</p>
                     </>
                     }
                     {!capital && <>
-                    <p className="error">Password isn't capitalized</p>
+                    <p className="error" tabIndex={0}>Password isn't capitalized</p>
                      </>}
                     
                     <div className="live-job-container">
-                        <input type="text" className="live" placeholder="Where do you live?" name="live" onChange={(e) => {handleOnChange(e)}}/>
-                        <input type="text" className="job" placeholder="What do you do for work?" name="job" onChange={(e) => {handleOnChange(e)}}/>
+                        <input type="text" className="live" placeholder="Where do you live?" name="live" onChange={(e) => {handleOnChange(e)}}  aria-label="Where do you live?"/>
+                        <input type="text" className="job" placeholder="What do you do for work?" name="job" onChange={(e) => {handleOnChange(e)}} aria-label="Where do you work?"/>
                     </div>
                     <div className="study-image-container">
-                        <input type="text" className="study-sign-up" placeholder="Where do you study?" name="studies" onChange={(e) => {handleOnChange(e)}}/>
+                        <input type="text" className="study-sign-up" placeholder="Where do you study?" name="studies" onChange={(e) => {handleOnChange(e)}} aria-label="Where do you study?"/>
                     </div>
                     <div className="profile-picture">
                             <label htmlFor="image_url">Profile Picture</label>
@@ -197,7 +202,7 @@ const SignUp = ({setSignUpModal, setNotification}) => {
                             </div>
                         </div>
                         <div className="submit-container">
-                            <input type="submit" className="sign-up-button"/>
+                            <input type="submit" className="sign-up-button" aria-label="Sign up button"/>
                         </div>
                 </form>
             </div>

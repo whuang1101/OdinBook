@@ -45,7 +45,6 @@ const Friends = ({setUser}) => {
             <div className="first-half">
             <div className="friend-toggle">
                 <Icon path={mdiAlphaXBoxOutline} size={1} className="close-icon" onClick= {() => handleFriendClose()}/>
-
                 <h1 className="friend-title">Friends</h1>
                 {friendSelection === "Friend Requests" ?
                 <div className="friend-requests focus">
@@ -56,7 +55,8 @@ const Friends = ({setUser}) => {
                         Friend Requests
                     </div>
                 </div> :
-                <div className="friend-requests" onClick={() => {dispatch(updateFriendSelection("Friend Requests")), handleFriendClose()}}>
+                <div className="friend-requests" onClick={() => {dispatch(updateFriendSelection("Friend Requests")), handleFriendClose()}}
+                onKeyDown={(e) => {if (e.key === "Enter") {dispatch(updateFriendSelection("Friend Requests")), handleFriendClose()}}} tabIndex={0}>
                     <div className="icon-outline">
                         <Icon path={mdiAccountArrowLeftOutline} size={1} />
                     </div>
@@ -75,7 +75,8 @@ const Friends = ({setUser}) => {
                     </div>
                 </div>:
                 <div className="friend-suggestions" onClick={() => {dispatch(updateFriendSelection("Friend Suggestions")),
-                handleFriendClose()}}>
+                handleFriendClose()}}
+                onKeyDown={(e) => {if (e.key === "Enter") {dispatch(updateFriendSelection("Friend Suggestions")), handleFriendClose()}}} tabIndex={0}>
                 <div className="icon-outline">
                     <Icon path={mdiAccountPlusOutline} size={1} />
                 </div>
@@ -93,7 +94,8 @@ const Friends = ({setUser}) => {
                         All Friends
                     </div>
                 </div>:
-                <div className="all-friends" onClick={() => {dispatch(updateFriendSelection("All Friends")), handleFriendClose()}}>
+                <div className="all-friends" onClick={() => {dispatch(updateFriendSelection("All Friends")), handleFriendClose()}}
+                onKeyDown={(e) => {if (e.key === "Enter") {dispatch(updateFriendSelection("All Friends")), handleFriendClose()}}} tabIndex={0}>
                 <div className="icon-outline">
                     <Icon path={mdiAccountMultipleOutline} size={1} />
                 </div>

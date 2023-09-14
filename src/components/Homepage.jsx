@@ -42,7 +42,7 @@ const Homepage = ({setUser}) => {
                 <Post setLoading = {setLoading} loading={loading} newInfo={newInfo} setNotification={setNotification}/>
                 <div className="sponsored-third">
                     <div className="main-sponsors">
-                        <h3 className="sponsored-title">Sponsored</h3>
+                        <h3 className="sponsored-title">Sponsored By @whuang1101:</h3>
                         <div className="sponsored-content">
                             <div className="game1">
                                 <Link to={"https://incandescent-froyo-150a8b.netlify.app/"} className="sponsored-title">Pixel Finder</Link>

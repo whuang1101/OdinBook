@@ -51,8 +51,7 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             .map(post => post._id);
             //
             setLikedPosts(likedPostIds);
-            console.log("set to false ")
-            setTimeout(() => {
+                setTimeout(() => {
                 setLoading(false)
             }, 1000);
             const updatedCommentLoading = { ...commentLoading };
@@ -223,39 +222,66 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
                                         <Link to= {`/profile/${post.author._id}`} className="name">
                                             {post.author.name}
                                         </Link>
-                                        <div className="long-ago">
+                                        <div className="long-ago" tabIndex={0}>
                                             {timeCalculator(post.date)}
                                         </div>
                                     </div>
                                     </div>
                                     {post.author._id === user._id &&
                                         <>
-                                            <div className="edit-post-icon" onClick={() => handlePostDropDown(post._id)}>
+                                            <div className="edit-post-icon" onClick={() => handlePostDropDown(post._id)} tabIndex={0}   
+                                                    onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') {
+                                                    handlePostDropDown(post._id);
+                                                    }
+                                                }}>
                                                 <Icon path={mdiDotsHorizontal} size={1} color={"rgb(57,115,234)"}/>
                                                 {postDropdown[post._id] &&
                                                  <div className="edit-dropdown">
-                                                    <div className="edit-comment" onClick={() => handleEditPost(post._id)}>Edit</div>
-                                                    <div className="delete-comment" onClick={(() => handleDeletePost(post._id))}>Delete</div>
+                                                    <div className="edit-comment" onClick={() => handleEditPost(post._id)} tabIndex={0}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                        handleEditPost(post._id);
+                                                        }
+                                                    }}>Edit</div>
+                                                    <div className="delete-comment" onClick={(() => handleDeletePost(post._id))} tabIndex={0}
+                                                     onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                        handleDeletePost(post._id);
+                                                        }
+                                                    }}>Delete</div>
                                              </div>
                                              }
                                             </div>
                                         </>
                                     }
                                 </div>
-                                <div className="post-content">
+                                <div className="post-content" tabIndex={0}>
                                     {post.text}
                                 </div>
                                 <div className="likes-comments">
                                         {/*If userid is in likes show blue icon*/}
                                         {likedPosts.includes(post._id) ?
                                             <div className="likes" onClick={() => handleRemoveLike(post._id)}>
-                                                <Icon path={mdiThumbUp} size={1} color={"rgb(57,115,234)"}/>
+                                                <Icon path={mdiThumbUp} size={1} color={"rgb(57,115,234)"}   
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') {
+                                                    handleRemoveLike(post._id);
+                                                    }
+                                                }}
+                                                tabIndex={0} />
                                                 <div className="like">
                                                     {post.likes}
                                                 </div>
                                             </div>:
                                             <div className="likes" onClick={() => {handleAddLike(post._id)}}>
-                                                <Icon path={mdiThumbUpOutline} size={1} color={"rgb(126,131,139)"} />
+                                                <Icon path={mdiThumbUpOutline} size={1} color={"rgb(126,131,139)"} 
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                        handleAddLike(post._id);
+                                                        }
+                                                    }}
+                                                    tabIndex={0} />
                                                     <div className="like">
                                                 {post.likes}
                                                 </div>
@@ -299,9 +325,9 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
                                                     </Link>
                                                 </div>
                                                 <div className="name-comment">
-                                                    {comment.edited && <div className="edited">edited</div>}
-                                                    <div className="comment-name">{comment.author.name}</div>
-                                                    <div className="user-comment">{comment.text}</div>
+                                                    {comment.edited && <div className="edited" tabIndex={0}>edited</div>}
+                                                    <div className="comment-name" tabIndex={0}>{comment.author.name}</div>
+                                                    <div className="user-comment" tabIndex={0}  >{comment.text}</div>
                                                 </div>
                                                 {comment.author._id === user._id &&
                                                 <>
