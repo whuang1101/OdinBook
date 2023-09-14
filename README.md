@@ -25,6 +25,7 @@
 ## Profile Page 
 <img width="1496" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/938089b0-3a4c-421c-ad46-ae7f5197bafd">
 <img width="381" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/66811df9-9926-4110-8eeb-3b6797b7b392">
+<img width="1494" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/6b78b954-76d0-4cfb-96c4-dd3dae5c198b">
 
 
 
