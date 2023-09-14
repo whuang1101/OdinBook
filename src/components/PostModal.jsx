@@ -38,13 +38,10 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
         }).then(response => {
             if(response.ok){
                 setLoading(true); 
-                console.log("set to true")
-                console.log("ok")
                 const current = {
                     status: true,
                     content: "Post Created"
                 };
-        
                 setNotification(current);
                     setTimeout(() => {
                     const newStatus = {
@@ -52,10 +49,10 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
                         content: ""
                     };
                     setNotification(newStatus);
-                    dispatch(updatePost(false));
-                    setNewInfo(!newInfo);    
                     setPostContent("")
                 }, 2000);
+                dispatch(updatePost(false));
+                setNewInfo(!newInfo);    
             }
             else {
                 console.log(response)
