@@ -42,15 +42,15 @@ const Homepage = ({setUser}) => {
                 <Post setLoading = {setLoading} loading={loading} newInfo={newInfo} setNotification={setNotification}/>
                 <div className="sponsored-third">
                     <div className="main-sponsors">
-                        <h3 className="sponsored-title">Sponsored By @whuang1101:</h3>
+                        <h3 className="sponsored-title">Sponsored By <a href="https://github.com/whuang1101/"style={{display:"inline"}} >@whuang1101:</a></h3>
                         <div className="sponsored-content">
                             <div className="game1">
-                                <Link to={"https://incandescent-froyo-150a8b.netlify.app/"} className="sponsored-title">Pixel Finder</Link>
+                                <a href={"https://incandescent-froyo-150a8b.netlify.app/"} className="sponsored-title">Pixel Finder</a>
                                 <p>The best where's waldo game in the world! </p>
                                 <img src={Game1} alt="Pixel Finder Game Image" style={{maxWidth:"100%", borderRadius:".5em"}}/>
                             </div>
                             <div className="game2">
-                                <Link to={"https://mellow-sfogliatella-52d786.netlify.app/login"} className="sponsored-title">KeepInTouch (A messenger clone)</Link>
+                                <a href={"https://mellow-sfogliatella-52d786.netlify.app/login"} className="sponsored-title">KeepInTouch (A messenger clone)</a>
                                 <p>Allows real time communication with socket.io</p>
                                 <img src={KeepInTouch} alt="Keep In Touch in action image" style={{maxWidth:"100%", borderRadius:".5em"}}/>
                             </div>
