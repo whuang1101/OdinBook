@@ -95,7 +95,7 @@ const SignUp = ({setSignUpModal, setNotification}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData();
-        formData.append("image_url", newUser.image_url.trim());
+        formData.append("image_url", newUser.image_url);
         formData.append("first_name", newUser.first_name.trim());
         formData.append("last_name", newUser.last_name.trim());
         formData.append("email", newUser.email.trim());
