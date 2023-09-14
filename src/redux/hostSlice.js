@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = "http://localhost:3000";
+const initialState = "https://odinbook-server-production-a812.up.railway.app";
 
 const hostSlice = createSlice({
   name: "post", 

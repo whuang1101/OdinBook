@@ -13,7 +13,7 @@ const Router = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
       if(initialUser){
-        fetch("http://localhost:3000/auth/local/success", {
+        fetch("https://odinbook-server-production-a812.up.railway.app/auth/local/success", {
           credentials: "include",
         })
           .then((response) => {
@@ -38,7 +38,7 @@ const Router = () => {
             setLoading(false);
           });
       }else{
-        fetch("http://localhost:3000/auth/login/success", {
+        fetch("https://odinbook-server-production-a812.up.railway.app/auth/auth/login/success", {
           credentials: "include",
         })
           .then((response) => {
