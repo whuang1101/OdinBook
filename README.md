@@ -13,14 +13,14 @@
 
 ## Create Post
 <img width="1496" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/42bbff20-9e3e-4464-a9db-377225ba1baf">
+
 ## Edit and logout dropdowns
 <img width="1497" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/eda9fc1b-596c-407c-bd26-107f2b166398">
-
+<img width="378" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/c47af87b-73a3-4a76-8468-7e9a8857a032">
+<img width="382" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/63846903-0e68-4d37-a57a-2a6b569f70f6">
 
 ## Friends Page 
 <img width="1502" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/5f3dc27b-1847-4f8d-8e10-bb4361d7c6d1">
-<img width="1502" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/9b7685f5-c185-4470-bf6d-1a53d1d8ff43">
-<img width="1502" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/1c18f49a-0e5d-416b-b608-8544d64c2ae9">
 
 ## Profile Page 
 <img width="1496" alt="image" src="https://github.com/whuang1101/OdinBook/assets/91977590/938089b0-3a4c-421c-ad46-ae7f5197bafd">
