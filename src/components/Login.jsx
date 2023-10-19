@@ -110,10 +110,6 @@ const Login = ({setUser}) => {
                             <input type="password" name="password" aria-label="Enter Password:" className="password-login" placeholder="Password" onChange={(e) => handleLoginCredentials(e, "password")}value={loginCredentials.password} />
                             <input type="submit"  className="login-submit" value={"Log In"}/>
                             {error && <div className="error">Either Email or Password is wrong!</div>}
-                            <div className="facebook-login">
-                                <span>Or Login with</span>
-                                <motion.span whileHover={{scale:1.1}}  whileTap={{scale: .9}} onKeyDown={(e) => handleFacebookEnter(e)}><FacebookLogo/></motion.span>
-                            </div>
                         </form>
                         <div className="sign-up">
                             <motion.button whileHover={{scale:1.1}} whileTap={{scale: .9}} className="sign-up-button"
