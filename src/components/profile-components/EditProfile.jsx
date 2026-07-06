@@ -45,7 +45,7 @@ const EditProfile = ({setProfileEdit, setUser}) => {
             response => {
                 if (response.ok) {
                     setUser(null)
-                    localStorage.setItem("userData", null);
+                    localStorage.removeItem("userData");
                     navigate("/login")
                     dispatch(updateProfile(null));
                 }

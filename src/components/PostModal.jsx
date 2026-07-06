@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../redux/postSlice"
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import Notification from "./Notification"
 const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
     const modalRef = useRef(null);
     const post = useSelector(state => state.post);

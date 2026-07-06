@@ -1,9 +1,8 @@
-import { useSelector } from "react-redux";
+import { apiUrl } from "../lib/apiClient";
 
 const FacebookLogo = () => {
-  const host = useSelector(state => state.host)
   const handleClick = () => {
-      window.open(`${host}/auth/facebook/callback`,"_self")
+      window.open(apiUrl("/auth/facebook"),"_self")
   }
   return (
     <svg
@@ -22,7 +21,6 @@ const FacebookLogo = () => {
 };
 
 export default FacebookLogo;
-
 
 
 

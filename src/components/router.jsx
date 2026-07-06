@@ -6,63 +6,22 @@ import { updateUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import Friends from "./Friends";
 import Profile from "./Profile";
+import { apiFetch } from "../lib/apiClient";
 const Router = () => {
-  const initialUser = JSON.parse(localStorage.getItem("userData"));
   const dispatch = useDispatch();
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-      if(initialUser){
-        fetch("https://odinbook-server-production-a812.up.railway.app/auth/local/success", {
-          credentials: "include",
-        })
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error("Failed to fetch user data");
-            }
-          })
-          .then((data) => {
-            if(data){
-            setUser(data);
-            dispatch(updateUser(data));
-            setLoading(false);}
-            else{
-              dispatch(updateUser(initialUser));
-            }
-          })
-          .catch((error) => {
-            dispatch(updateUser(initialUser));
-            console.error(error);
-            setLoading(false);
-          });
-      }else{
-        fetch("https://odinbook-server-production-a812.up.railway.app/auth/auth/login/success", {
-          credentials: "include",
-        })
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error("Failed to fetch user data");
-            }
-          })
-          .then((data) => {
-            if(data){
-            setUser(data);
-            dispatch(updateUser(data));
-            setLoading(false);}
-            else{
-              dispatch(updateUser(initialUser));
-            }
-          })
-          .catch((error) => {
-            console.error(error)
-            setLoading(false);
-          });
-      }
-  }, []);
+    apiFetch("/auth/me")
+      .then((data) => {
+        setUser(data);
+        dispatch(updateUser(data));
+      })
+      .catch(() => {
+        localStorage.removeItem("userData");
+      })
+      .finally(() => setLoading(false));
+  }, [dispatch]);
 
   if (loading) {
     return null;

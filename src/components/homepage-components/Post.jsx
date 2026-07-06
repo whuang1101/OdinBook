@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../../redux/postSlice";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { updateAllPosts } from "../../redux/allPostsSlice";
 import Icon from '@mdi/react';
-import { mdiCommentOutline, mdiDotsHorizontal, mdiLoading, mdiSend, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
+import { mdiCommentOutline, mdiDotsHorizontal, mdiSend, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import timeCalculator from "../../js/timeCalculator"; "../../js/timeCalculator"

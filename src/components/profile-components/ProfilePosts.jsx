@@ -13,7 +13,7 @@ import { updateCommentModal } from "../../redux/commentModalSlice";
 import { updateComment } from "../../redux/editCommentSlice";
 import { updateEditPost } from "../../redux/editPostSlice";
 
-const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit}) => {
+const ProfilePosts = ({loading,setLoading, newInfo, setNotification}) => {
     const commentModal = useSelector(state => state.commentModal);
     const [commentLoading, setCommentLoading] = useState({}); 
     const [actualLoading,setActualLoading] = useState(false);
@@ -21,7 +21,6 @@ const ProfilePosts = ({loading,setLoading, newInfo, setNotification, profileEdit
     const {id} = useParams();
     const [likedPosts, setLikedPosts] = useState(false)
     const allPosts = useSelector(state => state.allPosts)
-    const post = useSelector(state => state.post)
     const host = useSelector(state => state.host)
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);

@@ -13,7 +13,6 @@ import Notification from "./Notification"
 import Game1 from "../assets/game1.png"
 import KeepInTouch from "../assets/KeepInTouch.png"
 import "../css/sponsored.css"
-import { Link } from "react-router-dom"
 
 const Homepage = ({setUser}) => {
     const [loading, setLoading] = useState(true);

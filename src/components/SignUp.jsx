@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../css/sign-up.css"
 import { useSelector } from "react-redux";
 import Icon from '@mdi/react';

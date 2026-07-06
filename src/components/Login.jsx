@@ -1,12 +1,12 @@
 import "../css/login.css"
 import GithubLogo from "../assets/GithubLogo"
-import FacebookLogo from "../assets/FacebookLogo"
 import { motion } from "framer-motion"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { updateUser } from "../redux/userSlice"
 import SignUp from "./SignUp"
 import { useState } from "react"
 import Notification from "./Notification";
+import { apiFetch } from "../lib/apiClient"
 const Login = ({setUser}) => {
     const [loginCredentials, setLoginCredentials] = useState({email: "",
     password: ""})
@@ -14,70 +14,44 @@ const Login = ({setUser}) => {
         status: false,
         content: ""
     });
-    const host = useSelector(state => state.host)
     const dispatch = useDispatch();
     const [signUpModal, setSignUpModal] = useState(false);
     const [error, setError] = useState(false)
-    const handleFacebookEnter = (e) => {
-        if(e.key === "Enter"){
-            window.open(`${host}/auth/facebook/callback`,"_self")
-        }
-    }
     const login = (e) => {
         e.preventDefault();
-        fetch(`${host}/auth/local`,{
+        apiFetch("/auth/local",{
             method:"POST",
-            credentials:"include",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify({username:loginCredentials.email.toLowerCase(), password: loginCredentials.password})
-        }).then(
-            response => {
-                if(response.ok) {
-                    return response.json();
-                }
-            }
-        ).then (
+        }).then (
             data => {
-                if(data !== undefined){
+                if(data){
                 dispatch(updateUser(data));
-                setUser(true);
+                setUser(data);
                 localStorage.setItem("userData", JSON.stringify(data));
             }
             else{
                 setError(true);
             }
               }
-        )
+        ).catch(() => setError(true))
     }
     const demoLogin = (e) => {
         e.preventDefault();
-        fetch(`${host}/auth/local`,{
+        apiFetch("/auth/local",{
             method:"POST",
-            credentials:"include",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify({username:"joebob1@gmail.com", password: "Abcd1234"})
-        }).then(
-            response => {
-                if(response.ok) {
-                    return response.json();
-                }
-            }
-        ).then (
+        }).then (
             data => {
-                if(data !== undefined){
+                if(data){
                 dispatch(updateUser(data));
-                setUser(true);
+                setUser(data);
                 localStorage.setItem("userData", JSON.stringify(data));
             }
             else{
                 setError(true);
             }
               }
-        )
+        ).catch(() => setError(true))
     }
     const handleLoginCredentials = (e, name) => {
         if(name === "email"){

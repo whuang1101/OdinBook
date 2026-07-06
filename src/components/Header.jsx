@@ -1,6 +1,6 @@
 import "../css/header.css"
 import Icon from '@mdi/react';
-import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline, mdiDoor, mdiDoorOpen, mdiHome, mdiHomeOutline } from '@mdi/js';
+import { mdiAccount, mdiAccountGroup, mdiAccountGroupOutline, mdiAccountOutline, mdiDoorOpen, mdiHome, mdiHomeOutline } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
 import { updatePage } from "../redux/pageSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ const Header = ({setUser}) => {
             }
         })
         setUser(null)
-        localStorage.setItem("userData", null);
+        localStorage.removeItem("userData");
         navigate("/login")
         dispatch(updateProfile(null));
     }
@@ -47,7 +47,7 @@ const Header = ({setUser}) => {
                 }
             })
             setUser(null)
-            localStorage.setItem("userData", null);
+            localStorage.removeItem("userData");
             navigate("/login")
             dispatch(updateProfile(null));
         }

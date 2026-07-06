@@ -1,7 +1,7 @@
 import Header from "./Header"
 import "../css/friends.css"
 import Icon from '@mdi/react';
-import { mdiAccountArrowLeft, mdiAccountArrowLeftOutline, mdiAccountMultiple, mdiAccountMultipleOutline, mdiAccountPlus, mdiAccountPlusOutline, mdiAlphaXBox, mdiAlphaXBoxOutline, mdiMicrosoftXboxControllerMenu } from '@mdi/js';
+import { mdiAccountArrowLeft, mdiAccountArrowLeftOutline, mdiAccountMultiple, mdiAccountMultipleOutline, mdiAccountPlus, mdiAccountPlusOutline, mdiAlphaXBoxOutline, mdiMicrosoftXboxControllerMenu } from '@mdi/js';
 import { useDispatch, useSelector } from "react-redux";
 import { updateFriendSelection } from "../redux/friendSelectSlice";
 import { useEffect, useState } from "react";
