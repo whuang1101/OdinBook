@@ -1,5 +1,5 @@
 const DEFAULT_API_BASE_URL = import.meta.env.PROD
-  ? "https://odinbook-server-production-a812.up.railway.app"
+  ? "https://odinbook-api.172.206.26.66.sslip.io"
   : "http://localhost:3000";
 
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, "");
