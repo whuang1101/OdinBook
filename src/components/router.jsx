@@ -7,11 +7,17 @@ import { useDispatch } from "react-redux";
 import Friends from "./Friends";
 import Profile from "./Profile";
 import { apiFetch } from "../lib/apiClient";
+import DemoApp from "./DemoApp";
 const Router = () => {
+  const demoMode = new URLSearchParams(window.location.search).get("demo") === "1";
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    if (demoMode) {
+      setLoading(false);
+      return;
+    }
     apiFetch("/auth/me")
       .then((data) => {
         setUser(data);
@@ -21,7 +27,11 @@ const Router = () => {
         localStorage.removeItem("userData");
       })
       .finally(() => setLoading(false));
-  }, [dispatch]);
+  }, [dispatch, demoMode]);
+
+  if (demoMode) {
+    return <DemoApp />;
+  }
 
   if (loading) {
     return null;
