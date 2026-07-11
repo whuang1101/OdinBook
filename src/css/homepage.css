@@ -1,10 +1,84 @@
 .home-background {
-    min-height: 100vh;
-    min-width: 100vw;
-    position: relative;
-    background-color: rgb(240,242,245);
+  min-height: 100vh;
+  min-width: 100%;
+  position: relative;
+  background:
+    radial-gradient(circle at 17% 8%, rgba(110, 104, 238, .09), transparent 29rem),
+    radial-gradient(circle at 84% 20%, rgba(234, 132, 190, .075), transparent 26rem),
+    #f7f6fb;
 }
+
 .bottom-screen {
-    display: flex;
-    min-height: 93vh;
+  display: grid;
+  grid-template-columns: minmax(190px, 248px) minmax(0, 720px) minmax(230px, 300px);
+  justify-content: center;
+  align-items: start;
+  gap: clamp(18px, 2.2vw, 34px);
+  max-width: 1420px;
+  min-height: calc(100vh - 70px);
+  margin: 0 auto;
+  padding: 30px clamp(16px, 3vw, 42px) 70px;
+}
+
+.community-panel {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.community-card {
+  padding: 21px;
+  border: 1px solid rgba(223, 221, 234, .84);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 18px 50px rgba(41, 37, 74, .07);
+}
+
+.eyebrow {
+  display: block;
+  color: #7d7b91;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.panel-heading-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; }
+.panel-heading-row h2 { margin: 0; font-size: .98rem; letter-spacing: -.025em; }
+.text-action { padding: 0; border: 0; background: none; color: var(--ob-purple); font-size: .72rem; font-weight: 800; cursor: pointer; }
+.people-list, .trend-list { display: flex; flex-direction: column; gap: 15px; margin-top: 18px; }
+.person-row { display: grid; grid-template-columns: 36px minmax(0,1fr) 30px; align-items: center; gap: 10px; }
+.initial-avatar { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; flex: none; border-radius: 50%; color: white; font-size: .66rem; font-weight: 800; box-shadow: 0 6px 14px rgba(34,32,60,.12); }
+.initial-avatar.violet { background: linear-gradient(145deg,#b64ae7,#7c3fd1); }
+.initial-avatar.teal { background: linear-gradient(145deg,#27b8a6,#167f83); }
+.initial-avatar.coral { background: linear-gradient(145deg,#ff8c74,#e45978); }
+.initial-avatar.more { background: #6564d9; }
+.person-copy { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.person-copy strong { overflow: hidden; font-size: .78rem; text-overflow: ellipsis; white-space: nowrap; }
+.person-copy small, .trend-row small { color: var(--ob-muted); font-size: .62rem; }
+.add-person { display: grid; width: 30px; height: 30px; padding: 0; place-items: center; border: 1px solid var(--ob-line); border-radius: 10px; background: white; color: var(--ob-purple); cursor: pointer; }
+.add-person:hover { transform: translateY(-1px); border-color: #b9b7ec; background: var(--ob-purple-soft); }
+.trend-row { display: grid; grid-template-columns: 28px 1fr; align-items: start; gap: 8px; }
+.trend-row > span { color: #b4b1c0; font-size: .65rem; font-weight: 800; }
+.trend-row div { display: flex; flex-direction: column; gap: 2px; }
+.trend-row strong { font-size: .76rem; }
+.circle-pulse { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 13px; padding: 23px; border-radius: 22px; background: linear-gradient(145deg,#20213d,#343565); color: white; box-shadow: 0 20px 48px rgba(31,32,63,.17); }
+.circle-pulse::after { content: ""; position: absolute; right: -35px; bottom: -42px; width: 120px; height: 120px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; }
+.circle-pulse .eyebrow { color: #b9b9df; }
+.circle-pulse strong { max-width: 210px; font-size: .88rem; line-height: 1.4; }
+.circle-pulse > span:last-child { color: #c2c3dd; font-size: .72rem; }
+.circle-avatars { display: flex; }
+.circle-avatars .initial-avatar { width: 30px; height: 30px; margin-right: -7px; border: 2px solid #292a4d; font-size: .55rem; }
+
+@media (max-width: 1080px) {
+  .bottom-screen { grid-template-columns: minmax(180px, 220px) minmax(0, 700px); }
+  .community-panel { display: none; }
+}
+
+@media (max-width: 760px) {
+  .bottom-screen { display: block; padding: 18px 12px 60px; }
+  .profile-third { display: none !important; }
 }

@@ -1,402 +1,317 @@
-import { useDispatch, useSelector } from "react-redux"
-import { updatePost } from "../../redux/postSlice";
 import { useEffect, useState } from "react";
-import { updateAllPosts } from "../../redux/allPostsSlice";
-import Icon from '@mdi/react';
-import { mdiCommentOutline, mdiDotsHorizontal, mdiSend, mdiThumbUp, mdiThumbUpOutline } from '@mdi/js';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import timeCalculator from "../../js/timeCalculator"; "../../js/timeCalculator"
-import compareMongo from "../../js/compareMongoId";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import Icon from "@mdi/react";
+import {
+  mdiCalendarBlankOutline,
+  mdiChevronDown,
+  mdiCommentOutline,
+  mdiDotsHorizontal,
+  mdiImageOutline,
+  mdiMapMarkerOutline,
+  mdiReplyOutline,
+  mdiSend,
+  mdiShareVariantOutline,
+  mdiThumbUp,
+  mdiThumbUpOutline,
+} from "@mdi/js";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import timeCalculator from "../../js/timeCalculator";
+import compareMongo from "../../js/compareMongoId";
+import { updateAllPosts } from "../../redux/allPostsSlice";
+import { updatePost } from "../../redux/postSlice";
 import { updateCommentModal } from "../../redux/commentModalSlice";
 import { updateComment } from "../../redux/editCommentSlice";
 import { updateEditPost } from "../../redux/editPostSlice";
 import { apiRequest } from "../../lib/apiClient";
-const Post = ({setLoading,loading, newInfo, setNotification}) => {
-    const user = useSelector(state => state.user)
-    const commentModal = useSelector(state => state.commentModal);
-    const dispatch = useDispatch()
-    const host = useSelector(state => state.host);
-    const allPosts = useSelector(state => state.allPosts)
-    const [likedPosts, setLikedPosts] = useState([]);
-    const [commentText, setCommentText] = useState({});
-    const [commentLoading, setCommentLoading] = useState({}); 
-    const [actualLoading,setActualLoading] = useState(false);
-    const [editDropDown,setEditDropDown] =  useState(false);
-    const [postDropdown, setPostDropDown] = useState({});
-    useEffect(()=> {
-        apiRequest(`${host}/posts/${user._id}`).then( response =>
-           { if(response.ok){
-                return response.json()
-            }
-            else{
-                console.log(response.status)
-            }
-        }
-        ).then(data =>  {
-            const updatedPosts = data.map(post => ({
-                ...post,
-                likes: post.likes.length // Initialize likes property with the current like count
-            }));
-            const userIDs = data.map(post => post.author._id);
-            for(let i =0; i <userIDs.length; i ++) {
-                setPostDropDown((previous) => ({
-                    ...previous,
-                    [userIDs[i]]: false
-                }))
-            }
-            dispatch(updateAllPosts(updatedPosts))
-            const likedPostIds = data.filter(post => compareMongo(user._id, post.likes))
-            .map(post => post._id);
-            //
-            setLikedPosts(likedPostIds);
-                setTimeout(() => {
-                setLoading(false)
-            }, 1000);
-            const updatedCommentLoading = { ...commentLoading };
-            for (const postId in updatedCommentLoading) {
-            updatedCommentLoading[postId] = false;
-            }
-            // Set the commentLoading state to the updated object with all values set to false.
-            setCommentLoading(updatedCommentLoading);
-        })
-    },[actualLoading,commentModal, newInfo])
-    const handlePostDropDown = (postId) => {
-        setPostDropDown((previous) => ({
-            ...previous,
-            [postId]: !previous[postId]
-          }));
-    }
-    const handleAddLike = (postId) => {
-        const body = {
-            userId: user._id,
-            postId: postId
-        }
-        apiRequest(`${host}/posts/like/add`,{
-            method:"PUT",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(body)
-        }).then(response => 
-            {if (!response.ok){
-                console.log("bad")
-            }}
-        )
-        setLikedPosts(prevLikedPosts => [...prevLikedPosts, postId]);
-        const updatedPosts = allPosts.map(post => {
-            if (post._id === postId) {
-                return {
-                    ...post,
-                    likes: post.likes + 1 
-                };
-            }
-            return post;
-        });
-        dispatch(updateAllPosts(updatedPosts))
 
-    }
-    const handleRemoveLike = (postId) => {
-        const body = {
-            userId: user._id,
-            postId: postId
-        }
-        apiRequest(`${host}/posts/like/remove`,{
-            method:"PUT",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(body)
-        }).then(response => 
-            {if (!response.ok){
-                console.log("bad")
-            }}
-        )
-        setLikedPosts(likedPosts.filter(id => id !== postId));
-        const updatedPosts = allPosts.map(post => {
-            if (post._id === postId) {
-                return {
-                    ...post,
-                    likes: post.likes - 1
-                };
-            }
-            return post;
-        });
-        dispatch(updateAllPosts(updatedPosts))
-    }
-    const handleCommentChange = (event, postId) => {
-        setCommentText((prevCommentText) => ({
-        ...prevCommentText,
-        [postId]: event.target.value,
-      }));
-      if(commentLoading[postId] === undefined)
-      { 
-        setCommentLoading((prevCommentLoading) => ({
-        ...prevCommentLoading,
-        [postId]: false,
-      }));
-    }
-    }
-    const postComment = (event,postId,userId) => {
-        setCommentLoading((prevCommentLoading) => ({
-            ...prevCommentLoading,
-            [postId]: true,
-          }));
-        const body  = {
-            postId:postId,
-            text: commentText[postId],
-            userId:userId,
-        }
-        apiRequest(`${host}/comments/add`, {
-            method:"POST",
-            headers:{
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(body)
-        }).then(
-            response => {
-                if(response.ok){
-                      setCommentText((prevCommentText) => ({
-                        ...prevCommentText,
-                        [postId]: "",
-                      }));
-                      setActualLoading(!actualLoading);
-                        const current = {
-                            status: true,
-                            content: "Comment Created Successfully"
-                        };
-                        setNotification(current);
-                            setTimeout(() => {
-                            const newStatus = {
-                                status: false,
-                                content: ""
-                            };
-                            setNotification(newStatus);
-                        }, 3000);
-                }
-                else{
-                    console.log(response.status);
-                }
-            }
-        )
-    }
-    const handleEditComment = (commentId) => {
-        dispatch(updateCommentModal("edit-comment"))
-        dispatch(updateComment(commentId))
-    }
-    const handleDeleteComment = (commentId) => {
-        dispatch(updateCommentModal("delete-comment"))
-        dispatch(updateComment(commentId))
-    }
-    const handleEditPost = (postId) => {
-        dispatch(updateCommentModal("edit-post"))
-        dispatch(updateEditPost(postId))
-    }
-    const handleDeletePost = (postId) => {
-        dispatch(updateCommentModal("delete-post"))
-        dispatch(updateEditPost(postId))
-    }
-    const firstName = user.name.split(" ")[0];
-    return (
-        <>
-            <div className="post-third">
-                <div className="posts">
-                    <div className="add-post">
-                        <div className="image-container">
-                            <img src={user.image_url} alt={`${user.name} profile pic`} className="smallest-profile-pic"/>
-                        </div>
-                        <button className="post-button" onClick={() => dispatch(updatePost(true))}>What's on your mind {firstName}?</button>
-                        {/* Post modal/ background is on PostModal.jsx */}
-                    </div>
-                    {
-                        !loading ? allPosts.map((post) => (
-                            <div className="post" key={post._id}>
-                                <div className="post-header">
-                                    <div className="post-header-right">
-                                    <Link to= {`/profile/${post.author._id}`}>
-                                        <img src={post.author.image_url} alt={post.author.name} className="smallest-profile-pic" />
-                                    </Link>
-                                    <div className="name-time">
-                                        <Link to= {`/profile/${post.author._id}`} className="name">
-                                            {post.author.name} 
-                                            {post.edited && <span style={{fontSize: ".7em", opacity:".8"}}> (Edited)</span>}
-                                        </Link>
-                                        <div className="long-ago" tabIndex={0}>
-                                            {timeCalculator(post.date)}
-                                        </div>
-                                    </div>
-                                    </div>
-                                    {post.author._id === user._id &&
-                                        <>
-                                            <div className="edit-post-icon" onClick={() => handlePostDropDown(post._id)} tabIndex={0}   
-                                                    onKeyDown={(e) => {
-                                                    if (e.key === 'Enter') {
-                                                    handlePostDropDown(post._id);
-                                                    }
-                                                }}>
-                                                <Icon path={mdiDotsHorizontal} size={1} color={"rgb(57,115,234)"}/>
-                                                {postDropdown[post._id] &&
-                                                 <div className="edit-dropdown">
-                                                    <div className="edit-comment" onClick={() => handleEditPost(post._id)} tabIndex={0}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') {
-                                                        handleEditPost(post._id);
-                                                        }
-                                                    }}>Edit</div>
-                                                    <div className="delete-comment" onClick={(() => handleDeletePost(post._id))} tabIndex={0}
-                                                     onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') {
-                                                        handleDeletePost(post._id);
-                                                        }
-                                                    }}>Delete</div>
-                                             </div>
-                                             }
-                                            </div>
-                                        </>
-                                    }
-                                </div>
-                                <div className="post-content" tabIndex={0}>
-                                    {post.text}
-                                </div>
-                                <div className="likes-comments">
-                                        {/*If userid is in likes show blue icon*/}
-                                        {likedPosts.includes(post._id) ?
-                                            <div className="likes" onClick={() => handleRemoveLike(post._id)}>
-                                                <Icon path={mdiThumbUp} size={1} color={"rgb(57,115,234)"}   
-                                                onKeyDown={(e) => {
-                                                    if (e.key === 'Enter') {
-                                                    handleRemoveLike(post._id);
-                                                    }
-                                                }}
-                                                tabIndex={0} />
-                                                <div className="like">
-                                                    {post.likes}
-                                                </div>
-                                            </div>:
-                                            <div className="likes" onClick={() => {handleAddLike(post._id)}}>
-                                                <Icon path={mdiThumbUpOutline} size={1} color={"rgb(126,131,139)"} 
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') {
-                                                        handleAddLike(post._id);
-                                                        }
-                                                    }}
-                                                    tabIndex={0} />
-                                                    <div className="like">
-                                                {post.likes}
-                                                </div>
-                                            </div>
-                                        }
-                                    
-                                    <div className="comments">
-                                        <Icon path={mdiCommentOutline} size={1} color={"rgb(126,131,139)"} />
-                                        <div>
-                                            {post.comments.length}
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="post-comments">
-                                    <div className="image-container">
-                                    <Link to= {`/profile/${user._id}`}>
-                                        <img src={user.image_url} alt={`${user.name} profile pic`} className="comment-picture"/>
-                                        </Link>
-                                    </div>
-                                    
-                                        <motion.textarea 
-                                        className="comment-entry"
-                                        initial={{height:"2.2em"}} 
-                                        whileFocus={{height:"7em"}} 
-                                        placeholder="Write a comment"
-                                        value={commentText[post._id]}
-                                        onChange={(e) => {handleCommentChange(e,post._id)}}>
-                                        
+function ThreadedComment({
+  comment,
+  user,
+  depth = 0,
+  expandedReplies,
+  setExpandedReplies,
+  openReply,
+  setOpenReply,
+  replyText,
+  setReplyText,
+  submitting,
+  submitComment,
+  openMenu,
+  setOpenMenu,
+  onEdit,
+  onDelete,
+}) {
+  const replies = comment.comments || [];
+  const expanded = expandedReplies[comment._id] !== false;
+  const author = comment.author || { _id: "", name: "OdinBook member", image_url: "" };
 
-                                        </motion.textarea>
-                                        {commentText[post._id] &&
-                                        <Icon path={mdiSend} size={1} className="comment-send" color={"rgb(57,115,234)"} onClick={(e) => {postComment(e, post._id, user._id)}}/>}
-                                </div>
-                                    <div className="all-comments">
-                                        {post.comments.map((comment) =>(
-                                            <div className="comment-container" key={comment._id}>
-                                                <div className="image-container">
-                                                    <Link to= {`/profile/${comment.author._id}`}>
-                                                        <img src={comment.author.image_url} alt={`${comment.author.name} profile pic`} className="comment-picture"/>
-                                                    </Link>
-                                                </div>
-                                                <div className="name-comment">
-                                                    {comment.edited && <div className="edited" tabIndex={0}>edited</div>}
-                                                    <div className="comment-name" tabIndex={0}>{comment.author.name}</div>
-                                                    <div className="user-comment" tabIndex={0}  >{comment.text}</div>
-                                                </div>
-                                                {comment.author._id === user._id &&
-                                                <>
-                                                    <div className="edit-delete-container" onClick={() => setEditDropDown(!editDropDown)}>
-                                                        <div className="edit-delete-icon">
-                                                            <Icon path={mdiDotsHorizontal} size={1} color={"rgb(57,115,234)"}/>
-                                                        </div>
-                                                        {editDropDown &&
-                                                            <div className="edit-dropdown">
-                                                                <div className="edit-comment" onClick={() =>handleEditComment(comment._id)}>Edit</div>
-                                                                <div className="delete-comment" onClick={() =>handleDeleteComment(comment._id)}>Delete</div>
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                </>
-                                                }
-                                            </div>
-                                        ))}
-                                    </div>
-                                
-                                 {commentLoading[post._id] &&     
-                                    <div className="comment-container">
-                                        <div className="image-container">
-                                            {/* Use Skeleton component for loading image */}
-                                            <Skeleton circle={true} height={40} width={40} className="comment-picture"/>
-                                        </div>
-                                        <div className="name-comment">
-                                            <div className="comment-name">
-                                            {/* Use Skeleton component for loading name */}
-                                            <Skeleton width={80} />
-                                            </div>
-                                            <div className="user-comment">
-                                            {/* Use Skeleton component for loading comment text */}
-                                            <Skeleton count={3} />
-                                            </div>
-                                        </div>
-                                    </div>}
-
-                                
-                            </div>
-                        )):
-                        (
-                            Array.from({ length: 3 }).map((_, index) => (
-                                <div className="post" key={index}>
-                                <div className="post-header-right">
-                                    <Skeleton width={40} height={40} circle={true} />
-                                    <div className="actual-post-name">
-                                        <Skeleton width={100} />
-                                    </div>
-                                </div>
-                                <Skeleton height={80} />
-                                <div className="likes-comments">
-                                    <div className="likes">
-                                        <Skeleton width={30} />
-                                    </div>
-                                    <div className="comments">
-                                        <Skeleton width={30} />
-                                    </div>
-                                </div>
-                                </div>
-                              ))
-                          
-                        )
-                    }
-                </div>
+  return (
+    <div className={`thread-node depth-${Math.min(depth, 3)}`}>
+      <article className="comment-container">
+        <Link to={`/profile/${author._id}`} className="comment-avatar-link">
+          <img src={author.image_url} alt="" className="comment-picture" />
+        </Link>
+        <div className="comment-main">
+          <div className="name-comment">
+            <div className="comment-meta">
+              <Link to={`/profile/${author._id}`} className="comment-name">{author.name}</Link>
+              <span>{timeCalculator(comment.date)}</span>
+              {comment.edited && <span>edited</span>}
             </div>
-        </>
-    )
+            <div className="user-comment">{comment.text}</div>
+          </div>
+          <div className="comment-actions">
+            <button type="button" onClick={() => setOpenReply(openReply === comment._id ? "" : comment._id)}>
+              <Icon path={mdiReplyOutline} size={0.62}/> Reply
+            </button>
+            {replies.length > 0 && (
+              <button type="button" onClick={() => setExpandedReplies((current) => ({ ...current, [comment._id]: !expanded }))}>
+                <Icon path={mdiChevronDown} size={0.6} className={expanded ? "chevron-open" : ""}/>
+                {expanded ? "Hide" : "Show"} {replies.length} {replies.length === 1 ? "reply" : "replies"}
+              </button>
+            )}
+          </div>
+        </div>
+        {author._id === user._id && (
+          <div className="comment-menu-wrap">
+            <button type="button" className="icon-button" onClick={() => setOpenMenu(openMenu === comment._id ? "" : comment._id)} aria-label="Comment options">
+              <Icon path={mdiDotsHorizontal} size={0.8}/>
+            </button>
+            {openMenu === comment._id && (
+              <div className="edit-dropdown">
+                <button type="button" onClick={() => onEdit(comment._id)}>Edit</button>
+                <button type="button" onClick={() => onDelete(comment._id)}>Delete thread</button>
+              </div>
+            )}
+          </div>
+        )}
+      </article>
+
+      {openReply === comment._id && (
+        <form className="reply-composer" onSubmit={(event) => {
+          event.preventDefault();
+          submitComment(comment.post, replyText[comment._id], comment._id);
+        }}>
+          <img src={user.image_url} alt="" className="comment-picture" />
+          <input
+            autoFocus
+            value={replyText[comment._id] || ""}
+            onChange={(event) => setReplyText((current) => ({ ...current, [comment._id]: event.target.value }))}
+            placeholder={`Reply to ${author.name}`}
+            maxLength={2000}
+          />
+          <button type="submit" disabled={!replyText[comment._id]?.trim() || submitting === comment._id} aria-label="Send reply">
+            <Icon path={mdiSend} size={0.72}/>
+          </button>
+        </form>
+      )}
+
+      {expanded && replies.length > 0 && (
+        <div className="thread-children">
+          {replies.map((reply) => (
+            <ThreadedComment
+              key={reply._id}
+              comment={reply}
+              user={user}
+              depth={depth + 1}
+              expandedReplies={expandedReplies}
+              setExpandedReplies={setExpandedReplies}
+              openReply={openReply}
+              setOpenReply={setOpenReply}
+              replyText={replyText}
+              setReplyText={setReplyText}
+              submitting={submitting}
+              submitComment={submitComment}
+              openMenu={openMenu}
+              setOpenMenu={setOpenMenu}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default Post
+const Post = ({ setLoading, loading, newInfo, setNotification }) => {
+  const user = useSelector((state) => state.user);
+  const commentModal = useSelector((state) => state.commentModal);
+  const host = useSelector((state) => state.host);
+  const allPosts = useSelector((state) => state.allPosts);
+  const dispatch = useDispatch();
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [commentText, setCommentText] = useState({});
+  const [replyText, setReplyText] = useState({});
+  const [submitting, setSubmitting] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
+  const [postDropdown, setPostDropdown] = useState("");
+  const [commentDropdown, setCommentDropdown] = useState("");
+  const [openReply, setOpenReply] = useState("");
+  const [expandedReplies, setExpandedReplies] = useState({});
+
+  useEffect(() => {
+    let active = true;
+    apiRequest(`${host}/posts/${user._id}`)
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error(`Feed failed: ${response.status}`)))
+      .then((data) => {
+        if (!active) return;
+        setLikedPosts(data.filter((post) => compareMongo(user._id, post.likes)).map((post) => post._id));
+        dispatch(updateAllPosts(data.map((post) => ({ ...post, likeCount: post.likes.length }))));
+      })
+      .catch((error) => console.error(error))
+      .finally(() => active && setLoading(false));
+    return () => { active = false; };
+  }, [host, user._id, reloadKey, commentModal, newInfo, dispatch, setLoading]);
+
+  const notify = (content) => {
+    setNotification({ status: true, content });
+    window.setTimeout(() => setNotification({ status: false, content: "" }), 2600);
+  };
+
+  const updateLike = async (postId, liked) => {
+    const response = await apiRequest(`${host}/posts/like/${liked ? "add" : "remove"}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user._id, postId }),
+    });
+    if (!response.ok) return;
+    setLikedPosts((current) => liked ? [...current, postId] : current.filter((id) => id !== postId));
+    dispatch(updateAllPosts(allPosts.map((post) => post._id === postId
+      ? { ...post, likeCount: post.likeCount + (liked ? 1 : -1) }
+      : post)));
+  };
+
+  const submitComment = async (postId, text, parentCommentId = null) => {
+    if (!text?.trim()) return;
+    const submitKey = parentCommentId || postId;
+    setSubmitting(submitKey);
+    const response = await apiRequest(`${host}/comments/add`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ postId, text: text.trim(), userId: user._id, parentCommentId }),
+    });
+    setSubmitting("");
+    if (!response.ok) return notify("We could not add that comment.");
+    if (parentCommentId) {
+      setReplyText((current) => ({ ...current, [parentCommentId]: "" }));
+      setOpenReply("");
+    } else {
+      setCommentText((current) => ({ ...current, [postId]: "" }));
+    }
+    setReloadKey((value) => value + 1);
+    notify(parentCommentId ? "Reply added to the thread" : "Comment added");
+  };
+
+  const handleEditComment = (commentId) => {
+    dispatch(updateCommentModal("edit-comment"));
+    dispatch(updateComment(commentId));
+  };
+  const handleDeleteComment = (commentId) => {
+    dispatch(updateCommentModal("delete-comment"));
+    dispatch(updateComment(commentId));
+  };
+  const handleEditPost = (postId) => {
+    dispatch(updateCommentModal("edit-post"));
+    dispatch(updateEditPost(postId));
+  };
+  const handleDeletePost = (postId) => {
+    dispatch(updateCommentModal("delete-post"));
+    dispatch(updateEditPost(postId));
+  };
+
+  const firstName = user.name.split(" ")[0];
+  const today = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(new Date());
+
+  return (
+    <main className="post-third">
+      <div className="posts">
+        <header className="feed-welcome">
+          <div><span className="eyebrow">{today}</span><h1>Good to see you, {firstName}.</h1><p>Here&apos;s what your people are talking about.</p></div>
+          <div className="daily-pulse"><span>Circle pulse</span><strong>08</strong><small>updates today</small></div>
+        </header>
+
+        <section className="add-post">
+          <img src={user.image_url} alt="" className="smallest-profile-pic"/>
+          <button className="post-button" onClick={() => dispatch(updatePost(true))}>Share something with your circle…</button>
+          <div className="compose-actions">
+            <button type="button" onClick={() => dispatch(updatePost(true))}><Icon path={mdiImageOutline} size={0.75}/>Photo</button>
+            <button type="button" onClick={() => dispatch(updatePost(true))}><Icon path={mdiMapMarkerOutline} size={0.75}/>Location</button>
+            <button type="button" onClick={() => dispatch(updatePost(true))}><Icon path={mdiCalendarBlankOutline} size={0.75}/>Event</button>
+          </div>
+          <button type="button" className="compose-submit" onClick={() => dispatch(updatePost(true))}><Icon path={mdiSend} size={0.7}/>Post</button>
+        </section>
+
+        {!loading ? allPosts.map((post) => (
+          <article className="post" key={post._id}>
+            <div className="post-header">
+              <div className="post-header-right">
+                <Link to={`/profile/${post.author._id}`}><img src={post.author.image_url} alt="" className="smallest-profile-pic"/></Link>
+                <div className="name-time">
+                  <Link to={`/profile/${post.author._id}`} className="name">{post.author.name}</Link>
+                  <span>{post.author.job || "OdinBook member"} · {timeCalculator(post.date)}{post.edited ? " · edited" : ""}</span>
+                </div>
+              </div>
+              {post.author._id === user._id && (
+                <div className="post-menu-wrap">
+                  <button type="button" className="icon-button" onClick={() => setPostDropdown(postDropdown === post._id ? "" : post._id)} aria-label="Post options"><Icon path={mdiDotsHorizontal} size={0.9}/></button>
+                  {postDropdown === post._id && <div className="edit-dropdown"><button type="button" onClick={() => handleEditPost(post._id)}>Edit post</button><button type="button" onClick={() => handleDeletePost(post._id)}>Delete post</button></div>}
+                </div>
+              )}
+            </div>
+            <div className="post-content">{post.text}</div>
+
+            {post.author.name === "Maya Chen" && (
+              <div className="post-feature-art"><span>Design systems</span><strong>Ideas become clearer<br/>when we make them together.</strong><i/><b/></div>
+            )}
+
+            <div className="post-stats"><span>{post.likeCount} appreciations</span><span>{post.comment_count ?? 0} comments</span></div>
+            <div className="likes-comments">
+              <button type="button" className={likedPosts.includes(post._id) ? "likes active" : "likes"} onClick={() => updateLike(post._id, !likedPosts.includes(post._id))}>
+                <Icon path={likedPosts.includes(post._id) ? mdiThumbUp : mdiThumbUpOutline} size={0.8}/>Appreciate
+              </button>
+              <button type="button" className="comments" onClick={() => document.getElementById(`comment-${post._id}`)?.focus()}><Icon path={mdiCommentOutline} size={0.8}/>Comment</button>
+              <button type="button" className="share-action"><Icon path={mdiShareVariantOutline} size={0.8}/>Share</button>
+            </div>
+
+            <form className="post-comments" onSubmit={(event) => { event.preventDefault(); submitComment(post._id, commentText[post._id]); }}>
+              <img src={user.image_url} alt="" className="comment-picture"/>
+              <input id={`comment-${post._id}`} className="comment-entry" placeholder="Join the conversation…" maxLength={2000} value={commentText[post._id] || ""} onChange={(event) => setCommentText((current) => ({ ...current, [post._id]: event.target.value }))}/>
+              <button type="submit" className="comment-send" disabled={!commentText[post._id]?.trim() || submitting === post._id} aria-label="Send comment"><Icon path={mdiSend} size={0.75}/></button>
+            </form>
+
+            {post.comments.length > 0 && (
+              <div className="all-comments">
+                {post.comments.map((comment) => (
+                  <ThreadedComment
+                    key={comment._id}
+                    comment={comment}
+                    user={user}
+                    expandedReplies={expandedReplies}
+                    setExpandedReplies={setExpandedReplies}
+                    openReply={openReply}
+                    setOpenReply={setOpenReply}
+                    replyText={replyText}
+                    setReplyText={setReplyText}
+                    submitting={submitting}
+                    submitComment={submitComment}
+                    openMenu={commentDropdown}
+                    setOpenMenu={setCommentDropdown}
+                    onEdit={handleEditComment}
+                    onDelete={handleDeleteComment}
+                  />
+                ))}
+              </div>
+            )}
+          </article>
+        )) : Array.from({ length: 3 }).map((_, index) => (
+          <div className="post post-skeleton" key={index}><Skeleton height={44}/><Skeleton height={90}/><Skeleton height={38}/></div>
+        ))}
+      </div>
+    </main>
+  );
+};
+
+export default Post;
