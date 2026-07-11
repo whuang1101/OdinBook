@@ -1,7 +1,7 @@
-.profile-third { position: sticky; top: 100px; min-width: 0; min-height: 0; padding-top: 0; }
-.small-profile { top: auto; display: flex; width: 100%; height: auto; flex-direction: column; align-items: stretch; gap: 20px; padding: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.home-background .profile-third { position: sticky; top: 100px; min-width: 0; min-height: 0; padding-top: 0; }
+.home-background .small-profile { top: auto; display: flex; width: 100%; height: auto; flex-direction: column; align-items: stretch; gap: 20px; padding: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .sidebar-person { display: grid; grid-template-columns: 48px minmax(0,1fr); align-items: center; gap: 12px; padding: 2px 8px 14px; border-bottom: 1px solid var(--ob-line); }
-.medium-profile-pic { width: 48px; height: 48px; border-radius: 16px; object-fit: cover; box-shadow: 0 8px 20px rgba(37,34,68,.13); }
+.home-background .medium-profile-pic { width: 48px; height: 48px; border: 0; border-radius: 16px; object-fit: cover; box-shadow: 0 8px 20px rgba(37,34,68,.13); }
 .sidebar-person div { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .sidebar-person strong { overflow: hidden; font-size: .88rem; text-overflow: ellipsis; white-space: nowrap; }
 .sidebar-person span { overflow: hidden; color: var(--ob-muted); font-size: .69rem; text-overflow: ellipsis; white-space: nowrap; }
