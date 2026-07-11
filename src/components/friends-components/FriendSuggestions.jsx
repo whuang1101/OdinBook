@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { apiRequest } from "../../lib/apiClient"
 const FriendSuggestions = () => {
     const host = useSelector(state =>  state.host)
     const user = useSelector(state => state.user)
@@ -13,7 +14,7 @@ const FriendSuggestions = () => {
             recipientId: recipientId,
             senderId: user._id
         }
-        fetch(`${host}/friends/add`,{
+        apiRequest(`${host}/friends/add`,{
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -46,7 +47,7 @@ const FriendSuggestions = () => {
                 recipientId: recipientId,
                 senderId: user._id
             }
-            fetch(`${host}/friends/remove`,{
+            apiRequest(`${host}/friends/remove`,{
                 method: "POST",
                 headers: {
                     "Content-Type" : "application/json"
@@ -77,7 +78,7 @@ const FriendSuggestions = () => {
   
     }
     useEffect(() => {
-        fetch(`${host}/friends/suggestions/${user._id}`)
+        apiRequest(`${host}/friends/suggestions/${user._id}`)
         .then(response => 
             {if(response.ok){
                 return response.json()

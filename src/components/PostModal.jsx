@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { updatePost } from "../redux/postSlice"
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
+import { apiRequest } from "../lib/apiClient"
 const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
     const modalRef = useRef(null);
     const post = useSelector(state => state.post);
@@ -28,7 +29,7 @@ const PostModal = ({newInfo, setNewInfo, setLoading, setNotification}) => {
             content: postContent,
             userId: user._id
         }
-            fetch(`${host}/posts`, {
+            apiRequest(`${host}/posts`, {
             method:"POST",
             headers: {
                 "Content-Type": "application/json"

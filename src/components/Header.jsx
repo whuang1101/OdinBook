@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { updateFriendSelection } from "../redux/friendSelectSlice";
 import { useState } from "react";
 import { updateProfile } from "../redux/profileSlice";
+import { apiRequest } from "../lib/apiClient";
 const Header = ({setUser}) => {
     const user = useSelector((state) => state.user);
     const page = useSelector((state) => state.page);
@@ -25,7 +26,7 @@ const Header = ({setUser}) => {
         dispatch(updatePage(page))
     }
     const handleLogout = () => {
-        fetch(`${host}/auth/logout`,{
+        apiRequest(`${host}/auth/logout`,{
             method:"POST",
             credentials: "include",
             headers: {
@@ -39,7 +40,7 @@ const Header = ({setUser}) => {
     }
     const handleEnterLogout = (e) => {
         if(e.key === "Enter"){
-            fetch(`${host}/auth/logout`,{
+            apiRequest(`${host}/auth/logout`,{
                 method:"POST",
                 credentials: "include",
                 headers: {

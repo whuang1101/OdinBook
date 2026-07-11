@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { updateCommentModal } from "../../redux/commentModalSlice";
 import { updateComment } from "../../redux/editCommentSlice";
 import { updateEditPost } from "../../redux/editPostSlice";
+import { apiRequest } from "../../lib/apiClient";
 const Post = ({setLoading,loading, newInfo, setNotification}) => {
     const user = useSelector(state => state.user)
     const commentModal = useSelector(state => state.commentModal);
@@ -26,7 +27,7 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
     const [editDropDown,setEditDropDown] =  useState(false);
     const [postDropdown, setPostDropDown] = useState({});
     useEffect(()=> {
-        fetch(`${host}/posts/${user._id}`).then( response =>
+        apiRequest(`${host}/posts/${user._id}`).then( response =>
            { if(response.ok){
                 return response.json()
             }
@@ -73,7 +74,7 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             userId: user._id,
             postId: postId
         }
-        fetch(`${host}/posts/like/add`,{
+        apiRequest(`${host}/posts/like/add`,{
             method:"PUT",
             headers: {
                 "Content-Type" : "application/json"
@@ -102,7 +103,7 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             userId: user._id,
             postId: postId
         }
-        fetch(`${host}/posts/like/remove`,{
+        apiRequest(`${host}/posts/like/remove`,{
             method:"PUT",
             headers: {
                 "Content-Type" : "application/json"
@@ -148,7 +149,7 @@ const Post = ({setLoading,loading, newInfo, setNotification}) => {
             text: commentText[postId],
             userId:userId,
         }
-        fetch(`${host}/comments/add`, {
+        apiRequest(`${host}/comments/add`, {
             method:"POST",
             headers:{
                 "Content-Type" : "application/json"

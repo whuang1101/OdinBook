@@ -13,6 +13,7 @@ import EditModal from "./homepage-components/EditModal";
 import Notification from "./Notification";
 import EditProfile from "./profile-components/EditProfile";
 import { updateUser } from "../redux/userSlice";
+import { apiRequest } from "../lib/apiClient";
 const Profile = ({setUser}) => {
     const {id} = useParams()
     const user = useSelector(state => state.user);
@@ -23,7 +24,7 @@ const Profile = ({setUser}) => {
     const post = useSelector(state => state.post);
     const [newInfo, setNewInfo] = useState(false);
     useEffect(()=> {
-        fetch(`${host}/users/${id}`).then(
+        apiRequest(`${host}/users/${id}`).then(
             response => {
                 if(response.ok){
                     return response.json()

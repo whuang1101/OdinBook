@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { updateCommentModal } from "../../redux/commentModalSlice"
 import { updateComment } from "../../redux/editCommentSlice"
 import { updateEditPost } from "../../redux/editPostSlice"
+import { apiRequest } from "../../lib/apiClient"
 const EditModal = ({setLoading, setNotification}) => {
     const commentModal = useSelector(state => state.commentModal);
     const host = useSelector(state => state.host);
@@ -17,7 +18,7 @@ const EditModal = ({setLoading, setNotification}) => {
     const [postMouseDown, setPostMouseDown] = useState(false);
     useEffect(() => {
         if(postId !== "") {
-            fetch(`${host}/posts/single/${postId}`)
+            apiRequest(`${host}/posts/single/${postId}`)
             .then(response => {
                 if(response.ok) {
                     return response.json()
@@ -28,7 +29,7 @@ const EditModal = ({setLoading, setNotification}) => {
     },[postId])
     useEffect(() =>{
         if(comment !== ""){
-        fetch(`${host}/comments/${comment}`)
+        apiRequest(`${host}/comments/${comment}`)
         .then(response => {
             if(response.ok) {
                 return response.json()
@@ -46,7 +47,7 @@ const EditModal = ({setLoading, setNotification}) => {
                 id: comment,
                 text: postContent,
             }
-            fetch(`${host}/comments/edit`, {
+            apiRequest(`${host}/comments/edit`, {
             method:"PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -83,7 +84,7 @@ const EditModal = ({setLoading, setNotification}) => {
                 id: postId,
                 text: postContent,
             }
-            fetch(`${host}/posts/edit`, {
+            apiRequest(`${host}/posts/edit`, {
                 method:"PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -127,7 +128,7 @@ const EditModal = ({setLoading, setNotification}) => {
             id: comment,
             text: postContent,
         }
-            fetch(`${host}/comments/delete`, {
+            apiRequest(`${host}/comments/delete`, {
             method:"DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -163,7 +164,7 @@ const EditModal = ({setLoading, setNotification}) => {
             id: postId,
             text: postContent,
         }
-            fetch(`${host}/posts/delete`, {
+            apiRequest(`${host}/posts/delete`, {
             method:"DELETE",
             headers: {
                 "Content-Type": "application/json"

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { apiRequest } from "../../lib/apiClient";
 const FriendRequests = ({setNotification}) => {
     const [pendingRequests, setPendingRequests] = useState([]);
     const [incomingRequests, setIncomingRequests] = useState([]);
@@ -10,7 +11,7 @@ const FriendRequests = ({setNotification}) => {
     const user = useSelector(state => state.user)
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        fetch(`${host}/friends/pending/${user._id}`)
+        apiRequest(`${host}/friends/pending/${user._id}`)
         .then(response =>{
             if(response.ok){
                 return response.json()
@@ -25,7 +26,7 @@ const FriendRequests = ({setNotification}) => {
             setLoading(false)
         }
         )
-        fetch(`${host}/friends/request/${user._id}`)
+        apiRequest(`${host}/friends/request/${user._id}`)
         .then(response =>{
             if(response.ok){
                 return response.json()
@@ -44,7 +45,7 @@ const FriendRequests = ({setNotification}) => {
             recipientId: recipientId,
             senderId: user._id
         }
-        fetch(`${host}/friends/add`,{
+        apiRequest(`${host}/friends/add`,{
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -76,7 +77,7 @@ const FriendRequests = ({setNotification}) => {
             const body = {
                 recipientId: requestId,
             }
-            fetch(`${host}/friends/cancel/request`,{
+            apiRequest(`${host}/friends/cancel/request`,{
                 method: "DELETE",
                 headers: {
                     "Content-Type" : "application/json"
@@ -113,7 +114,7 @@ const FriendRequests = ({setNotification}) => {
         const body = {
             id: postId
         }
-        fetch(`${host}/friends/request/accept`,{
+        apiRequest(`${host}/friends/request/accept`,{
             method:"PUT",
             headers: {
                 "Content-Type": "application/json"

@@ -3,6 +3,7 @@ import Icon from '@mdi/react';
 import { mdiBriefcase, mdiHome, mdiSchool } from '@mdi/js';
 import { useEffect, useState } from "react";
 import { updateProfile } from "../../redux/profileSlice";
+import { apiRequest } from "../../lib/apiClient";
 const ProfileInfo = () => {
     const user = useSelector(state => state.user);
     const host = useSelector(state => state.host);
@@ -33,7 +34,7 @@ const ProfileInfo = () => {
             id: profile._id,
             bio:bio
         }
-        fetch(`${host}/users/edit/bio`, {
+        apiRequest(`${host}/users/edit/bio`, {
             method:"PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -62,7 +63,7 @@ const ProfileInfo = () => {
             lives: livesAt,
             job: job
         }
-        fetch(`${host}/users/edit/details`, {
+        apiRequest(`${host}/users/edit/details`, {
             method:"PUT",
             headers: {
                 "Content-Type": "application/json"

@@ -3,6 +3,7 @@ import "../css/sign-up.css"
 import { useSelector } from "react-redux";
 import Icon from '@mdi/react';
 import { mdiAlphaXCircle } from "@mdi/js";
+import { apiRequest } from "../lib/apiClient";
 
 const SignUp = ({setSignUpModal, setNotification}) => {
     const [newUser, setNewUser] = useState({
@@ -106,7 +107,7 @@ const SignUp = ({setSignUpModal, setNotification}) => {
         formData.append("studies", newUser.studies.trim());
       
         try {
-          const response = await fetch(`${host}/users/newUser`, {
+          const response = await apiRequest(`${host}/users/newUser`, {
             method: "POST",
             body: formData, 
           });
@@ -134,7 +135,7 @@ const SignUp = ({setSignUpModal, setNotification}) => {
         }
     };
     const onEmailBlur = () => {
-        fetch(`${host}/users/email/${newUser.email.toLowerCase()}`)
+        apiRequest(`${host}/users/email/${newUser.email.toLowerCase()}`)
         .then(response => {
             if(response.ok){
                 return response.json()

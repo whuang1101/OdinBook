@@ -3,6 +3,7 @@ import "../../css/edit-profile.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateProfile } from "../../redux/profileSlice";
+import { apiRequest } from "../../lib/apiClient";
 const EditProfile = ({setProfileEdit, setUser}) => {
     const {id} = useParams();
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const EditProfile = ({setProfileEdit, setUser}) => {
         formData.append("image_url", selectedImage);
         formData.append("id", profile._id);
 
-        fetch(`${host}/users/image/edit`, {
+        apiRequest(`${host}/users/image/edit`, {
             method:"PUT",
             body: formData
         }).then(
@@ -35,7 +36,7 @@ const EditProfile = ({setProfileEdit, setUser}) => {
         )
     }
     const onDelete = () => {
-        fetch(`${host}/users`,{
+        apiRequest(`${host}/users`,{
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -54,7 +55,7 @@ const EditProfile = ({setProfileEdit, setUser}) => {
     }
     const onSaveName = (e) => {
         e.preventDefault();
-        fetch(`${host}/users/name/edit`, {
+        apiRequest(`${host}/users/name/edit`, {
             method:"PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom";
+import { apiRequest } from "../../lib/apiClient";
 const AllFriends=  ({setNotification}) => {
     
     const host = useSelector(state=> state.host);
@@ -10,7 +11,7 @@ const AllFriends=  ({setNotification}) => {
     const [allFriends, setAllFriends] = useState([])
     const [loading, setLoading] = useState(true)
     useEffect(()=>{
-      fetch(`${host}/friends/${user._id}`).then(
+      apiRequest(`${host}/friends/${user._id}`).then(
         response =>{
             if(response.ok){
                 return response.json()
@@ -28,7 +29,7 @@ const AllFriends=  ({setNotification}) => {
             friendId:friendId,
             selfId: user._id,
         }
-        fetch(`${host}/users/friend/remove`,{
+        apiRequest(`${host}/users/friend/remove`,{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

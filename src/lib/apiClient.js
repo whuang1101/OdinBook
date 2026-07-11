@@ -12,6 +12,13 @@ export function apiUrl(path) {
   return `${API_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+export function apiRequest(path, options = {}) {
+  return fetch(apiUrl(path), {
+    credentials: "include",
+    ...options,
+  });
+}
+
 export async function apiFetch(path, options = {}) {
   const headers = options.body instanceof FormData
     ? options.headers
@@ -20,8 +27,7 @@ export async function apiFetch(path, options = {}) {
         ...options.headers,
       };
 
-  const response = await fetch(apiUrl(path), {
-    credentials: "include",
+  const response = await apiRequest(path, {
     ...options,
     headers,
   });
