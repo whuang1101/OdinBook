@@ -60,9 +60,13 @@ function Brand() {
   return <div className="demo-brand"><span>O</span><strong>OdinBook</strong></div>;
 }
 
-function NavItem({ icon, label, active, onClick }) {
+function NavItem({ icon, label, active, onClick, testId }) {
   return (
-    <button className={`demo-nav-item ${active ? "active" : ""}`} onClick={onClick}>
+    <button
+      className={`demo-nav-item ${active ? "active" : ""}`}
+      data-testid={testId}
+      onClick={onClick}
+    >
       <Icon path={icon} size={0.92} /><span>{label}</span>
     </button>
   );
@@ -95,7 +99,7 @@ function Sidebar({ view, setView }) {
       </div>
       <div className="demo-nav-list">
         <NavItem icon={mdiHomeVariantOutline} label="Home" active={view === "feed"} onClick={() => setView("feed")} />
-        <NavItem icon={mdiAccountGroupOutline} label="Connections" active={view === "friends"} onClick={() => setView("friends")} />
+        <NavItem icon={mdiAccountGroupOutline} label="Connections" active={view === "friends"} onClick={() => setView("friends")} testId="connections-nav" />
         <NavItem icon={mdiBookmarkOutline} label="Saved" />
         <NavItem icon={mdiCalendarBlankOutline} label="Events" />
       </div>
@@ -172,7 +176,7 @@ function Feed() {
 
 function FriendsView() {
   return (
-    <main className="demo-wide-view"><div className="demo-page-title"><span className="demo-eyebrow">YOUR NETWORK</span><h1>Connections worth keeping.</h1><p>Stay close to the people who make your world more interesting.</p></div><div className="demo-friend-grid">{[people.maya, people.theo, people.lina, people.noah].map((p, i) => <article key={p.name}><div className={`demo-cover cover-${i}`}></div><img src={p.image} alt="" /><h3>{p.name}</h3><p>{p.role}</p><span>{12 + i * 7} mutual connections</span><button>View profile</button></article>)}</div></main>
+    <main className="demo-wide-view" data-testid="connections-view"><div className="demo-page-title"><span className="demo-eyebrow">YOUR NETWORK</span><h1>Connections worth keeping.</h1><p>Stay close to the people who make your world more interesting.</p></div><div className="demo-friend-grid">{[people.maya, people.theo, people.lina, people.noah].map((p, i) => <article key={p.name}><div className={`demo-cover cover-${i}`}></div><img src={p.image} alt="" /><h3>{p.name}</h3><p>{p.role}</p><span>{12 + i * 7} mutual connections</span><button>View profile</button></article>)}</div></main>
   );
 }
 
@@ -185,5 +189,5 @@ function ProfileView() {
 export default function DemoApp() {
   const initial = useMemo(() => new URLSearchParams(window.location.search).get("view") || "feed", []);
   const [view, setView] = useState(initial);
-  return <div className="demo-app"><Header view={view} setView={setView}/><div className="demo-shell"><Sidebar view={view} setView={setView}/>{view === "feed" ? <Feed/> : view === "friends" ? <FriendsView/> : <ProfileView/>}</div></div>;
+  return <div className="demo-app" data-testid="showcase-ready"><Header view={view} setView={setView}/><div className="demo-shell"><Sidebar view={view} setView={setView}/>{view === "feed" ? <Feed/> : view === "friends" ? <FriendsView/> : <ProfileView/>}</div></div>;
 }
